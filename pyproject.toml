@@ -1,0 +1,31 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "plate-model-manager"
+version = "1.0.1"
+description = "Plate Model Manager"
+readme = "README.md"
+authors = [{ name = "Michael Chin", email = "michael.chin@sydney.edu.au" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["Tectonics", "Earth"]
+dependencies = [
+    "python-dotenv",
+    "requests",
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
+
+[project.urls]
+Homepage = "https://github.com/michaelchin/plate-model-manager"
+
+[project.scripts]
+geoserver-pyadmin = "plate_model_manager.__main__:main"
