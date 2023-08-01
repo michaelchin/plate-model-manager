@@ -5,7 +5,6 @@ import glob
 import json
 import os
 import shutil
-import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -13,22 +12,62 @@ import requests
 
 from . import network_requests
 
+EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
+METADATA_FILENAME = "metadata.json"
+
+
+class PlateModelManager:
+    """manage plate models
+    https://www.earthbyte.org/webdav/ftp/gplately/models.json
+    """
+
+    def __init__(self, model_manifest="models.json"):
+        self.model_manifest = model_manifest
+        self.models = None
+
+        # check if the model manifest file is a local file
+        if os.path.isfile(self.model_manifest):
+            with open(self.model_manifest) as f:
+                self.models = json.load(f)
+        elif self.model_manifest.startswith(
+            "http://"
+        ) or self.model_manifest.startswith("https://"):
+            # try the http(s) url
+            try:
+                r = requests.get(self.model_manifest)
+                self.models = r.json()
+
+            except requests.exceptions.ConnectionError:
+                raise Exception(
+                    f"Unable to fetch {self.model_manifest}. "
+                    + "No network connection or invalid URL!"
+                )
+        else:
+            raise Exception(
+                f"The model_manifest '{self.model_manifest}' should be either a local file path or a http(s) URL."
+            )
+
+    def get_model(self, model_name):
+        """return a PlateModel object by model_name"""
+        if model_name in self.models:
+            return PlateModel(model_name, self.models[model_name])
+        else:
+            print(f"Model {model_name} is not available.")
+            return None
+
 
 class PlateModel:
     """Class to manage a plate model"""
 
-    def __init__(self, model_name, data_dir=None, force_fresh=False):
-        """The valid model names can be found at https://www.earthbyte.org/webdav/ftp/gplately/models.json"""
+    def __init__(self, model_name, model_cfg, data_dir=None):
         self.model_name = model_name
-        self.meta_filename = "metadata.json"
-        self.expiry_format = "%Y/%m/%d, %H:%M:%S"
-        self.model = None
+        self.meta_filename = METADATA_FILENAME
+        self.expiry_format = EXPIRY_TIME_FORMAT
+        self.model = model_cfg
         if not data_dir:
-            self.data_dir = "./"
+            self.data_dir = f"./{model_name}/"
         else:
             self.data_dir = data_dir
-        models_file = f"{self.data_dir}/models.json"
-        models = None
 
         # async and concurrent things
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=15)
@@ -36,45 +75,14 @@ class PlateModel:
         self.run = functools.partial(self.loop.run_in_executor, self.executor)
         asyncio.set_event_loop(self.loop)
 
-        # force refresh models.json
-        if os.path.isfile(models_file) and force_fresh:
-            os.remove(models_file)
-
-        # check the local models cfg first. if not too old, use it
-        if os.path.isfile(models_file):
-            if (time.time() - os.path.getmtime(models_file)) < 6 * 60 * 60:  # 6 hours
-                with open(models_file) as f:
-                    models = json.load(f)
-
-        # and then try the network
-        if not models:
-            try:
-                r = requests.get(
-                    "https://www.earthbyte.org/webdav/ftp/gplately/models.json"
-                )
-                Path(self.data_dir).mkdir(parents=True, exist_ok=True)
-                models = r.json()
-                with open(models_file, "w+") as of:
-                    of.write(r.text)
-            except requests.exceptions.ConnectionError:
-                print("No network connection!")
-                if os.path.isfile(models_file):
-                    with open(models_file) as f:
-                        models = json.load(f)
-        if models:
-            if model_name in models:
-                self.model = models[model_name]
-                # print(models[model_name])
-            else:
-                raise Exception(f"Fatal: invalid model name: {model_name}")
-        else:
-            raise Exception("Fatal: failed to load models.")
-
     def __del__(self):
         self.loop.close()
 
     def get_data_dir(self):
         return self.data_dir
+
+    def set_data_dir(self, new_dir):
+        self.data_dir = new_dir
 
     def get_avail_layers(self):
         """get all available layers in this plate model"""
@@ -350,3 +358,10 @@ class PlateModel:
                 Path(metadata_folder).mkdir(parents=True, exist_ok=True)
                 with open(metadata_file, "w+") as f:
                     json.dump(metadata, f)
+
+    def download_all(self, dst_path=None):
+        """download everything in this plate model"""
+        self.download_all_layers(dst_path=dst_path)
+        if "TimeDepRasters" in self.model:
+            for raster in self.model["TimeDepRasters"]:
+                self.download_time_dependent_rasters(raster, dst_path=dst_path)
