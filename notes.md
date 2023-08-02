@@ -32,3 +32,14 @@
 - `twine check dist/*`
 - `twine upload -r testpypi dist/*`
 - `twine upload dist/*`
+
+#### gh-pages branch
+
+- `git clone https://github.com/michaelchin/plate-model-manager.git gh-pages.git`
+- `git checkout --orphan gh-pages`
+- `git rm -rf .`
+- `cp -rf ../doc/build/html/* .`
+- `touch .nojekyll`
+- `git add .`
+- `git commit -m"initial gh-pages checkin"`
+- `git push --set-upstream origin gh-pages`

@@ -1,5 +1,6 @@
 plate-model-manager-venv/
 .DS_Store
+gh-pages.git/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
