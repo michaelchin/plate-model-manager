@@ -43,3 +43,5 @@
 - `git add .`
 - `git commit -m"initial gh-pages checkin"`
 - `git push --set-upstream origin gh-pages`
+
+create GH_PAGE_COMMIT_TOKEN for the github workflow
