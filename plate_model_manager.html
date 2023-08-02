@@ -46,13 +46,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">plate_model_manager</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">plate_model_manager package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.network_aiohttp">plate_model_manager.network_aiohttp module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_file"><code class="docutils literal notranslate"><span class="pre">fetch_file()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_files"><code class="docutils literal notranslate"><span class="pre">fetch_files()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_large_file"><code class="docutils literal notranslate"><span class="pre">fetch_large_file()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.get_etag"><code class="docutils literal notranslate"><span class="pre">get_etag()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#plate-model-manager-network-aiohttp-module">plate_model_manager.network_aiohttp module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.network_requests">plate_model_manager.network_requests module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_requests.fetch_file"><code class="docutils literal notranslate"><span class="pre">fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_requests.fetch_files"><code class="docutils literal notranslate"><span class="pre">fetch_files()</span></code></a></li>
@@ -65,7 +59,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.plate_model.PlateModelManager"><code class="docutils literal notranslate"><span class="pre">PlateModelManager</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -102,85 +96,14 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
-<section id="module-plate_model_manager.network_aiohttp">
-<span id="plate-model-manager-network-aiohttp-module"></span><h2>plate_model_manager.network_aiohttp module<a class="headerlink" href="#module-plate_model_manager.network_aiohttp" title="Permalink to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="plate_model_manager.network_aiohttp.fetch_file">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_aiohttp.</span></span><span class="sig-name descname"><span class="pre">fetch_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_aiohttp.html#fetch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_aiohttp.fetch_file" title="Permalink to this definition"></a></dt>
-<dd><dl class="simple">
-<dt>download a file from “url” and save to “filepath”</dt><dd><p>You can give a new “filename” for the file.
-If “etag” is given, check if etag has changed. If not changed, do not download again.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> – the url to download file from</p></li>
-<li><p><strong>filepath</strong> – location to keep the file</p></li>
-<li><p><strong>filename</strong> – new file name (optional)</p></li>
-<li><p><strong>etag</strong> – old etag. if the old etag is the same with the one on server, do not download again.</p></li>
-<li><p><strong>auto_unzip</strong> – bool flag to indicate if unzip .zip file automatically</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="plate_model_manager.network_aiohttp.fetch_files">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_aiohttp.</span></span><span class="sig-name descname"><span class="pre">fetch_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">urls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepaths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filenames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_aiohttp.html#fetch_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_aiohttp.fetch_files" title="Permalink to this definition"></a></dt>
-<dd><p>fetch multiple files concurrently</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>urls</strong> – the urls to download files from</p></li>
-<li><p><strong>filepaths</strong> – location(s) to keep the files. This can be one path for all files or one path for each file.</p></li>
-<li><p><strong>filenames</strong> – new file names (optional)</p></li>
-<li><p><strong>etags</strong> – old etags. if the old etag is the same with the one on server, do not download again.</p></li>
-<li><p><strong>auto_unzip</strong> – bool flag to indicate if unzip .zip file automatically</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="plate_model_manager.network_aiohttp.fetch_large_file">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_aiohttp.</span></span><span class="sig-name descname"><span class="pre">fetch_large_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_aiohttp.html#fetch_large_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_aiohttp.fetch_large_file" title="Permalink to this definition"></a></dt>
-<dd><dl class="simple">
-<dt>use multi-thread to fetch a large file.</dt><dd><p>Be careful when use this function. You cannot get partial content if the content is gzip encoded.
-So the file might be larger than the one download directly.
-It is useful when downloading large .zip file.
-Warning: this could be slower than single thread download.
-Some firewall sequences these requests to shape network traffic and defeat the purpose of this function completely.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> – the file url</p></li>
-<li><p><strong>filepath</strong> – location to keep the file</p></li>
-<li><p><strong>filename</strong> – new file name (optional)</p></li>
-<li><p><strong>etag</strong> – old etag. if the old etag is the same with the one on server, do not download again.</p></li>
-<li><p><strong>auto_unzip</strong> – bool flag to indicate if unzip .zip file automatically</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>new etag</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="plate_model_manager.network_aiohttp.get_etag">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_aiohttp.</span></span><span class="sig-name descname"><span class="pre">get_etag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_aiohttp.html#get_etag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_aiohttp.get_etag" title="Permalink to this definition"></a></dt>
-<dd><p>return the etag of the given url. could be none</p>
-</dd></dl>
-
+<section id="plate-model-manager-network-aiohttp-module">
+<h2>plate_model_manager.network_aiohttp module<a class="headerlink" href="#plate-model-manager-network-aiohttp-module" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-plate_model_manager.network_requests">
 <span id="plate-model-manager-network-requests-module"></span><h2>plate_model_manager.network_requests module<a class="headerlink" href="#module-plate_model_manager.network_requests" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.network_requests.fetch_file">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_requests.</span></span><span class="sig-name descname"><span class="pre">fetch_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_requests.html#fetch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_requests.fetch_file" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_requests.</span></span><span class="sig-name descname"><span class="pre">fetch_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_requests.html#fetch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_requests.fetch_file" title="Permalink to this definition"></a></dt>
 <dd><dl class="simple">
 <dt>download a file from “url” and save to “filepath”</dt><dd><p>You can give a new “filename” for the file.
 If “etag” is given, check if etag has changed. If not changed, do not download again.</p>
@@ -218,7 +141,7 @@ If “etag” is given, check if etag has changed. If not changed, do not downlo
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.network_requests.fetch_large_file">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_requests.</span></span><span class="sig-name descname"><span class="pre">fetch_large_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_requests.html#fetch_large_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_requests.fetch_large_file" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_requests.</span></span><span class="sig-name descname"><span class="pre">fetch_large_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_requests.html#fetch_large_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_requests.fetch_large_file" title="Permalink to this definition"></a></dt>
 <dd><dl class="simple">
 <dt>use multi-thread to fetch a large file.</dt><dd><p>LOOK HERE!!!
 Be careful when use this function. You cannot get partial content if the content is gzip encoded.
@@ -404,8 +327,8 @@ a metadata file will also be created for the raster file in folder f”{dst_path
 </dd></dl>
 
 </section>
-<section id="module-plate_model_manager">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-plate_model_manager" title="Permalink to this heading"></a></h2>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
 </section>
 </section>
 
