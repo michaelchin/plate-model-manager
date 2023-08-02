@@ -1,0 +1,44 @@
+name: Build Test and Doc
+on: 
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+jobs:
+  build-test-doc:
+    name: build test doc
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          repository: michaelchin/plate-model-manager
+          token: ${{ secrets.GH_PAGE_COMMIT_TOKEN }}
+          path: main
+
+      - name: Checkout github pages branch
+        uses: actions/checkout@v2
+        with:
+          repository: michaelchin/plate-model-manager
+          ref: gh-pages
+          token: ${{ secrets.GH_PAGE_COMMIT_TOKEN }}
+          path: gh-pages
+       
+      - name: Build doc
+        run: | 
+          chmod +x ./main/scripts/build-workflow.sh
+          cd main
+          ./scripts/build-workflow.sh
+          cd ..
+        env:
+          GITHUB_TOKEN: '${{secrets.GH_PAGE_COMMIT_TOKEN}}'
+
+      - name: Update github pages
+        run: | 
+          chmod +x ./main/scripts/update-gh-pages.sh
+          ./main/scripts/update-gh-pages.sh
+        env:
+          GITHUB_TOKEN: '${{secrets.GH_PAGE_COMMIT_TOKEN}}'
+
