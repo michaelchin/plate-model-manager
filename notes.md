@@ -1,8 +1,8 @@
 #### activate/deactivate the python virtual env
 
-- `python -m venv plate-model-manager-venv`
-- `source plate-model-manager-venv/bin/activate`
-- `pip install -r requirements.txt `
+- `/opt/homebrew/bin/python3 -m venv pmm-venv` (macos system python is no good.)
+- `source pmm-venv/bin/activate`
+- `pip3 install -r plate-model-manager-venv.txt`
 - `deactivate`
 
 #### build and install the package

@@ -8,52 +8,10 @@ import shutil
 from datetime import datetime, timedelta
 from pathlib import Path
 
-import requests
-
 from . import network_requests
 
 EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
 METADATA_FILENAME = "metadata.json"
-
-
-class PlateModelManager:
-    """manage plate models
-    https://www.earthbyte.org/webdav/ftp/gplately/models.json
-    """
-
-    def __init__(self, model_manifest="models.json"):
-        self.model_manifest = model_manifest
-        self.models = None
-
-        # check if the model manifest file is a local file
-        if os.path.isfile(self.model_manifest):
-            with open(self.model_manifest) as f:
-                self.models = json.load(f)
-        elif self.model_manifest.startswith(
-            "http://"
-        ) or self.model_manifest.startswith("https://"):
-            # try the http(s) url
-            try:
-                r = requests.get(self.model_manifest)
-                self.models = r.json()
-
-            except requests.exceptions.ConnectionError:
-                raise Exception(
-                    f"Unable to fetch {self.model_manifest}. "
-                    + "No network connection or invalid URL!"
-                )
-        else:
-            raise Exception(
-                f"The model_manifest '{self.model_manifest}' should be either a local file path or a http(s) URL."
-            )
-
-    def get_model(self, model_name):
-        """return a PlateModel object by model_name"""
-        if model_name in self.models:
-            return PlateModel(model_name, self.models[model_name])
-        else:
-            print(f"Model {model_name} is not available.")
-            return None
 
 
 class PlateModel:
