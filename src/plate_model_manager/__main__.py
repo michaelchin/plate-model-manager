@@ -1,6 +1,7 @@
 import sys
 
 from .plate_model import *
+from .plate_model_manager import PlateModelManager
 
 import argparse
 
@@ -17,11 +18,13 @@ def main():
 
     subparser = parser.add_subparsers(dest="command")
     ls_cmd = subparser.add_parser("ls")
-    delete_cmd = subparser.add_parser("delete")
+    download_cmd = subparser.add_parser("download")
 
-    ls_cmd.add_argument("-w", "--workspace", type=str, dest="workspace")
+    ls_cmd.add_argument("-r", "--repository", type=str, dest="repository")
 
-    delete_cmd.add_argument("-w", "--workspace", type=str, dest="workspace")
+    download_cmd.add_argument("-m", "--model", type=str, dest="model", required=True)
+    download_cmd.add_argument("-p", "--path", type=str, dest="path", default="./")
+    download_cmd.add_argument("-r", "--repository", type=str, dest="repository")
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
@@ -30,12 +33,23 @@ def main():
     args = parser.parse_args()
 
     if args.command == "ls":
-        if args.workspace == None:
-            pass
+        if args.repository == None:
+            pm_manager = PlateModelManager(
+                "https://www.earthbyte.org/webdav/ftp/gplately/models.json"
+            )
         else:
-            pass
-    elif args.command == "delete":
-        print(f"delete {args.workspace}")
+            pm_manager = PlateModelManager(args.repository)
+        print(pm_manager.get_vavilable_model_names())
+    elif args.command == "download":
+        print(f"download {args.model}")
+        if args.repository == None:
+            pm_manager = PlateModelManager(
+                "https://www.earthbyte.org/webdav/ftp/gplately/models.json"
+            )
+        else:
+            pm_manager = PlateModelManager(args.repository)
+        model = pm_manager.get_model(args.model)
+        model.download_all(dst_path=args.path)
 
 
 if __name__ == "__main__":
