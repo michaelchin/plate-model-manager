@@ -79,52 +79,10 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">import</span> <span class="nn">requests</span>
-
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">network_requests</span>
 
 <span class="n">EXPIRY_TIME_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2">, %H:%M:%S&quot;</span>
 <span class="n">METADATA_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;metadata.json&quot;</span>
-
-
-<div class="viewcode-block" id="PlateModelManager"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModelManager">[docs]</a><span class="k">class</span> <span class="nc">PlateModelManager</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;manage plate models</span>
-<span class="sd">    https://www.earthbyte.org/webdav/ftp/gplately/models.json</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manifest</span><span class="o">=</span><span class="s2">&quot;models.json&quot;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span> <span class="o">=</span> <span class="n">model_manifest</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="c1"># check if the model manifest file is a local file</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
-            <span class="s2">&quot;http://&quot;</span>
-        <span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">):</span>
-            <span class="c1"># try the http(s) url</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-
-            <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Unable to fetch </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="si">}</span><span class="s2">. &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;No network connection or invalid URL!&quot;</span>
-                <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;The model_manifest &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="si">}</span><span class="s2">&#39; should be either a local file path or a http(s) URL.&quot;</span>
-            <span class="p">)</span>
-
-<div class="viewcode-block" id="PlateModelManager.get_model"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModelManager.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;return a PlateModel object by model_name&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">PlateModel</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is not available.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
 <div class="viewcode-block" id="PlateModel"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel">[docs]</a><span class="k">class</span> <span class="nc">PlateModel</span><span class="p">:</span>

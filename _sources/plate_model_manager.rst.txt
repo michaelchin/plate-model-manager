@@ -28,6 +28,14 @@ plate\_model\_manager.plate\_model module
    :undoc-members:
    :show-inheritance:
 
+plate\_model\_manager.plate\_model\_manager module
+--------------------------------------------------
+
+.. automodule:: plate_model_manager.plate_model_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
