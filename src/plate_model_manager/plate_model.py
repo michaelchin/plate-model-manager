@@ -13,34 +13,75 @@ from . import network_requests
 EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
 METADATA_FILENAME = "metadata.json"
 
+FILE_EXT = [
+    "gpml",
+    "gpmlz",
+    "gpml.gz",
+    "dat",
+    "pla",
+    "shp",
+    "geojson",
+    "json",
+    ".gpkg",
+    "gmt",
+    "vgp",
+]
+
 
 class PlateModel:
     """Class to manage a plate model"""
 
-    def __init__(self, model_name, model_cfg, data_dir=None):
+    def __init__(self, model_name, model_cfg=None, data_dir=None, readonly=False):
+        """Constructor
+
+        :param model_name: model name
+        :param model_cfg: model configuration in JSON format
+        :param data_dir: the folder path of the model data
+        :param readonly: this will return whatever local folder has. Will not attempt to download data from internet
+
+        """
         self.model_name = model_name
         self.meta_filename = METADATA_FILENAME
         self.expiry_format = EXPIRY_TIME_FORMAT
         self.model = model_cfg
+        self.readonly = readonly
+
         if not data_dir:
-            self.data_dir = f"./{model_name}/"
+            self.data_dir = f"./"
         else:
             self.data_dir = data_dir
 
-        # async and concurrent things
-        self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=15)
-        self.loop = asyncio.new_event_loop()
-        self.run = functools.partial(self.loop.run_in_executor, self.executor)
-        asyncio.set_event_loop(self.loop)
+        self.model_dir = f"{self.data_dir}/{model_name}/"
+
+        if readonly:
+            if not PlateModel.is_model_dir(self.model_dir):
+                raise Exception(
+                    f"{self.model_dir} must be valid model dir in readonly mode."
+                )
+            else:
+                with open(f"{self.model_dir}/.metadata.json", "r") as f:
+                    self.model = json.load(f)
+
+        if not readonly:
+            # async and concurrent things
+            self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=15)
+            self.loop = asyncio.new_event_loop()
+            self.run = functools.partial(self.loop.run_in_executor, self.executor)
+            asyncio.set_event_loop(self.loop)
 
     def __del__(self):
-        self.loop.close()
+        if not self.readonly:
+            self.loop.close()
+
+    def get_model_dir(self):
+        return self.create_model_dir()
 
     def get_data_dir(self):
         return self.data_dir
 
     def set_data_dir(self, new_dir):
         self.data_dir = new_dir
+        self.model_dir = f"{self.data_dir}/{self.model_name}/"
 
     def get_avail_layers(self):
         """get all available layers in this plate model"""
@@ -50,7 +91,10 @@ class PlateModel:
 
     def get_rotation_model(self):
         """return a pygplates.RotationModel object"""
-        rotation_folder = self.download_layer_files("Rotations")
+        if not self.readonly:
+            rotation_folder = self.download_layer_files("Rotations")
+        else:
+            rotation_folder = f"{self.model_dir}/Rotations"
         rotation_files = glob.glob(f"{rotation_folder}/*.rot")
         rotation_files.extend(glob.glob(f"{rotation_folder}/*.grot"))
         # print(rotation_files)
@@ -77,41 +121,85 @@ class PlateModel:
         return self.get_layer("COBs")
 
     def get_layer(self, layer_name):
-        """get a layer by name
+        """get layer files by name
 
         :param layer_name: layer name
-        :returns: pygplates.FeatureCollection
+
+        :returns: a list of file names
+
         """
-        file_extensions = [
-            "gpml",
-            "gpmlz",
-            "gpml.gz",
-            "dat",
-            "pla",
-            "shp",
-            "geojson",
-            "json",
-            ".gpkg",
-            "gmt",
-            "vgp",
-        ]
-        layer_folder = self.download_layer_files(layer_name)
+        if not self.readonly:
+            layer_folder = self.download_layer_files(layer_name)
+        else:
+            layer_folder = f"{self.model_dir}/{layer_name}"
         files = []
-        for ext in file_extensions:
+        for ext in FILE_EXT:
             files.extend(glob.glob(f"{layer_folder}/*.{ext}"))
 
         return files
 
-    def download_layer_files(self, layer_name, dst_path=None, force=False):
+    def create_model_dir(self):
+        """create a model folder with a .metadata.json file in it"""
+        if self.readonly:
+            raise Exception("Unable to create model dir in readonly mode.")
+        if not self.model_dir:
+            raise Exception(f"Error: model dir is {self.model_dir}")
+
+        # model dir already exists
+        if PlateModel.is_model_dir(self.model_dir):
+            return self.model_dir
+
+        model_path = self.model_dir
+        if os.path.isfile(model_path):
+            raise Exception(
+                f"Fatal: the model folder {model_path} already exists and is a file!! Remove the file or use another path."
+            )
+
+        Path(model_path).mkdir(parents=True, exist_ok=True)
+
+        metadata_file = f"{model_path}/.metadata.json"
+        if not os.path.isfile(metadata_file):
+            with open(metadata_file, "w+") as f:
+                json.dump(self.model, f)
+
+        return model_path
+
+    @staticmethod
+    def is_model_dir(folder_path):
+        """return True if it is a model dir, otherwise False"""
+        return os.path.isdir(folder_path) and os.path.isfile(
+            f"{folder_path}/.metadata.json"
+        )
+
+    def purge(self):
+        """remove the model folder and everything inside it"""
+        if os.path.isdir(self.model_dir):
+            shutil.rmtree(self.model_dir)
+
+    def purge_layer(self, layer_name):
+        """remove the layer folder of the given layer name"""
+        layer_path = f"{self.model_dir}/{layer_name}"
+        if os.path.isdir(layer_path):
+            shutil.rmtree(layer_path)
+
+    def purge_time_dependent_rasters(self, raster_name):
+        """remove the raster folder of the given raster name"""
+        raster_path = f"{self.model_dir}/{raster_name}"
+        if os.path.isdir(raster_path):
+            shutil.rmtree(raster_path)
+
+    def download_layer_files(self, layer_name):
         """given the layer name, download the layer files.
         The layer files are in a .zip file. download and unzip it.
 
         :param layer_name: such as "Rotations","Coastlines", "StaticPolygons", "ContinentalPolygons", "Topologies", etc
-        :param force: delete the local files and download again
 
         :returns: the folder path which contains the layer files
 
         """
+        if self.readonly:
+            raise Exception("Unable to download layer files in readonly mode.")
+
         print(f"downloading {layer_name}")
         download_flag = False
         meta_etag = None
@@ -126,22 +214,9 @@ class PlateModel:
 
         now = datetime.now()
 
-        # make sure the model folder is a folder indeed; otherwise rename it.
-        if dst_path:
-            model_folder = f"{dst_path}/{self.model_name}"
-        else:
-            model_folder = f"{self.data_dir}/{self.model_name}"
-        if os.path.isfile(model_folder):
-            new_name = model_folder + now.strftime("-%Y-%m-%d-%H-%M-%S")
-            os.rename(model_folder, new_name)
-            print(
-                f"{model_folder} is a file. This should not happen. Rename the file name to {new_name}"
-            )
+        model_folder = self.create_model_dir()
 
         layer_folder = f"{model_folder}/{layer_name}"
-
-        if os.path.isdir(layer_folder) and force:
-            shutil.rmtree(layer_folder)
 
         # first check if the layer folder exists
         if os.path.isdir(layer_folder):
@@ -176,20 +251,18 @@ class PlateModel:
 
         return layer_folder
 
-    def download_all_layers(self, dst_path=None, force=False):
+    def download_all_layers(self):
         """download all layers. Call download_layer_files() on every layer"""
+        if self.readonly:
+            raise Exception("Unable to download all layers in readonly mode.")
 
         async def f():
             tasks = []
             if "Rotations" in self.model:
-                tasks.append(
-                    self.run(self.download_layer_files, "Rotations", dst_path, force)
-                )
+                tasks.append(self.run(self.download_layer_files, "Rotations"))
             if "Layers" in self.model:
                 for layer in self.model["Layers"]:
-                    tasks.append(
-                        self.run(self.download_layer_files, layer, dst_path, force)
-                    )
+                    tasks.append(self.run(self.download_layer_files, layer))
 
             # print(tasks)
             await asyncio.wait(tasks)
@@ -247,13 +320,17 @@ class PlateModel:
         else:
             return [name for name in self.model["TimeDepRasters"]]
 
-    def download_time_dependent_rasters(self, raster_name, dst_path=None, times=None):
+    def download_time_dependent_rasters(self, raster_name, times=None):
         """download time dependent rasters, such agegrids
 
         :param raster_name: raster name, such as AgeGrids. see the models.json
-        :param dst_path: where to save the files
         :param times: if not given, download from begin to end with 1My interval
         """
+        if self.readonly:
+            raise Exception(
+                "Unable to download time dependent rasters in readonly mode."
+            )
+
         if (
             "TimeDepRasters" in self.model
             and raster_name in self.model["TimeDepRasters"]
@@ -261,10 +338,9 @@ class PlateModel:
 
             async def f():
                 nonlocal times
-                nonlocal dst_path
                 tasks = []
-                if not dst_path:
-                    dst_path = f"{self.get_data_dir()}/{self.model_name}/{raster_name}"
+
+                dst_path = f"{self.get_model_dir()}/{raster_name}"
                 if not times:
                     times = range(self.model["SmallTime"], self.model["BigTime"])
                 for time in times:
@@ -290,7 +366,12 @@ class PlateModel:
         """download a single raster file from "url" and save the file in "dst_path"
         a metadata file will also be created for the raster file in folder f"{dst_path}/metadata"
 
+        :param url: the url to the raster file
+        :param dst_path: the folder path to save the raster file
+
         """
+        if self.readonly:
+            raise Exception("Unable to download raster in readonly mode.")
         print(f"downloading {url}")
         filename = url.split("/")[-1]
         metadata_folder = f"{dst_path}/metadata"
@@ -317,9 +398,11 @@ class PlateModel:
                 with open(metadata_file, "w+") as f:
                     json.dump(metadata, f)
 
-    def download_all(self, dst_path=None):
+    def download_all(self):
         """download everything in this plate model"""
-        self.download_all_layers(dst_path=dst_path)
+        if self.readonly:
+            raise Exception("Unable to download all in readonly mode.")
+        self.download_all_layers()
         if "TimeDepRasters" in self.model:
             for raster in self.model["TimeDepRasters"]:
-                self.download_time_dependent_rasters(raster, dst_path=dst_path)
+                self.download_time_dependent_rasters(raster)

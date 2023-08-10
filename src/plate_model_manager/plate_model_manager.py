@@ -1,4 +1,3 @@
-
 import json
 import os
 
@@ -10,12 +9,12 @@ from . import plate_model
 class PlateModelManager:
     """load a models.json file and manage plate models
     see an example models.json file at https://www.earthbyte.org/webdav/ftp/gplately/models.json
-    
+
     """
 
     def __init__(self, model_manifest="models.json"):
         """constructor
-        
+
         :param model_manifest: the path to a models.json file
 
         """
@@ -46,18 +45,28 @@ class PlateModelManager:
 
     def get_model(self, model_name):
         """return a PlateModel object by model_name
-        
+
         :param model_name: model name
 
         :returns: a PlateModel object or none if model name is no good
 
         """
         if model_name in self.models:
-            return plate_model.PlateModel(model_name, self.models[model_name])
+            return plate_model.PlateModel(model_name, model_cfg=self.models[model_name])
         else:
             print(f"Model {model_name} is not available.")
             return None
-        
-    def get_vavilable_model_names(self):
+
+    def get_available_model_names(self):
         """return the names of available models as a list"""
         return [name for name in self.models]
+
+    @staticmethod
+    def get_local_available_model_names(local_dir):
+        """list all model names in a local folder"""
+        models = []
+        for file in os.listdir(local_dir):
+            d = os.path.join(local_dir, file)
+            if os.path.isdir(d) and os.path.isfile(f"{d}/.metadata.json"):
+                models.append(file)
+        return models

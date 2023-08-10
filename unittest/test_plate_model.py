@@ -1,9 +1,9 @@
 import sys
 
 sys.path.insert(0, "../src")
-from plate_model_manager import plate_model
+from plate_model_manager import PlateModel, PlateModelManager
 
-model_manager = plate_model.PlateModelManager("../models.json")
+model_manager = PlateModelManager("../models.json")
 
 # test remote models.json with URL
 # model_manager = plate_model.PlateModelManager(
@@ -30,4 +30,4 @@ model.download_time_dependent_rasters("AgeGrids", times=[1, 2])
 print(model.get_data_dir())
 
 # this will download a large volume of data
-# model.download_all(dst_path="./test-download-all")
+# model.download_all()

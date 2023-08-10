@@ -2,7 +2,7 @@ import sys
 import time
 
 sys.path.insert(0, "../")
-from gplately import network_aiohttp, network_requests
+from plate_model_manager import network_aiohttp, network_requests
 
 test_urls = [
     f"https://www.earthbyte.org/webdav/ftp/Data_Collections/Zahirovic_etal_2016_ESR_AgeGrid/jpegs/EarthByte_Zahirovic_etal_2016_ESR_r888_AgeGrid-{i}.jpg"

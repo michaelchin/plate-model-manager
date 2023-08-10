@@ -39,7 +39,7 @@ def main():
             )
         else:
             pm_manager = PlateModelManager(args.repository)
-        print(pm_manager.get_vavilable_model_names())
+        print(pm_manager.get_available_model_names())
     elif args.command == "download":
         print(f"download {args.model}")
         if args.repository == None:
