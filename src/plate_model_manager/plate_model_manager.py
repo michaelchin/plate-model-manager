@@ -43,7 +43,7 @@ class PlateModelManager:
                 f"The model_manifest '{self.model_manifest}' should be either a local file path or a http(s) URL."
             )
 
-    def get_model(self, model_name):
+    def get_model(self, model_name: str):
         """return a PlateModel object by model_name
 
         :param model_name: model name
@@ -51,6 +51,7 @@ class PlateModelManager:
         :returns: a PlateModel object or none if model name is no good
 
         """
+        model_name = model_name.lower()
         if model_name in self.models:
             return plate_model.PlateModel(model_name, model_cfg=self.models[model_name])
         else:

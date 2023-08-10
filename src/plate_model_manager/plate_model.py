@@ -31,7 +31,7 @@ FILE_EXT = [
 class PlateModel:
     """Class to manage a plate model"""
 
-    def __init__(self, model_name, model_cfg=None, data_dir=None, readonly=False):
+    def __init__(self, model_name: str, model_cfg=None, data_dir=None, readonly=False):
         """Constructor
 
         :param model_name: model name
@@ -40,7 +40,7 @@ class PlateModel:
         :param readonly: this will return whatever local folder has. Will not attempt to download data from internet
 
         """
-        self.model_name = model_name
+        self.model_name = model_name.lower()
         self.meta_filename = METADATA_FILENAME
         self.expiry_format = EXPIRY_TIME_FORMAT
         self.model = model_cfg

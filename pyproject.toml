@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "plate-model-manager"
-version = "1.0.2"
+version = "1.0.3"
 description = "Plate Model Manager"
 readme = "README.md"
 authors = [{ name = "Michael Chin", email = "michael.chin@sydney.edu.au" }]

@@ -1,5 +1,5 @@
 {
-    "Muller2019": {
+    "muller2019": {
         "BigTime": 250,
         "SmallTime": 0,
         "Rotations": "https://www.earthbyte.org/webdav/ftp/gplately/Muller2019/Rotations.zip",
@@ -14,7 +14,7 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc"
         }
     },
-    "Muller2022": {
+    "muller2022": {
         "BigTime": 1000,
         "SmallTime": 0,
         "Rotations": "https://www.earthbyte.org/webdav/ftp/gplately/Muller2019/Rotations.zip",
