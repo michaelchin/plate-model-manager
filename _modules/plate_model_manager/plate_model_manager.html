@@ -114,7 +114,7 @@
                 <span class="sa">f</span><span class="s2">&quot;The model_manifest &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="si">}</span><span class="s2">&#39; should be either a local file path or a http(s) URL.&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="PlateModelManager.get_model"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+<div class="viewcode-block" id="PlateModelManager.get_model"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return a PlateModel object by model_name</span>
 
 <span class="sd">        :param model_name: model name</span>
@@ -122,6 +122,7 @@
 <span class="sd">        :returns: a PlateModel object or none if model name is no good</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">plate_model</span><span class="o">.</span><span class="n">PlateModel</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
