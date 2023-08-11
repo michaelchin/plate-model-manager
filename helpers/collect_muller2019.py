@@ -8,75 +8,33 @@ from pathlib import Path
 
 import requests
 
-if len(sys.argv) >= 2:
-    print(sys.argv)
-    model_path = f"{sys.argv[1]}/muller2019"
-else:
-    model_path = "muller2019"
+import utils
 
-Path(model_path).mkdir(parents=True, exist_ok=True)
+model_path = utils.get_model_path(sys.argv, "muller2019")
 
 # fetch coastlines
-r = requests.get(
+utils.fetch_coastlines(
     "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MULLER2019/Global_EarthByte_GPlates_PresentDay_Coastlines.gpmlz",
-    allow_redirects=True,
+    model_path,
+    "Global_EarthByte_GPlates_PresentDay_Coastlines.gpmlz",
 )
-if r.status_code in [200]:
-    with open(f"{model_path}/Coastlines.gpmlz", "wb+") as of:
-        of.write(r.content)
 
-    with zipfile.ZipFile(
-        f"{model_path}/Coastlines.zip",
-        mode="w",
-        compression=zipfile.ZIP_DEFLATED,
-        compresslevel=9,
-    ) as f_zip:
-        f_zip.write(f"{model_path}/Coastlines.gpmlz", "Coastlines/Coastlines.gpmlz")
-
-    os.remove(f"{model_path}/Coastlines.gpmlz")
 
 # fetch static polygons
-r = requests.get(
+utils.fetch_static_polygons(
     "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MULLER2019/Global_EarthByte_GPlates_PresentDay_StaticPlatePolygons.gpmlz",
-    allow_redirects=True,
+    model_path,
+    "Global_EarthByte_GPlates_PresentDay_StaticPlatePolygons.gpmlz",
 )
-if r.status_code in [200]:
-    with open(f"{model_path}/StaticPolygons.gpmlz", "wb+") as of:
-        of.write(r.content)
 
-    with zipfile.ZipFile(
-        f"{model_path}/StaticPolygons.zip",
-        mode="w",
-        compression=zipfile.ZIP_DEFLATED,
-        compresslevel=9,
-    ) as f_zip:
-        f_zip.write(
-            f"{model_path}/StaticPolygons.gpmlz", "StaticPolygons/StaticPolygons.gpmlz"
-        )
-
-    os.remove(f"{model_path}/StaticPolygons.gpmlz")
 
 # fetch rotations
-r = requests.get(
+utils.fetch_rotations(
     "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MULLER2019/Muller2019-Young2019-Cao2020.rot",
-    allow_redirects=True,
+    model_path,
+    "Muller2019-Young2019-Cao2020.rot",
 )
-if r.status_code in [200]:
-    with open(f"{model_path}/Muller2019-Young2019-Cao2020.rot", "wb+") as of:
-        of.write(r.content)
 
-    with zipfile.ZipFile(
-        f"{model_path}/Rotations.zip",
-        mode="w",
-        compression=zipfile.ZIP_DEFLATED,
-        compresslevel=9,
-    ) as f_zip:
-        f_zip.write(
-            f"{model_path}/Muller2019-Young2019-Cao2020.rot",
-            "Rotations/Muller2019-Young2019-Cao2020.rot",
-        )
-
-    os.remove(f"{model_path}/Muller2019-Young2019-Cao2020.rot")
 
 # fetch topologies
 r = requests.get(
