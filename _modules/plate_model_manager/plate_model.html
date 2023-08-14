@@ -82,7 +82,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">network_requests</span>
 
 <span class="n">EXPIRY_TIME_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2">, %H:%M:%S&quot;</span>
-<span class="n">METADATA_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;metadata.json&quot;</span>
+<span class="n">METADATA_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;.metadata.json&quot;</span>
 
 <span class="n">FILE_EXT</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;gpml&quot;</span><span class="p">,</span>
@@ -102,7 +102,7 @@
 <div class="viewcode-block" id="PlateModel"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel">[docs]</a><span class="k">class</span> <span class="nc">PlateModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to manage a plate model&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor</span>
 
 <span class="sd">        :param model_name: model name</span>
@@ -117,10 +117,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_cfg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span> <span class="o">=</span> <span class="n">readonly</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_dir</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./&quot;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">/&quot;</span>
 
@@ -445,7 +442,7 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to download raster in readonly mode.&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;downloading </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">metadata_folder</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dst_path</span><span class="si">}</span><span class="s2">/metadata&quot;</span>
+        <span class="n">metadata_folder</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dst_path</span><span class="si">}</span><span class="s2">/.metadata&quot;</span>
         <span class="n">metadata_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metadata_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.json&quot;</span>
         <span class="n">download_flag</span><span class="p">,</span> <span class="n">etag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_redownload_need</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
         <span class="c1"># only redownload when necessary</span>

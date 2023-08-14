@@ -79,17 +79,20 @@
 
 <div class="viewcode-block" id="PlateModelManager"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager">[docs]</a><span class="k">class</span> <span class="nc">PlateModelManager</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;load a models.json file and manage plate models</span>
-<span class="sd">    see an example models.json file at https://www.earthbyte.org/webdav/ftp/gplately/models.json</span>
+<span class="sd">    see an example models.json file at PlateModelManager.get_default_repo_url()</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manifest</span><span class="o">=</span><span class="s2">&quot;models.json&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manifest</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;constructor</span>
 
 <span class="sd">        :param model_manifest: the path to a models.json file</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span> <span class="o">=</span> <span class="n">model_manifest</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model_manifest</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span> <span class="o">=</span> <span class="n">PlateModelManager</span><span class="o">.</span><span class="n">get_default_repo_url</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span> <span class="o">=</span> <span class="n">model_manifest</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># check if the model manifest file is a local file</span>
@@ -141,7 +144,11 @@
             <span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_dir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">/.metadata.json&quot;</span><span class="p">):</span>
                 <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">models</span></div></div>
+        <span class="k">return</span> <span class="n">models</span></div>
+
+<div class="viewcode-block" id="PlateModelManager.get_default_repo_url"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_default_repo_url">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_default_repo_url</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">&quot;https://www.earthbyte.org/webdav/ftp/plate-model-repo/models.json&quot;</span></div></div>
 </pre></div>
 
            </div>
