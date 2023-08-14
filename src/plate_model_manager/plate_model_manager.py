@@ -8,17 +8,20 @@ from . import plate_model
 
 class PlateModelManager:
     """load a models.json file and manage plate models
-    see an example models.json file at https://www.earthbyte.org/webdav/ftp/gplately/models.json
+    see an example models.json file at PlateModelManager.get_default_repo_url()
 
     """
 
-    def __init__(self, model_manifest="models.json"):
+    def __init__(self, model_manifest=None):
         """constructor
 
         :param model_manifest: the path to a models.json file
 
         """
-        self.model_manifest = model_manifest
+        if not model_manifest:
+            self.model_manifest = PlateModelManager.get_default_repo_url()
+        else:
+            self.model_manifest = model_manifest
         self.models = None
 
         # check if the model manifest file is a local file
@@ -71,3 +74,7 @@ class PlateModelManager:
             if os.path.isdir(d) and os.path.isfile(f"{d}/.metadata.json"):
                 models.append(file)
         return models
+
+    @staticmethod
+    def get_default_repo_url():
+        return "https://www.earthbyte.org/webdav/ftp/plate-model-repo/models.json"

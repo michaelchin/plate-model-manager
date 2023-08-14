@@ -4,9 +4,7 @@ sys.path.insert(0, "../src")
 from plate_model_manager import PlateModel
 
 
-model = PlateModel(
-    "Muller2019", None, data_dir="test-plate-model-folder", readonly=True
-)
+model = PlateModel("Muller2019", readonly=True)
 
 print(model.get_avail_layers())
 

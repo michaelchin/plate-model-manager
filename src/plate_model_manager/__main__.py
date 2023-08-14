@@ -5,6 +5,8 @@ from .plate_model_manager import PlateModelManager
 
 import argparse
 
+DEFAULT_REPO_URL = "https://www.earthbyte.org/webdav/ftp/plate-model-repo/models.json"
+
 
 class ArgParser(argparse.ArgumentParser):
     def error(self, message):
@@ -34,22 +36,19 @@ def main():
 
     if args.command == "ls":
         if args.repository == None:
-            pm_manager = PlateModelManager(
-                "https://www.earthbyte.org/webdav/ftp/gplately/models.json"
-            )
+            pm_manager = PlateModelManager(DEFAULT_REPO_URL)
         else:
             pm_manager = PlateModelManager(args.repository)
         print(pm_manager.get_available_model_names())
     elif args.command == "download":
         print(f"download {args.model}")
         if args.repository == None:
-            pm_manager = PlateModelManager(
-                "https://www.earthbyte.org/webdav/ftp/gplately/models.json"
-            )
+            pm_manager = PlateModelManager(DEFAULT_REPO_URL)
         else:
             pm_manager = PlateModelManager(args.repository)
         model = pm_manager.get_model(args.model)
-        model.download_all(dst_path=args.path)
+        model.set_data_dir(args.path)
+        model.download_all()
 
 
 if __name__ == "__main__":

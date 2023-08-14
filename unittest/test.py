@@ -1,8 +1,9 @@
+import sys
+
+sys.path.insert(0, "../src")
 from plate_model_manager import PlateModelManager
 
-pm_manager = PlateModelManager(
-    "https://www.earthbyte.org/webdav/ftp/gplately/models.json"
-)
+pm_manager = PlateModelManager()
 model = pm_manager.get_model("Muller2019")
 model.download_all_layers()
 model.download_time_dependent_rasters(

@@ -11,7 +11,7 @@ from pathlib import Path
 from . import network_requests
 
 EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
-METADATA_FILENAME = "metadata.json"
+METADATA_FILENAME = ".metadata.json"
 
 FILE_EXT = [
     "gpml",
@@ -31,7 +31,7 @@ FILE_EXT = [
 class PlateModel:
     """Class to manage a plate model"""
 
-    def __init__(self, model_name: str, model_cfg=None, data_dir=None, readonly=False):
+    def __init__(self, model_name: str, model_cfg=None, data_dir=".", readonly=False):
         """Constructor
 
         :param model_name: model name
@@ -46,10 +46,7 @@ class PlateModel:
         self.model = model_cfg
         self.readonly = readonly
 
-        if not data_dir:
-            self.data_dir = f"./"
-        else:
-            self.data_dir = data_dir
+        self.data_dir = data_dir
 
         self.model_dir = f"{self.data_dir}/{model_name}/"
 
@@ -374,7 +371,7 @@ class PlateModel:
             raise Exception("Unable to download raster in readonly mode.")
         print(f"downloading {url}")
         filename = url.split("/")[-1]
-        metadata_folder = f"{dst_path}/metadata"
+        metadata_folder = f"{dst_path}/.metadata"
         metadata_file = f"{metadata_folder}/{filename}.json"
         download_flag, etag = self._check_redownload_need(metadata_file, url)
         # only redownload when necessary
