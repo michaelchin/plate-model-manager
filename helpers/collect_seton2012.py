@@ -45,3 +45,12 @@ utils.fetch_and_zip_files(
     model_path,
     "COBs",
 )
+
+# fetch Topologies
+utils.fetch_and_zip_files(
+    [
+        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/SETON2012/Seton_etal_ESR2012_PP_2012.1.gpmlz"
+    ],
+    model_path,
+    "Topologies",
+)
