@@ -10,11 +10,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -84,7 +84,9 @@
 <span class="c1"># Download partial content of a large file concurrently may/maynot work depending on the server configuration.</span>
 
 
-<div class="viewcode-block" id="get_etag"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.get_etag">[docs]</a><span class="k">def</span> <span class="nf">get_etag</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="get_etag">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.get_etag">[docs]</a>
+<span class="k">def</span> <span class="nf">get_etag</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;return the etag of the given url. The return could be none if the server does not support etag.</span>
 
 <span class="sd">    :param url: the url of the file</span>
@@ -93,7 +95,10 @@
     <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ETag&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="fetch_file"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_file">[docs]</a><span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
+
+<div class="viewcode-block" id="fetch_file">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_file">[docs]</a>
+<span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -147,6 +152,7 @@
     <span class="k">return</span> <span class="n">new_etag</span></div>
 
 
+
 <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;get patial content of a file from the server</span>
 <span class="sd">    Be careful, some server does not support this function.</span>
@@ -192,7 +198,9 @@
         <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
 
-<div class="viewcode-block" id="fetch_large_file"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_large_file">[docs]</a><span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
+<div class="viewcode-block" id="fetch_large_file">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_large_file">[docs]</a>
+<span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -274,6 +282,7 @@
     <span class="k">return</span> <span class="n">new_etag</span></div>
 
 
+
 <span class="k">def</span> <span class="nf">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;helper function to save file to hard drive&quot;&quot;&quot;</span>
 
@@ -333,7 +342,9 @@
     <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="fetch_files"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_files">[docs]</a><span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
+<div class="viewcode-block" id="fetch_files">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_files">[docs]</a>
+<span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
     <span class="n">urls</span><span class="p">,</span>
     <span class="n">filepaths</span><span class="p">,</span>
     <span class="n">filenames</span><span class="o">=</span><span class="p">[],</span>
@@ -370,6 +381,7 @@
         <span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
 </pre></div>
 
            </div>

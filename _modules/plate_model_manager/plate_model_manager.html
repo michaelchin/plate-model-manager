@@ -10,11 +10,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -74,10 +74,12 @@
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">plate_model</span>
+<span class="kn">from</span> <span class="nn">.plate_model</span> <span class="kn">import</span> <span class="n">PlateModel</span>
 
 
-<div class="viewcode-block" id="PlateModelManager"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager">[docs]</a><span class="k">class</span> <span class="nc">PlateModelManager</span><span class="p">:</span>
+<div class="viewcode-block" id="PlateModelManager">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager">[docs]</a>
+<span class="k">class</span> <span class="nc">PlateModelManager</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;load a models.json file and manage plate models</span>
 <span class="sd">    see an example models.json file at PlateModelManager.get_default_repo_url()</span>
 
@@ -117,7 +119,9 @@
                 <span class="sa">f</span><span class="s2">&quot;The model_manifest &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="si">}</span><span class="s2">&#39; should be either a local file path or a http(s) URL.&quot;</span>
             <span class="p">)</span>
 
-<div class="viewcode-block" id="PlateModelManager.get_model"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="PlateModelManager.get_model">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return a PlateModel object by model_name</span>
 
 <span class="sd">        :param model_name: model name</span>
@@ -127,16 +131,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">plate_model</span><span class="o">.</span><span class="n">PlateModel</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">PlateModel</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is not available.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="PlateModelManager.get_available_model_names"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_available_model_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_available_model_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModelManager.get_available_model_names">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_available_model_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_available_model_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return the names of available models as a list&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="PlateModelManager.get_local_available_model_names"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_local_available_model_names">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="PlateModelManager.get_local_available_model_names">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_local_available_model_names">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_local_available_model_names</span><span class="p">(</span><span class="n">local_dir</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;list all model names in a local folder&quot;&quot;&quot;</span>
         <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
@@ -146,9 +156,25 @@
                 <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">models</span></div>
 
-<div class="viewcode-block" id="PlateModelManager.get_default_repo_url"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_default_repo_url">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="PlateModelManager.get_default_repo_url">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_default_repo_url">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_default_repo_url</span><span class="p">():</span>
-        <span class="k">return</span> <span class="s2">&quot;https://www.earthbyte.org/webdav/ftp/plate-model-repo/models.json&quot;</span></div></div>
+        <span class="k">return</span> <span class="s2">&quot;https://repo.gplates.org/webdav/pmm/models.json&quot;</span></div>
+
+
+<div class="viewcode-block" id="PlateModelManager.download_all_models">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.download_all_models">[docs]</a>
+    <span class="k">def</span> <span class="nf">download_all_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="p">):</span>
+        <span class="n">model_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_available_model_names</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">model_names</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;download </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">set_data_dir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">download_all_layers</span><span class="p">()</span></div>
+</div>
+
 </pre></div>
 
            </div>

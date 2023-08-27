@@ -10,11 +10,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -99,7 +99,9 @@
 <span class="p">]</span>
 
 
-<div class="viewcode-block" id="PlateModel"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel">[docs]</a><span class="k">class</span> <span class="nc">PlateModel</span><span class="p">:</span>
+<div class="viewcode-block" id="PlateModel">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel">[docs]</a>
+<span class="k">class</span> <span class="nc">PlateModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to manage a plate model&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -141,23 +143,37 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<div class="viewcode-block" id="PlateModel.get_model_dir"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_model_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_model_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PlateModel.get_model_dir">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_model_dir">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_model_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_model_dir</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_data_dir"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_data_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_data_dir">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_data_dir">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_data_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span></div>
 
-<div class="viewcode-block" id="PlateModel.set_data_dir"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.set_data_dir">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_dir</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.set_data_dir">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.set_data_dir">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_data_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_dir</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">new_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">/&quot;</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_avail_layers"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_avail_layers">[docs]</a>    <span class="k">def</span> <span class="nf">get_avail_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_avail_layers">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_avail_layers">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_avail_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;get all available layers in this plate model&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Fatal: No model configuration found!&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Layers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_rotation_model"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_rotation_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_rotation_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_rotation_model">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_rotation_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_rotation_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return a pygplates.RotationModel object&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
             <span class="n">rotation_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_layer_files</span><span class="p">(</span><span class="s2">&quot;Rotations&quot;</span><span class="p">)</span>
@@ -168,27 +184,45 @@
         <span class="c1"># print(rotation_files)</span>
         <span class="k">return</span> <span class="n">rotation_files</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_coastlines"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_coastlines">[docs]</a>    <span class="k">def</span> <span class="nf">get_coastlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_coastlines">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_coastlines">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_coastlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return coastlines feature collection&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;Coastlines&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_static_polygons"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_static_polygons">[docs]</a>    <span class="k">def</span> <span class="nf">get_static_polygons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_static_polygons">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_static_polygons">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_static_polygons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return StaticPolygons feature collection&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;StaticPolygons&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_continental_polygons"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_continental_polygons">[docs]</a>    <span class="k">def</span> <span class="nf">get_continental_polygons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_continental_polygons">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_continental_polygons">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_continental_polygons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return ContinentalPolygons feature collection&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;ContinentalPolygons&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_topologies"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_topologies">[docs]</a>    <span class="k">def</span> <span class="nf">get_topologies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_topologies">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_topologies">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_topologies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return Topologies feature collection&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;Topologies&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_COBs"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_COBs">[docs]</a>    <span class="k">def</span> <span class="nf">get_COBs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_COBs">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_COBs">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_COBs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return COBs feature collection&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;COBs&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.get_layer"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_layer">[docs]</a>    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.get_layer">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_layer">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;get layer files by name</span>
 
 <span class="sd">        :param layer_name: layer name</span>
@@ -206,7 +240,10 @@
 
         <span class="k">return</span> <span class="n">files</span></div>
 
-<div class="viewcode-block" id="PlateModel.create_model_dir"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.create_model_dir">[docs]</a>    <span class="k">def</span> <span class="nf">create_model_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.create_model_dir">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.create_model_dir">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_model_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;create a model folder with a .metadata.json file in it&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to create model dir in readonly mode.&quot;</span><span class="p">)</span>
@@ -232,31 +269,46 @@
 
         <span class="k">return</span> <span class="n">model_path</span></div>
 
-<div class="viewcode-block" id="PlateModel.is_model_dir"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.is_model_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="PlateModel.is_model_dir">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.is_model_dir">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">is_model_dir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return True if it is a model dir, otherwise False&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder_path</span><span class="si">}</span><span class="s2">/.metadata.json&quot;</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.purge"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.purge">[docs]</a>    <span class="k">def</span> <span class="nf">purge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.purge">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.purge">[docs]</a>
+    <span class="k">def</span> <span class="nf">purge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;remove the model folder and everything inside it&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="p">):</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.purge_layer"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.purge_layer">[docs]</a>    <span class="k">def</span> <span class="nf">purge_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.purge_layer">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.purge_layer">[docs]</a>
+    <span class="k">def</span> <span class="nf">purge_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;remove the layer folder of the given layer name&quot;&quot;&quot;</span>
         <span class="n">layer_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">layer_path</span><span class="p">):</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">layer_path</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.purge_time_dependent_rasters"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.purge_time_dependent_rasters">[docs]</a>    <span class="k">def</span> <span class="nf">purge_time_dependent_rasters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.purge_time_dependent_rasters">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.purge_time_dependent_rasters">[docs]</a>
+    <span class="k">def</span> <span class="nf">purge_time_dependent_rasters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;remove the raster folder of the given raster name&quot;&quot;&quot;</span>
         <span class="n">raster_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">raster_name</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">raster_path</span><span class="p">):</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">raster_path</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.download_layer_files"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_layer_files">[docs]</a>    <span class="k">def</span> <span class="nf">download_layer_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.download_layer_files">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_layer_files">[docs]</a>
+    <span class="k">def</span> <span class="nf">download_layer_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;given the layer name, download the layer files.</span>
 <span class="sd">        The layer files are in a .zip file. download and unzip it.</span>
 
@@ -319,7 +371,10 @@
 
         <span class="k">return</span> <span class="n">layer_folder</span></div>
 
-<div class="viewcode-block" id="PlateModel.download_all_layers"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_all_layers">[docs]</a>    <span class="k">def</span> <span class="nf">download_all_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.download_all_layers">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_all_layers">[docs]</a>
+    <span class="k">def</span> <span class="nf">download_all_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;download all layers. Call download_layer_files() on every layer&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to download all layers in readonly mode.&quot;</span><span class="p">)</span>
@@ -336,6 +391,7 @@
             <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">f</span><span class="p">())</span></div>
+
 
     <span class="k">def</span> <span class="nf">_check_redownload_need</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;check the metadata file and decide if redownload is necessary</span>
@@ -381,14 +437,19 @@
 
         <span class="k">return</span> <span class="n">download_flag</span><span class="p">,</span> <span class="n">meta_etag</span>
 
-<div class="viewcode-block" id="PlateModel.get_avail_time_dependent_raster_names"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_avail_time_dependent_raster_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_avail_time_dependent_raster_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PlateModel.get_avail_time_dependent_raster_names">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_avail_time_dependent_raster_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_avail_time_dependent_raster_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return the names of all time dependent rasters which have been configurated in this model.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;TimeDepRasters&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;TimeDepRasters&quot;</span><span class="p">]]</span></div>
 
-<div class="viewcode-block" id="PlateModel.download_time_dependent_rasters"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_time_dependent_rasters">[docs]</a>    <span class="k">def</span> <span class="nf">download_time_dependent_rasters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.download_time_dependent_rasters">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_time_dependent_rasters">[docs]</a>
+    <span class="k">def</span> <span class="nf">download_time_dependent_rasters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;download time dependent rasters, such agegrids</span>
 
 <span class="sd">        :param raster_name: raster name, such as AgeGrids. see the models.json</span>
@@ -430,7 +491,10 @@
                 <span class="sa">f</span><span class="s2">&quot;Unable to find </span><span class="si">{</span><span class="n">raster_name</span><span class="si">}</span><span class="s2"> configuration in this model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.download_raster"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_raster">[docs]</a>    <span class="k">def</span> <span class="nf">download_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.download_raster">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_raster">[docs]</a>
+    <span class="k">def</span> <span class="nf">download_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;download a single raster file from &quot;url&quot; and save the file in &quot;dst_path&quot;</span>
 <span class="sd">        a metadata file will also be created for the raster file in folder f&quot;{dst_path}/metadata&quot;</span>
 
@@ -466,14 +530,19 @@
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PlateModel.download_all"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_all">[docs]</a>    <span class="k">def</span> <span class="nf">download_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlateModel.download_all">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_all">[docs]</a>
+    <span class="k">def</span> <span class="nf">download_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;download everything in this plate model&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to download all in readonly mode.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">download_all_layers</span><span class="p">()</span>
         <span class="k">if</span> <span class="s2">&quot;TimeDepRasters&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">raster</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;TimeDepRasters&quot;</span><span class="p">]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">download_time_dependent_rasters</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">download_time_dependent_rasters</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>
