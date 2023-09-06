@@ -162,6 +162,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">/&quot;</span></div>
 
 
+<div class="viewcode-block" id="PlateModel.get_big_time">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_big_time">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_big_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;BigTime&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PlateModel.get_small_time">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_small_time">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_small_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;SmallTime&quot;</span><span class="p">]</span></div>
+
+
 <div class="viewcode-block" id="PlateModel.get_avail_layers">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_avail_layers">[docs]</a>
     <span class="k">def</span> <span class="nf">get_avail_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -174,7 +186,7 @@
 <div class="viewcode-block" id="PlateModel.get_rotation_model">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_rotation_model">[docs]</a>
     <span class="k">def</span> <span class="nf">get_rotation_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;return a pygplates.RotationModel object&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;return a list of rotation files&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
             <span class="n">rotation_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_layer_files</span><span class="p">(</span><span class="s2">&quot;Rotations&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>

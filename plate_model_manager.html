@@ -46,29 +46,29 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">plate_model_manager</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">plate_model_manager package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#plate-model-manager-network-aiohttp-module">plate_model_manager.network_aiohttp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.network_aiohttp">plate_model_manager.network_aiohttp module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_file"><code class="docutils literal notranslate"><span class="pre">fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_files"><code class="docutils literal notranslate"><span class="pre">fetch_files()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_large_file"><code class="docutils literal notranslate"><span class="pre">fetch_large_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.get_etag"><code class="docutils literal notranslate"><span class="pre">get_etag()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#plate-model-manager-network-requests-module">plate_model_manager.network_requests module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.network_requests">plate_model_manager.network_requests module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_requests.fetch_file"><code class="docutils literal notranslate"><span class="pre">fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_requests.fetch_files"><code class="docutils literal notranslate"><span class="pre">fetch_files()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_requests.fetch_large_file"><code class="docutils literal notranslate"><span class="pre">fetch_large_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_requests.get_etag"><code class="docutils literal notranslate"><span class="pre">get_etag()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#plate-model-manager-plate-model-module">plate_model_manager.plate_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.plate_model">plate_model_manager.plate_model module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.plate_model.PlateModel"><code class="docutils literal notranslate"><span class="pre">PlateModel</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#plate-model-manager-plate-model-manager-module">plate_model_manager.plate_model_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.plate_model_manager">plate_model_manager.plate_model_manager module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.plate_model_manager.PlateModelManager"><code class="docutils literal notranslate"><span class="pre">PlateModelManager</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -105,9 +105,9 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="plate-model-manager-network-aiohttp-module">
-<h2>plate_model_manager.network_aiohttp module<a class="headerlink" href="#plate-model-manager-network-aiohttp-module" title="Link to this heading"></a></h2>
-<dl class="py function" id="module-plate_model_manager.network_aiohttp">
+<section id="module-plate_model_manager.network_aiohttp">
+<span id="plate-model-manager-network-aiohttp-module"></span><h2>plate_model_manager.network_aiohttp module<a class="headerlink" href="#module-plate_model_manager.network_aiohttp" title="Link to this heading"></a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.network_aiohttp.fetch_file">
 <span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_aiohttp.</span></span><span class="sig-name descname"><span class="pre">fetch_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_aiohttp.html#fetch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_aiohttp.fetch_file" title="Link to this definition"></a></dt>
 <dd><dl class="simple">
@@ -179,9 +179,9 @@ Some firewall sequences these requests to shape network traffic and defeat the p
 </dd></dl>
 
 </section>
-<section id="plate-model-manager-network-requests-module">
-<h2>plate_model_manager.network_requests module<a class="headerlink" href="#plate-model-manager-network-requests-module" title="Link to this heading"></a></h2>
-<dl class="py function" id="module-plate_model_manager.network_requests">
+<section id="module-plate_model_manager.network_requests">
+<span id="plate-model-manager-network-requests-module"></span><h2>plate_model_manager.network_requests module<a class="headerlink" href="#module-plate_model_manager.network_requests" title="Link to this heading"></a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.network_requests.fetch_file">
 <span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_requests.</span></span><span class="sig-name descname"><span class="pre">fetch_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_requests.html#fetch_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_requests.fetch_file" title="Link to this definition"></a></dt>
 <dd><dl class="simple">
@@ -259,9 +259,9 @@ Some firewall sequences these requests to shape network traffic and defeat the p
 </dd></dl>
 
 </section>
-<section id="plate-model-manager-plate-model-module">
-<h2>plate_model_manager.plate_model module<a class="headerlink" href="#plate-model-manager-plate-model-module" title="Link to this heading"></a></h2>
-<dl class="py class" id="module-plate_model_manager.plate_model">
+<section id="module-plate_model_manager.plate_model">
+<span id="plate-model-manager-plate-model-module"></span><h2>plate_model_manager.plate_model module<a class="headerlink" href="#module-plate_model_manager.plate_model" title="Link to this heading"></a></h2>
+<dl class="py class">
 <dt class="sig sig-object py" id="plate_model_manager.plate_model.PlateModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.plate_model.</span></span><span class="sig-name descname"><span class="pre">PlateModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_cfg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model.PlateModel" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -347,6 +347,11 @@ a metadata file will also be created for the raster file in folder f”{dst_path
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.plate_model.PlateModel.get_big_time">
+<span class="sig-name descname"><span class="pre">get_big_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_big_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model.PlateModel.get_big_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="plate_model_manager.plate_model.PlateModel.get_coastlines">
 <span class="sig-name descname"><span class="pre">get_coastlines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_coastlines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model.PlateModel.get_coastlines" title="Link to this definition"></a></dt>
 <dd><p>return coastlines feature collection</p>
@@ -385,8 +390,13 @@ a metadata file will also be created for the raster file in folder f”{dst_path
 <dl class="py method">
 <dt class="sig sig-object py" id="plate_model_manager.plate_model.PlateModel.get_rotation_model">
 <span class="sig-name descname"><span class="pre">get_rotation_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_rotation_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model.PlateModel.get_rotation_model" title="Link to this definition"></a></dt>
-<dd><p>return a pygplates.RotationModel object</p>
+<dd><p>return a list of rotation files</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.plate_model.PlateModel.get_small_time">
+<span class="sig-name descname"><span class="pre">get_small_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_small_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model.PlateModel.get_small_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="plate_model_manager.plate_model.PlateModel.get_static_polygons">
@@ -432,9 +442,9 @@ a metadata file will also be created for the raster file in folder f”{dst_path
 </dd></dl>
 
 </section>
-<section id="plate-model-manager-plate-model-manager-module">
-<h2>plate_model_manager.plate_model_manager module<a class="headerlink" href="#plate-model-manager-plate-model-manager-module" title="Link to this heading"></a></h2>
-<dl class="py class" id="module-plate_model_manager.plate_model_manager">
+<section id="module-plate_model_manager.plate_model_manager">
+<span id="plate-model-manager-plate-model-manager-module"></span><h2>plate_model_manager.plate_model_manager module<a class="headerlink" href="#module-plate_model_manager.plate_model_manager" title="Link to this heading"></a></h2>
+<dl class="py class">
 <dt class="sig sig-object py" id="plate_model_manager.plate_model_manager.PlateModelManager">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.plate_model_manager.</span></span><span class="sig-name descname"><span class="pre">PlateModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_manifest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model_manager.PlateModelManager" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -479,9 +489,9 @@ see an example models.json file at PlateModelManager.get_default_repo_url()</p>
 </dd></dl>
 
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
-<span class="target" id="module-plate_model_manager"></span></section>
+<section id="module-plate_model_manager">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-plate_model_manager" title="Link to this heading"></a></h2>
+</section>
 </section>
 
 
