@@ -29,5 +29,9 @@ model.download_time_dependent_rasters("AgeGrids", times=[1, 2])
 
 print(model.get_data_dir())
 
+print(model.get_raster("AgeGrids", 10))
+
+print(model.get_rasters("AgeGrids", [10, 11, 12, 13, 14]))
+
 # this will download a large volume of data
 # model.download_all()

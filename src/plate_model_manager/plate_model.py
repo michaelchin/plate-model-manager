@@ -141,6 +141,63 @@ class PlateModel:
 
         return files
 
+    def get_raster(self, raster_name, time):
+        """return a local path for the raster
+
+        :returns: a local path of the raster file
+        """
+        if not "TimeDepRasters" in self.model:
+            raise Exception("No time-dependent rasters found in this model.")
+        if not raster_name in self.model["TimeDepRasters"]:
+            raise Exception(
+                f"Time-dependent rasters ({raster_name}) not found in this model. {self.model['TimeDepRasters']}"
+            )
+        url = self.model["TimeDepRasters"][raster_name].format(time)
+
+        if not self.readonly:
+            self.download_raster(url, f"{self.get_model_dir()}/{raster_name}")
+        file_name = url.split("/")[-1]
+        local_path = f"{self.get_model_dir()}/{raster_name}/{file_name}"
+        if os.path.isfile(local_path):
+            return local_path
+        elif self.readonly:
+            raise Exception(
+                f"You are in readonly mode and the raster {url} has not been downloaded yet."
+            )
+        else:
+            raise Exception(f"Failed to download {url}")
+
+    def get_rasters(self, raster_name, times):
+        """return local paths for the raster files
+
+        :param times: a list of times
+        :returns: a list of local paths
+        """
+        if not "TimeDepRasters" in self.model:
+            raise Exception("No time-dependent rasters found in this model.")
+        if not raster_name in self.model["TimeDepRasters"]:
+            raise Exception(
+                f"Time-dependent rasters ({raster_name}) not found in this model. {self.model['TimeDepRasters']}"
+            )
+
+        if not self.readonly:
+            self.download_time_dependent_rasters(raster_name, times)
+
+        paths = []
+        for time in times:
+            url = self.model["TimeDepRasters"][raster_name].format(time)
+            file_name = url.split("/")[-1]
+            local_path = f"{self.get_model_dir()}/{raster_name}/{file_name}"
+            if os.path.isfile(local_path):
+                paths.append(local_path)
+            elif self.readonly:
+                raise Exception(
+                    f"You are in readonly mode and the raster {url} has not been downloaded yet."
+                )
+            else:
+                raise Exception(f"Failed to download {url}")
+        return paths
+
     def create_model_dir(self):
         """create a model folder with a .metadata.json file in it"""
         if self.readonly:
