@@ -48,7 +48,7 @@ class PlateModel:
 
         self.data_dir = data_dir
 
-        self.model_dir = f"{self.data_dir}/{model_name}/"
+        self.model_dir = f"{self.data_dir}/{self.model_name}/"
 
         if readonly:
             if not PlateModel.is_model_dir(self.model_dir):
