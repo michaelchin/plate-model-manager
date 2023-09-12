@@ -39,7 +39,9 @@
         "Rotations": "https://repo.gplates.org/webdav/pmm/merdith2021/Rotations.zip",
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/merdith2021/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip"
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/ContinentalPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip"
         }
     },
     "matthews2016": {
