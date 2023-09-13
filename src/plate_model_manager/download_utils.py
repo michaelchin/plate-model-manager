@@ -62,6 +62,7 @@ def download_file(url, metadata_file, dst_path):
     """
     print(f"downloading {url}")
     download_flag, etag = check_redownload_need(metadata_file, url)
+
     # only redownload when necessary
     if download_flag:
         new_etag = network_requests.fetch_file(
@@ -70,7 +71,7 @@ def download_file(url, metadata_file, dst_path):
             etag=etag,
             auto_unzip=True,
         )
-        if etag != new_etag:
+        if etag != new_etag or new_etag is None:
             # save metadata file
             metadata = {
                 "url": url,

@@ -55,11 +55,10 @@ class PresentDayRasterManager:
         if not name in self.rasters:
             raise Exception(f"Raster {name} is not found in {self.rasters}.")
 
-        if not os.path.isdir(f"{self.data_dir}/{name}"):
-            download_utils.download_file(
-                self.rasters[name],
-                f"{self.data_dir}/{name}/.metadata.json",
-                f"{self.data_dir}/{name}/",
-            )
+        download_utils.download_file(
+            self.rasters[name],
+            f"{self.data_dir}/{name}/.metadata.json",
+            f"{self.data_dir}/{name}/",
+        )
 
         return f"{self.data_dir}/{name}"

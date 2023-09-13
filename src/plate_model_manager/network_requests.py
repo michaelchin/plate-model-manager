@@ -1,11 +1,12 @@
 import asyncio
+import bz2
 import concurrent.futures
 import functools
 import gzip
 import io
 import os
 import shutil
-import zipfile
+import zipfile, lzma
 from pathlib import Path
 
 import requests
@@ -72,6 +73,21 @@ def fetch_file(
             with open(f"{filepath}/{fn}", "wb+") as f_out:
                 with gzip.GzipFile(fileobj=io.BytesIO(r.content)) as f_in:
                     shutil.copyfileobj(f_in, f_out)
+        elif auto_unzip and url.endswith(".bz2"):
+            fn = url.split("/")[-1][:-4]
+            with open(f"{filepath}/{fn}", "wb+") as f_out:
+                data = bz2.decompress(io.BytesIO(r.content).read())
+                f_out.write(data)
+        elif auto_unzip and url.endswith(".lzma"):
+            fn = url.split("/")[-1][:-5]
+            with open(f"{filepath}/{fn}", "wb+") as f_out:
+                data = lzma.decompress(io.BytesIO(r.content).read())
+                f_out.write(data)
+        elif auto_unzip and url.endswith(".xz"):
+            fn = url.split("/")[-1][:-3]
+            with open(f"{filepath}/{fn}", "wb+") as f_out:
+                data = lzma.decompress(io.BytesIO(r.content).read())
+                f_out.write(data)
         else:
             _save_file(url, filepath, filename, r.content)
     else:
