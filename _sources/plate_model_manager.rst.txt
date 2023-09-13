@@ -4,6 +4,14 @@ plate\_model\_manager package
 Submodules
 ----------
 
+plate\_model\_manager.download\_utils module
+--------------------------------------------
+
+.. automodule:: plate_model_manager.download_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 plate\_model\_manager.network\_aiohttp module
 ---------------------------------------------
 
@@ -32,6 +40,14 @@ plate\_model\_manager.plate\_model\_manager module
 --------------------------------------------------
 
 .. automodule:: plate_model_manager.plate_model_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+plate\_model\_manager.present\_day\_rasters module
+--------------------------------------------------
+
+.. automodule:: plate_model_manager.present_day_rasters
    :members:
    :undoc-members:
    :show-inheritance:

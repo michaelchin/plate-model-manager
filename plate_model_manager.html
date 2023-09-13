@@ -46,6 +46,11 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">plate_model_manager</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">plate_model_manager package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.download_utils">plate_model_manager.download_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.download_utils.check_redownload_need"><code class="docutils literal notranslate"><span class="pre">check_redownload_need()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.download_utils.download_file"><code class="docutils literal notranslate"><span class="pre">download_file()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.network_aiohttp">plate_model_manager.network_aiohttp module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_file"><code class="docutils literal notranslate"><span class="pre">fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_files"><code class="docutils literal notranslate"><span class="pre">fetch_files()</span></code></a></li>
@@ -66,6 +71,10 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.plate_model_manager">plate_model_manager.plate_model_manager module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.plate_model_manager.PlateModelManager"><code class="docutils literal notranslate"><span class="pre">PlateModelManager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.present_day_rasters">plate_model_manager.present_day_rasters module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager">Module contents</a></li>
@@ -104,6 +113,42 @@
 <h1>plate_model_manager package<a class="headerlink" href="#plate-model-manager-package" title="Link to this heading"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-plate_model_manager.download_utils">
+<span id="plate-model-manager-download-utils-module"></span><h2>plate_model_manager.download_utils module<a class="headerlink" href="#module-plate_model_manager.download_utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="plate_model_manager.download_utils.check_redownload_need">
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.download_utils.</span></span><span class="sig-name descname"><span class="pre">check_redownload_need</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/download_utils.html#check_redownload_need"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.download_utils.check_redownload_need" title="Link to this definition"></a></dt>
+<dd><p>check the metadata file and decide if redownload is necessary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata_file</strong> – metadata file path</p></li>
+<li><p><strong>url</strong> – url for the target file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns download_flag, etag<span class="colon">:</span></dt>
+<dd class="field-even"><p>a flag indicates if redownload is neccesarry and old etag if needed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plate_model_manager.download_utils.download_file">
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.download_utils.</span></span><span class="sig-name descname"><span class="pre">download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/download_utils.html#download_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.download_utils.download_file" title="Link to this definition"></a></dt>
+<dd><p>download a file from “url”, save the file in “dst_path” and write the metadata
+a metadata file will also be created for the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – the url to the raster file</p></li>
+<li><p><strong>metadata_file</strong> – the path to the metadata</p></li>
+<li><p><strong>dst_path</strong> – the folder path to save the raster file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-plate_model_manager.network_aiohttp">
 <span id="plate-model-manager-network-aiohttp-module"></span><h2>plate_model_manager.network_aiohttp module<a class="headerlink" href="#module-plate_model_manager.network_aiohttp" title="Link to this heading"></a></h2>
@@ -510,6 +555,31 @@ see an example models.json file at PlateModelManager.get_default_repo_url()</p>
 </dd>
 </dl>
 </dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-plate_model_manager.present_day_rasters">
+<span id="plate-model-manager-present-day-rasters-module"></span><h2>plate_model_manager.present_day_rasters module<a class="headerlink" href="#module-plate_model_manager.present_day_rasters" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.present_day_rasters.</span></span><span class="sig-name descname"><span class="pre">PresentDayRasterManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_manifest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>manage present-day rasters</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster">
+<span class="sig-name descname"><span class="pre">get_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.get_raster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager.list_present_day_rasters">
+<span class="sig-name descname"><span class="pre">list_present_day_rasters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.list_present_day_rasters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.list_present_day_rasters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager.set_data_dir">
+<span class="sig-name descname"><span class="pre">set_data_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.set_data_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.set_data_dir" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
