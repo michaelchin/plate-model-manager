@@ -91,9 +91,10 @@ async def _fetch_file(
                 _save_file(url, filepath, filename, content)
         else:
             raise Exception(f"HTTP request failed with code {r.status_code}.")
-        new_etag = r.headers.get("ETag").replace(
-            "-gzip", ""
-        )  # remove the content-encoding awareness thing
+        new_etag = r.headers.get("ETag")
+        if new_etag:
+            # remove the content-encoding awareness thing
+            new_etag = new_etag.replace("-gzip", "")
 
         return new_etag
 

@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from . import network_requests
+from . import download_utils
 
-EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
 METADATA_FILENAME = ".metadata.json"
 
 FILE_EXT = [
@@ -42,7 +42,6 @@ class PlateModel:
         """
         self.model_name = model_name.lower()
         self.meta_filename = METADATA_FILENAME
-        self.expiry_format = EXPIRY_TIME_FORMAT
         self.model = model_cfg
         self.readonly = readonly
 
@@ -272,42 +271,11 @@ class PlateModel:
         else:
             raise Exception(f"Fatal: No {layer_name} files in configuration file!")
 
-        now = datetime.now()
-
         model_folder = self.create_model_dir()
-
         layer_folder = f"{model_folder}/{layer_name}"
+        metadata_file = f"{layer_folder}/{self.meta_filename}"
 
-        # first check if the layer folder exists
-        if os.path.isdir(layer_folder):
-            metadata_file = f"{layer_folder}/{self.meta_filename}"
-            download_flag, meta_etag = self._check_redownload_need(
-                metadata_file, layer_file_url
-            )
-        else:
-            # if the layer folder does not exist
-            download_flag = True
-
-        if not download_flag:
-            print("The local files are still good. Will not download again.")
-        else:
-            new_etag = network_requests.fetch_file(
-                layer_file_url,
-                model_folder,
-                etag=meta_etag,
-                auto_unzip=True,
-            )
-
-            if new_etag != meta_etag:
-                # save metadata
-                metadata = {
-                    "layer_name": layer_name,
-                    "url": layer_file_url,
-                    "expiry": (now + timedelta(hours=12)).strftime(self.expiry_format),
-                    "etag": new_etag,
-                }
-                with open(f"{layer_folder}/{self.meta_filename}", "w+") as f:
-                    json.dump(metadata, f)
+        download_utils.download_file(layer_file_url, metadata_file, model_folder)
 
         return layer_folder
 
@@ -328,50 +296,6 @@ class PlateModel:
             await asyncio.wait(tasks)
 
         self.loop.run_until_complete(f())
-
-    def _check_redownload_need(self, metadata_file, url):
-        """check the metadata file and decide if redownload is necessary
-
-        :param metadata_file: metadata file path
-        :param url: url for the target file
-
-        :returns download_flag, etag: a flag indicates if redownload is neccesarry and old etag if needed.
-        """
-        download_flag = False
-        meta_etag = None
-        if os.path.isfile(metadata_file):
-            with open(metadata_file, "r") as f:
-                meta = json.load(f)
-                if "url" in meta:
-                    meta_url = meta["url"]
-                    if meta_url != url:
-                        # if the data url has changed, re-download
-                        download_flag = True
-                else:
-                    download_flag = True
-
-                # if the url is the same, now check the expiry date
-                if not download_flag:
-                    if "expiry" in meta:
-                        try:
-                            meta_expiry = meta["expiry"]
-                            expiry_date = datetime.strptime(
-                                meta_expiry, self.expiry_format
-                            )
-                            now = datetime.now()
-                            if now > expiry_date:
-                                download_flag = True  # expired
-                        except ValueError:
-                            download_flag = True  # invalid expiry date
-                    else:
-                        download_flag = True  # no expiry date in metafile
-
-                    if download_flag and "etag" in meta:
-                        meta_etag = meta["etag"]
-        else:
-            download_flag = True  # if metadata_file does not exist
-
-        return download_flag, meta_etag
 
     def get_avail_time_dependent_raster_names(self):
         """return the names of all time dependent rasters which have been configurated in this model."""
@@ -432,31 +356,10 @@ class PlateModel:
         """
         if self.readonly:
             raise Exception("Unable to download raster in readonly mode.")
-        print(f"downloading {url}")
         filename = url.split("/")[-1]
         metadata_folder = f"{dst_path}/.metadata"
         metadata_file = f"{metadata_folder}/{filename}.json"
-        download_flag, etag = self._check_redownload_need(metadata_file, url)
-        # only redownload when necessary
-        if download_flag:
-            new_etag = network_requests.fetch_file(
-                url,
-                dst_path,
-                etag=etag,
-                auto_unzip=True,
-            )
-            if etag != new_etag:
-                # save metadata file
-                metadata = {
-                    "url": url,
-                    "expiry": (datetime.now() + timedelta(hours=12)).strftime(
-                        self.expiry_format
-                    ),
-                    "etag": new_etag,
-                }
-                Path(metadata_folder).mkdir(parents=True, exist_ok=True)
-                with open(metadata_file, "w+") as f:
-                    json.dump(metadata, f)
+        download_utils.download_file(url, metadata_file, dst_path)
 
     def download_all(self):
         """download everything in this plate model"""

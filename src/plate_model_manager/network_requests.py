@@ -1,8 +1,10 @@
 import asyncio
 import concurrent.futures
 import functools
+import gzip
 import io
-import os, time
+import os
+import shutil
 import zipfile
 from pathlib import Path
 
@@ -65,13 +67,19 @@ def fetch_file(
             # unzip zip file
             z = zipfile.ZipFile(io.BytesIO(r.content))
             z.extractall(filepath)
+        elif auto_unzip and url.endswith(".gz"):
+            fn = url.split("/")[-1][:-3]
+            with open(f"{filepath}/{fn}", "wb+") as f_out:
+                with gzip.GzipFile(fileobj=io.BytesIO(r.content)) as f_in:
+                    shutil.copyfileobj(f_in, f_out)
         else:
             _save_file(url, filepath, filename, r.content)
     else:
         raise Exception(f"HTTP request failed with code {r.status_code}.")
-    new_etag = r.headers.get("ETag").replace(
-        "-gzip", ""
-    )  # remove the content-encoding awareness thing
+    new_etag = r.headers.get("ETag")
+    if new_etag:
+        # remove the content-encoding awareness thing
+        new_etag = new_etag.replace("-gzip", "")
 
     return new_etag
 
