@@ -11,6 +11,8 @@ from pathlib import Path
 
 import requests
 
+from . import unzip_utils
+
 # This file contains the code to download file(s) from url(s) using "requests" + "asyncio"
 # Download files concurrently can improve the performance significantly.
 # Download partial content of a large file concurrently may/maynot work depending on the server configuration.
@@ -64,30 +66,8 @@ def fetch_file(
             "The file has not been changed since it was downloaded last time. Do nothing and return."
         )
     elif r.status_code == 200:
-        if auto_unzip and url.endswith(".zip"):
-            # unzip zip file
-            z = zipfile.ZipFile(io.BytesIO(r.content))
-            z.extractall(filepath)
-        elif auto_unzip and url.endswith(".gz"):
-            fn = url.split("/")[-1][:-3]
-            with open(f"{filepath}/{fn}", "wb+") as f_out:
-                with gzip.GzipFile(fileobj=io.BytesIO(r.content)) as f_in:
-                    shutil.copyfileobj(f_in, f_out)
-        elif auto_unzip and url.endswith(".bz2"):
-            fn = url.split("/")[-1][:-4]
-            with open(f"{filepath}/{fn}", "wb+") as f_out:
-                data = bz2.decompress(io.BytesIO(r.content).read())
-                f_out.write(data)
-        elif auto_unzip and url.endswith(".lzma"):
-            fn = url.split("/")[-1][:-5]
-            with open(f"{filepath}/{fn}", "wb+") as f_out:
-                data = lzma.decompress(io.BytesIO(r.content).read())
-                f_out.write(data)
-        elif auto_unzip and url.endswith(".xz"):
-            fn = url.split("/")[-1][:-3]
-            with open(f"{filepath}/{fn}", "wb+") as f_out:
-                data = lzma.decompress(io.BytesIO(r.content).read())
-                f_out.write(data)
+        if auto_unzip:
+            unzip_utils.save_compressed_data(url, io.BytesIO(r.content), filepath)
         else:
             _save_file(url, filepath, filename, r.content)
     else:
@@ -218,9 +198,8 @@ def fetch_large_file(
 
     data[0].seek(0)
     # save the file
-    if auto_unzip and url.endswith(".zip"):
-        # unzip zip file
-        zipfile.ZipFile(data[0]).extractall(filepath)
+    if auto_unzip:
+        unzip_utils.save_compressed_data(url, data[0], filepath)
     else:
         _save_file(url, filepath, filename, data[0].read())
 

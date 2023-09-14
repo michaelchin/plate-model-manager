@@ -1,8 +1,5 @@
 {
     "ETOPO1_grd": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO1/data/ice_surface/grid_registered/netcdf/ETOPO1_Ice_g_gmt4.grd.gz",
     "ETOPO1_tif": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO1/image/color_etopo1_ice_low.tif.gz",
-    "TOPOGRAPHY": "https://repo.gplates.org/webdav/pmm/present-day-rasters/topo15-3601x1801.nc.gz",
-    "TOPOGRAPHY_bz2": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test.nc.bz2",
-    "TOPOGRAPHY_lzma": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test.nc.lzma",
-    "TOPOGRAPHY_xz": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test.nc.xz"
+    "TOPOGRAPHY": "https://repo.gplates.org/webdav/pmm/present-day-rasters/topo15-3601x1801.nc.gz"
 }

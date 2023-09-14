@@ -1,5 +1,9 @@
-import os, json, requests, gzip, shutil
-from . import network_requests, download_utils
+import json
+import os
+
+import requests
+
+from . import download_utils
 
 DEFAULT_PRESENT_DAY_RASTERS_MANIFEST = (
     "https://repo.gplates.org/webdav/pmm/present_day_rasters.json"
