@@ -69,8 +69,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for plate_model_manager.present_day_rasters</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">gzip</span><span class="o">,</span> <span class="nn">shutil</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">network_requests</span><span class="p">,</span> <span class="n">download_utils</span>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">download_utils</span>
 
 <span class="n">DEFAULT_PRESENT_DAY_RASTERS_MANIFEST</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;https://repo.gplates.org/webdav/pmm/present_day_rasters.json&quot;</span>

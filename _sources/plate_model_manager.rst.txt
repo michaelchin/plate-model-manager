@@ -52,6 +52,14 @@ plate\_model\_manager.present\_day\_rasters module
    :undoc-members:
    :show-inheritance:
 
+plate\_model\_manager.unzip\_utils module
+-----------------------------------------
+
+.. automodule:: plate_model_manager.unzip_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
