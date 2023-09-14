@@ -14,6 +14,11 @@ files = {
     "test_tar_xz": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test.tar.xz",
     "test_tbz2": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test.tbz2",
     "test_txz": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test.txz",
+    "test_zip": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test.zip",
+    "test_bad_zip": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test-bad.zip",
+    "test_bad_tar_gz": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test-bad.tar.gz",
+    "test_bad_xz": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test-bad.xz",
+    "test_bad_bz2": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test-bad.bz2",
 }
 
 for file in files:

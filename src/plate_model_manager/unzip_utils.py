@@ -4,6 +4,14 @@ import lzma
 import shutil
 import tarfile
 import zipfile
+import warnings
+
+
+def my_warningformat(message, category, filename, lineno, line=None):
+    return f"{filename}:{lineno}: {category.__name__}: {message}\n"
+
+
+warnings.formatwarning = my_warningformat
 
 
 def save_compressed_data(url, data, dst_path):
@@ -15,44 +23,90 @@ def save_compressed_data(url, data, dst_path):
     """
     # .zip
     if url.endswith(".zip"):
-        z = zipfile.ZipFile(data)
-        z.extractall(dst_path)
+        if not zipfile.is_zipfile(data):
+            warnings.warn(
+                f"The {url} seems a zip file. But it is in fact not. Will not decompress the file."
+            )
+        else:
+            with zipfile.ZipFile(data) as z:
+                z.extractall(dst_path)
+                z.close()
     # .tar.gz or .tgz
     elif url.endswith(".tar.gz") or url.endswith(".tgz"):
-        tar = tarfile.open(fileobj=data, mode="r:gz")
-        tar.extractall(path=dst_path)
-        tar.close()
+        if not tarfile.is_tarfile(data):
+            warnings.warn(
+                f"The {url} seems a tar gzip file. But it is in fact not. Will not decompress the file."
+            )
+        else:
+            with tarfile.open(fileobj=data, mode="r:gz") as tar:
+                tar.extractall(path=dst_path)
+                tar.close()
     # .gz
     elif url.endswith(".gz"):
-        fn = url.split("/")[-1][:-3]
-        with open(f"{dst_path}/{fn}", "wb+") as f_out:
-            with gzip.GzipFile(fileobj=data) as f_in:
-                shutil.copyfileobj(f_in, f_out)
+        try:
+            fn = url.split("/")[-1][:-3]
+            with open(f"{dst_path}/{fn}", "wb+") as f_out:
+                with gzip.GzipFile(fileobj=data) as f_in:
+                    shutil.copyfileobj(f_in, f_out)
+                    f_in.close()
+                f_out.close()
+        except:
+            warnings.warn(
+                f"The {url} seems a gzip file. But it is in fact not. Will not decompress the file."
+            )
     # .tar.bz2 or .tbz2
     elif url.endswith(".tar.bz2") or url.endswith(".tbz2"):
-        tar = tarfile.open(fileobj=data, mode="r:bz2")
-        tar.extractall(path=dst_path)
-        tar.close()
+        if not tarfile.is_tarfile(data):
+            warnings.warn(
+                f"The {url} seems a tar bz2 file. But it is in fact not. Will not decompress the file."
+            )
+        else:
+            with tarfile.open(fileobj=data, mode="r:bz2") as tar:
+                tar.extractall(path=dst_path)
+                tar.close()
     # .bz2
     elif url.endswith(".bz2"):
-        fn = url.split("/")[-1][:-4]
-        with open(f"{dst_path}/{fn}", "wb+") as f_out:
-            data = bz2.decompress(data.read())
-            f_out.write(data)
+        try:
+            fn = url.split("/")[-1][:-4]
+            with open(f"{dst_path}/{fn}", "wb+") as f_out:
+                data = bz2.decompress(data.read())
+                f_out.write(data)
+                f_out.close()
+        except:
+            warnings.warn(
+                f"The {url} seems a bz2 file. But it is in fact not. Will not decompress the file."
+            )
     # .lzma
     elif url.endswith(".lzma"):
-        fn = url.split("/")[-1][:-5]
-        with open(f"{dst_path}/{fn}", "wb+") as f_out:
-            data = lzma.decompress(data.read())
-            f_out.write(data)
+        try:
+            fn = url.split("/")[-1][:-5]
+            with open(f"{dst_path}/{fn}", "wb+") as f_out:
+                data = lzma.decompress(data.read())
+                f_out.write(data)
+                f_out.close()
+        except:
+            warnings.warn(
+                f"The {url} seems a lzma file. But it is in fact not. Will not decompress the file."
+            )
     # .tar.xz or .txz
     elif url.endswith(".tar.xz") or url.endswith(".txz"):
-        tar = tarfile.open(fileobj=data, mode="r:xz")
-        tar.extractall(path=dst_path)
-        tar.close()
+        if not tarfile.is_tarfile(data):
+            warnings.warn(
+                f"The {url} seems a tar xz file. But it is in fact not. Will not decompress the file."
+            )
+        else:
+            with tarfile.open(fileobj=data, mode="r:xz") as tar:
+                tar.extractall(path=dst_path)
+                tar.close()
     # .xz
     elif url.endswith(".xz"):
-        fn = url.split("/")[-1][:-3]
-        with open(f"{dst_path}/{fn}", "wb+") as f_out:
-            data = lzma.decompress(data.read())
-            f_out.write(data)
+        try:
+            fn = url.split("/")[-1][:-3]
+            with open(f"{dst_path}/{fn}", "wb+") as f_out:
+                data = lzma.decompress(data.read())
+                f_out.write(data)
+                f_out.close()
+        except:
+            warnings.warn(
+                f"The {url} seems a xz file. But it is in fact not. Will not decompress the file."
+            )
