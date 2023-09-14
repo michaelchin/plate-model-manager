@@ -1,9 +1,18 @@
+import glob
 import json
 import os
 
 import requests
 
 from . import download_utils
+import warnings
+
+
+def my_warningformat(message, category, filename, lineno, line=None):
+    return f"{filename}:{lineno}: {category.__name__}: {message}\n"
+
+
+warnings.formatwarning = my_warningformat
 
 DEFAULT_PRESENT_DAY_RASTERS_MANIFEST = (
     "https://repo.gplates.org/webdav/pmm/present_day_rasters.json"
@@ -64,5 +73,11 @@ class PresentDayRasterManager:
             f"{self.data_dir}/{name}/.metadata.json",
             f"{self.data_dir}/{name}/",
         )
-
-        return f"{self.data_dir}/{name}"
+        files = glob.glob(f"{self.data_dir}/{name}/*")
+        if len(files) == 0:
+            raise Exception(f"Failed to get raster {name}")
+        if len(files) > 1:
+            warnings.warn(
+                f"Multiple raster files have been detected.{files}. Return the first one found {files[0]}."
+            )
+        return files[0]
