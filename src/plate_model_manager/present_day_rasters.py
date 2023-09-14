@@ -64,7 +64,8 @@ class PresentDayRasterManager:
     def list_present_day_rasters(self):
         return [name for name in self.rasters]
 
-    def get_raster(self, name):
+    def get_raster(self, _name):
+        name = _name.lower()
         if not name in self.rasters:
             raise Exception(f"Raster {name} is not found in {self.rasters}.")
 
