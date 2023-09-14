@@ -148,7 +148,8 @@
 
 <div class="viewcode-block" id="PresentDayRasterManager.get_raster">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raster </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not found in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
