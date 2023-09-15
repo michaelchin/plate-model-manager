@@ -12,6 +12,14 @@ plate\_model\_manager.download\_utils module
    :undoc-members:
    :show-inheritance:
 
+plate\_model\_manager.misc\_utils module
+----------------------------------------
+
+.. automodule:: plate_model_manager.misc_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 plate\_model\_manager.network\_aiohttp module
 ---------------------------------------------
 
@@ -24,6 +32,14 @@ plate\_model\_manager.network\_requests module
 ----------------------------------------------
 
 .. automodule:: plate_model_manager.network_requests
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+plate\_model\_manager.network\_utils module
+-------------------------------------------
+
+.. automodule:: plate_model_manager.network_utils
    :members:
    :undoc-members:
    :show-inheritance:

@@ -75,17 +75,8 @@
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">tarfile</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 
-
-<div class="viewcode-block" id="my_warningformat">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.unzip_utils.my_warningformat">[docs]</a>
-<span class="k">def</span> <span class="nf">my_warningformat</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">lineno</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">category</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span></div>
-
-
-
-<span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="n">my_warningformat</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">misc_utils</span>
 
 
 <div class="viewcode-block" id="save_compressed_data">
@@ -100,7 +91,7 @@
     <span class="c1"># .zip</span>
     <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.zip&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">is_zipfile</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a zip file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -110,7 +101,7 @@
     <span class="c1"># .tar.gz or .tgz</span>
     <span class="k">elif</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.tar.gz&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.tgz&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">is_tarfile</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a tar gzip file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -127,13 +118,13 @@
                     <span class="n">f_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a gzip file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
     <span class="c1"># .tar.bz2 or .tbz2</span>
     <span class="k">elif</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.tar.bz2&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.tbz2&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">is_tarfile</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a tar bz2 file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -149,7 +140,7 @@
                 <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                 <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a bz2 file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
     <span class="c1"># .lzma</span>
@@ -161,13 +152,13 @@
                 <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                 <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a lzma file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
     <span class="c1"># .tar.xz or .txz</span>
     <span class="k">elif</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.tar.xz&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.txz&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">is_tarfile</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a tar xz file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -183,7 +174,7 @@
                 <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                 <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a xz file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span></div>
 

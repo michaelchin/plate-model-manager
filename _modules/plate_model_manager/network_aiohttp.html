@@ -71,12 +71,13 @@
   <h1>Source code for plate_model_manager.network_aiohttp</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">aiohttp</span>
 
+<span class="kn">import</span> <span class="nn">aiohttp</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">unzip_utils</span>
 
 <span class="c1"># This file contains experimental code to download files concurrently using aiohttp.</span>
 <span class="c1"># Later, I realized that &quot;requests&quot;+&quot;ThreadPoolExecutor&quot; works as well.</span>
@@ -160,10 +161,8 @@
                 <span class="s2">&quot;The file has not been changed since it was downloaded last time. Do nothing and return.&quot;</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">auto_unzip</span> <span class="ow">and</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.zip&quot;</span><span class="p">):</span>
-                <span class="c1"># unzip zip file</span>
-                <span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
-                <span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">auto_unzip</span><span class="p">:</span>
+                <span class="n">unzip_utils</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -222,8 +221,8 @@
 <span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">filesize</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;use multi-thread to fetch a large file.</span>
@@ -235,38 +234,13 @@
 
 <span class="sd">    :param url: the file url</span>
 <span class="sd">    :param filepath: location to keep the file</span>
+<span class="sd">    :param filesize: the size of file (in bytes)</span>
 <span class="sd">    :param filename: new file name (optional)</span>
-<span class="sd">    :param etag: old etag. if the old etag is the same with the one on server, do not download again.</span>
 <span class="sd">    :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
 
 <span class="sd">    :returns: new etag</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># check file size and etag</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Accept-Encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;identity&quot;</span><span class="p">}</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-    <span class="c1"># print(r.headers)</span>
-
-    <span class="n">file_size</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">file_size</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s2">&quot;Unable to find the size of the file. Call fetch_file() instead.&quot;</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">file_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file_size</span><span class="p">)</span>
-
-    <span class="n">new_etag</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ETag&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">new_etag</span><span class="p">:</span>
-        <span class="n">new_etag</span> <span class="o">=</span> <span class="n">new_etag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-            <span class="s2">&quot;-gzip&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
-        <span class="p">)</span>  <span class="c1"># remove the content-encoding awareness thing</span>
-        <span class="k">if</span> <span class="n">new_etag</span> <span class="o">==</span> <span class="n">etag</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;The file has not been changed since it was downloaded last time. Do nothing and return.&quot;</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="n">new_etag</span>
 
     <span class="c1"># create folder to keep the file</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
@@ -282,19 +256,18 @@
     <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()]</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file_size</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="c1"># save the file</span>
-    <span class="k">if</span> <span class="n">auto_unzip</span> <span class="ow">and</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.zip&quot;</span><span class="p">):</span>
-        <span class="c1"># unzip zip file</span>
-        <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">auto_unzip</span><span class="p">:</span>
+        <span class="n">unzip_utils</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">filepath</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
-    <span class="k">return</span> <span class="n">new_etag</span></div>
+    <span class="k">return</span></div>
 
 
 

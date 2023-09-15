@@ -74,7 +74,7 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">network_requests</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">network_requests</span><span class="p">,</span> <span class="n">network_utils</span>
 
 <span class="n">EXPIRY_TIME_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2">, %H:%M:%S&quot;</span>
 
@@ -127,7 +127,7 @@
 
 <div class="viewcode-block" id="download_file">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.download_utils.download_file">[docs]</a>
-<span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">,</span> <span class="n">expire_hours</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">large_file_hint</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;download a file from &quot;url&quot;, save the file in &quot;dst_path&quot; and write the metadata</span>
 <span class="sd">    a metadata file will also be created for the file</span>
 
@@ -141,17 +141,25 @@
 
     <span class="c1"># only redownload when necessary</span>
     <span class="k">if</span> <span class="n">download_flag</span><span class="p">:</span>
-        <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_requests</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">(</span>
-            <span class="n">url</span><span class="p">,</span>
-            <span class="n">dst_path</span><span class="p">,</span>
-            <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
-            <span class="n">auto_unzip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">file_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">large_file_hint</span><span class="p">:</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_content_length</span><span class="p">(</span><span class="n">network_utils</span><span class="o">.</span><span class="n">get_headers</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">file_size</span> <span class="ow">and</span> <span class="n">file_size</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_requests</span><span class="o">.</span><span class="n">fetch_large_file</span><span class="p">(</span>
+                <span class="n">url</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">,</span> <span class="n">file_size</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_requests</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">(</span>
+                <span class="n">url</span><span class="p">,</span>
+                <span class="n">dst_path</span><span class="p">,</span>
+                <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
+                <span class="n">auto_unzip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">etag</span> <span class="o">!=</span> <span class="n">new_etag</span> <span class="ow">or</span> <span class="n">new_etag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># save metadata file</span>
             <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
-                <span class="s2">&quot;expiry&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">12</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                <span class="s2">&quot;expiry&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">expire_hours</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
                     <span class="n">EXPIRY_TIME_FORMAT</span>
                 <span class="p">),</span>
                 <span class="s2">&quot;etag&quot;</span><span class="p">:</span> <span class="n">new_etag</span><span class="p">,</span>

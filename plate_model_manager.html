@@ -51,6 +51,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.download_utils.download_file"><code class="docutils literal notranslate"><span class="pre">download_file()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.misc_utils">plate_model_manager.misc_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.misc_utils.my_warningformat"><code class="docutils literal notranslate"><span class="pre">my_warningformat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.misc_utils.print_warning"><code class="docutils literal notranslate"><span class="pre">print_warning()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.network_aiohttp">plate_model_manager.network_aiohttp module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_file"><code class="docutils literal notranslate"><span class="pre">fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_aiohttp.fetch_files"><code class="docutils literal notranslate"><span class="pre">fetch_files()</span></code></a></li>
@@ -65,6 +70,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_requests.get_etag"><code class="docutils literal notranslate"><span class="pre">get_etag()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.network_utils">plate_model_manager.network_utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_utils.get_content_length"><code class="docutils literal notranslate"><span class="pre">get_content_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_utils.get_etag"><code class="docutils literal notranslate"><span class="pre">get_etag()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.network_utils.get_headers"><code class="docutils literal notranslate"><span class="pre">get_headers()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.plate_model">plate_model_manager.plate_model module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.plate_model.PlateModel"><code class="docutils literal notranslate"><span class="pre">PlateModel</span></code></a></li>
 </ul>
@@ -75,11 +86,9 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.present_day_rasters">plate_model_manager.present_day_rasters module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.present_day_rasters.my_warningformat"><code class="docutils literal notranslate"><span class="pre">my_warningformat()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.unzip_utils">plate_model_manager.unzip_utils module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.unzip_utils.my_warningformat"><code class="docutils literal notranslate"><span class="pre">my_warningformat()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.unzip_utils.save_compressed_data"><code class="docutils literal notranslate"><span class="pre">save_compressed_data()</span></code></a></li>
 </ul>
 </li>
@@ -141,7 +150,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.download_utils.download_file">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.download_utils.</span></span><span class="sig-name descname"><span class="pre">download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/download_utils.html#download_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.download_utils.download_file" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.download_utils.</span></span><span class="sig-name descname"><span class="pre">download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expire_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">large_file_hint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/download_utils.html#download_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.download_utils.download_file" title="Link to this definition"></a></dt>
 <dd><p>download a file from “url”, save the file in “dst_path” and write the metadata
 a metadata file will also be created for the file</p>
 <dl class="field-list simple">
@@ -154,6 +163,19 @@ a metadata file will also be created for the file</p>
 </dd>
 </dl>
 </dd></dl>
+
+</section>
+<section id="module-plate_model_manager.misc_utils">
+<span id="plate-model-manager-misc-utils-module"></span><h2>plate_model_manager.misc_utils module<a class="headerlink" href="#module-plate_model_manager.misc_utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="plate_model_manager.misc_utils.my_warningformat">
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.misc_utils.</span></span><span class="sig-name descname"><span class="pre">my_warningformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/misc_utils.html#my_warningformat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.misc_utils.my_warningformat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plate_model_manager.misc_utils.print_warning">
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.misc_utils.</span></span><span class="sig-name descname"><span class="pre">print_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/misc_utils.html#print_warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.misc_utils.print_warning" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-plate_model_manager.network_aiohttp">
@@ -198,7 +220,7 @@ If “etag” is given, check if etag has changed. If not changed, do not downlo
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.network_aiohttp.fetch_large_file">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_aiohttp.</span></span><span class="sig-name descname"><span class="pre">fetch_large_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_aiohttp.html#fetch_large_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_aiohttp.fetch_large_file" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_aiohttp.</span></span><span class="sig-name descname"><span class="pre">fetch_large_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filesize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_aiohttp.html#fetch_large_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_aiohttp.fetch_large_file" title="Link to this definition"></a></dt>
 <dd><dl class="simple">
 <dt>use multi-thread to fetch a large file.</dt><dd><p>Be careful when use this function. You cannot get partial content if the content is gzip encoded.
 So the file might be larger than the one download directly.
@@ -212,8 +234,8 @@ Some firewall sequences these requests to shape network traffic and defeat the p
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> – the file url</p></li>
 <li><p><strong>filepath</strong> – location to keep the file</p></li>
+<li><p><strong>filesize</strong> – the size of file (in bytes)</p></li>
 <li><p><strong>filename</strong> – new file name (optional)</p></li>
-<li><p><strong>etag</strong> – old etag. if the old etag is the same with the one on server, do not download again.</p></li>
 <li><p><strong>auto_unzip</strong> – bool flag to indicate if unzip .zip file automatically</p></li>
 </ul>
 </dd>
@@ -272,7 +294,7 @@ If “etag” is given, check if etag has changed. If not changed, do not downlo
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.network_requests.fetch_large_file">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_requests.</span></span><span class="sig-name descname"><span class="pre">fetch_large_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_requests.html#fetch_large_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_requests.fetch_large_file" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_requests.</span></span><span class="sig-name descname"><span class="pre">fetch_large_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filesize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_unzip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_requests.html#fetch_large_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_requests.fetch_large_file" title="Link to this definition"></a></dt>
 <dd><dl class="simple">
 <dt>use multi-thread to fetch a large file.</dt><dd><p>LOOK HERE!!!
 Be careful when use this function. You cannot get partial content if the content is gzip encoded.
@@ -287,8 +309,8 @@ Some firewall sequences these requests to shape network traffic and defeat the p
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>url</strong> – the file url</p></li>
 <li><p><strong>filepath</strong> – location to keep the file</p></li>
+<li><p><strong>filesize</strong> – the size of file (in bytes)</p></li>
 <li><p><strong>filename</strong> – new file name (optional)</p></li>
-<li><p><strong>etag</strong> – old etag. if the old etag is the same with the one on server, do not download again.</p></li>
 <li><p><strong>auto_unzip</strong> – bool flag to indicate if unzip .zip file automatically</p></li>
 </ul>
 </dd>
@@ -308,6 +330,24 @@ Some firewall sequences these requests to shape network traffic and defeat the p
 </dd>
 </dl>
 </dd></dl>
+
+</section>
+<section id="module-plate_model_manager.network_utils">
+<span id="plate-model-manager-network-utils-module"></span><h2>plate_model_manager.network_utils module<a class="headerlink" href="#module-plate_model_manager.network_utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="plate_model_manager.network_utils.get_content_length">
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_utils.</span></span><span class="sig-name descname"><span class="pre">get_content_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_utils.html#get_content_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_utils.get_content_length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plate_model_manager.network_utils.get_etag">
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_utils.</span></span><span class="sig-name descname"><span class="pre">get_etag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_utils.html#get_etag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_utils.get_etag" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plate_model_manager.network_utils.get_headers">
+<span class="sig-prename descclassname"><span class="pre">plate_model_manager.network_utils.</span></span><span class="sig-name descname"><span class="pre">get_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/network_utils.html#get_headers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.network_utils.get_headers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-plate_model_manager.plate_model">
@@ -575,7 +615,8 @@ see an example models.json file at PlateModelManager.get_default_repo_url()</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster">
 <span class="sig-name descname"><span class="pre">get_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.get_raster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>download the raster by name. Save the raster in self.data_dir</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager.list_present_day_rasters">
@@ -589,19 +630,9 @@ see an example models.json file at PlateModelManager.get_default_repo_url()</p>
 
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.my_warningformat">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.present_day_rasters.</span></span><span class="sig-name descname"><span class="pre">my_warningformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#my_warningformat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.my_warningformat" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 </section>
 <section id="module-plate_model_manager.unzip_utils">
 <span id="plate-model-manager-unzip-utils-module"></span><h2>plate_model_manager.unzip_utils module<a class="headerlink" href="#module-plate_model_manager.unzip_utils" title="Link to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="plate_model_manager.unzip_utils.my_warningformat">
-<span class="sig-prename descclassname"><span class="pre">plate_model_manager.unzip_utils.</span></span><span class="sig-name descname"><span class="pre">my_warningformat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/unzip_utils.html#my_warningformat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.unzip_utils.my_warningformat" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="plate_model_manager.unzip_utils.save_compressed_data">
 <span class="sig-prename descclassname"><span class="pre">plate_model_manager.unzip_utils.</span></span><span class="sig-name descname"><span class="pre">save_compressed_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/unzip_utils.html#save_compressed_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.unzip_utils.save_compressed_data" title="Link to this definition"></a></dt>
