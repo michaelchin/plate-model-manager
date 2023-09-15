@@ -1,12 +1,8 @@
 import asyncio
-import bz2
 import concurrent.futures
 import functools
-import gzip
 import io
 import os
-import shutil
-import zipfile, lzma
 from pathlib import Path
 
 import requests
@@ -128,8 +124,8 @@ async def _fetch_large_file(
 def fetch_large_file(
     url: str,
     filepath: str,
+    filesize: int,
     filename: str = None,
-    etag: str = None,
     auto_unzip: bool = True,
 ):
     """use multi-thread to fetch a large file.
@@ -142,38 +138,13 @@ def fetch_large_file(
 
     :param url: the file url
     :param filepath: location to keep the file
+    :param filesize: the size of file (in bytes)
     :param filename: new file name (optional)
-    :param etag: old etag. if the old etag is the same with the one on server, do not download again.
     :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
     :returns: new etag
 
     """
-
-    # check file size and etag
-    headers = {"Accept-Encoding": "identity"}
-    r = requests.head(url, headers=headers)
-    # print(r.headers)
-
-    file_size = r.headers.get("Content-Length")
-    if not file_size:
-        raise Exception(
-            "Unable to find the size of the file. Call fetch_file() instead."
-        )
-    else:
-        file_size = int(file_size)
-
-    new_etag = r.headers.get("ETag")
-    if new_etag:
-        new_etag = new_etag.replace(
-            "-gzip", ""
-        )  # remove the content-encoding awareness thing
-        if new_etag == etag:
-            print(url)
-            print(
-                "The file has not been changed since it was downloaded last time. Do nothing and return."
-            )
-            return new_etag
 
     # create folder to keep the file
     if os.path.isfile(filepath):
@@ -192,7 +163,7 @@ def fetch_large_file(
     data = [io.BytesIO()]
 
     try:
-        loop.run_until_complete(_fetch_large_file(run, url, file_size, data))
+        loop.run_until_complete(_fetch_large_file(run, url, filesize, data))
     finally:
         loop.close()
 
@@ -203,7 +174,7 @@ def fetch_large_file(
     else:
         _save_file(url, filepath, filename, data[0].read())
 
-    return new_etag
+    return
 
 
 def _save_file(url, filepath, filename, data):

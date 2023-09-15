@@ -5,10 +5,8 @@ import glob
 import json
 import os
 import shutil
-from datetime import datetime, timedelta
 from pathlib import Path
 
-from . import network_requests
 from . import download_utils
 
 METADATA_FILENAME = ".metadata.json"

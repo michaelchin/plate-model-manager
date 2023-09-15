@@ -1,11 +1,12 @@
 import asyncio
 import io
-import os, time
-import zipfile
+import os
 from pathlib import Path
-import aiohttp
 
+import aiohttp
 import requests
+
+from . import unzip_utils
 
 # This file contains experimental code to download files concurrently using aiohttp.
 # Later, I realized that "requests"+"ThreadPoolExecutor" works as well.
@@ -83,10 +84,8 @@ async def _fetch_file(
                 "The file has not been changed since it was downloaded last time. Do nothing and return."
             )
         elif r.status == 200:
-            if auto_unzip and url.endswith(".zip"):
-                # unzip zip file
-                z = zipfile.ZipFile(io.BytesIO(content))
-                z.extractall(filepath)
+            if auto_unzip:
+                unzip_utils.save_compressed_data(url, io.BytesIO(r.content), filepath)
             else:
                 _save_file(url, filepath, filename, content)
         else:
@@ -143,8 +142,8 @@ async def _fetch_large_file(
 def fetch_large_file(
     url: str,
     filepath: str,
+    filesize: int,
     filename: str = None,
-    etag: str = None,
     auto_unzip: bool = True,
 ):
     """use multi-thread to fetch a large file.
@@ -156,38 +155,13 @@ def fetch_large_file(
 
     :param url: the file url
     :param filepath: location to keep the file
+    :param filesize: the size of file (in bytes)
     :param filename: new file name (optional)
-    :param etag: old etag. if the old etag is the same with the one on server, do not download again.
     :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
     :returns: new etag
 
     """
-
-    # check file size and etag
-    headers = {"Accept-Encoding": "identity"}
-    r = requests.head(url, headers=headers)
-    # print(r.headers)
-
-    file_size = r.headers.get("Content-Length")
-    if not file_size:
-        raise Exception(
-            "Unable to find the size of the file. Call fetch_file() instead."
-        )
-    else:
-        file_size = int(file_size)
-
-    new_etag = r.headers.get("ETag")
-    if new_etag:
-        new_etag = new_etag.replace(
-            "-gzip", ""
-        )  # remove the content-encoding awareness thing
-        if new_etag == etag:
-            print(url)
-            print(
-                "The file has not been changed since it was downloaded last time. Do nothing and return."
-            )
-            return new_etag
 
     # create folder to keep the file
     if os.path.isfile(filepath):
@@ -203,19 +177,18 @@ def fetch_large_file(
     data = [io.BytesIO()]
 
     try:
-        loop.run_until_complete(_fetch_large_file(url, file_size, data))
+        loop.run_until_complete(_fetch_large_file(url, filesize, data))
     finally:
         loop.close()
 
     data[0].seek(0)
     # save the file
-    if auto_unzip and url.endswith(".zip"):
-        # unzip zip file
-        zipfile.ZipFile(data[0]).extractall(filepath)
+    if auto_unzip:
+        unzip_utils.save_compressed_data(url, data[0], filepath)
     else:
         _save_file(url, filepath, filename, data[0].read())
 
-    return new_etag
+    return
 
 
 def _save_file(url, filepath, filename, data):

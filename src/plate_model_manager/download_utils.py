@@ -3,7 +3,7 @@ import os
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from . import network_requests
+from . import network_requests, network_utils
 
 EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
 
@@ -51,7 +51,7 @@ def check_redownload_need(metadata_file, url):
     return download_flag, meta_etag
 
 
-def download_file(url, metadata_file, dst_path):
+def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint=False):
     """download a file from "url", save the file in "dst_path" and write the metadata
     a metadata file will also be created for the file
 
@@ -65,17 +65,25 @@ def download_file(url, metadata_file, dst_path):
 
     # only redownload when necessary
     if download_flag:
-        new_etag = network_requests.fetch_file(
-            url,
-            dst_path,
-            etag=etag,
-            auto_unzip=True,
-        )
+        file_size = None
+        if large_file_hint:
+            file_size = network_utils.get_content_length(network_utils.get_headers(url))
+        if file_size and file_size > 20 * 1000 * 1000:
+            new_etag = network_requests.fetch_large_file(
+                url, dst_path, file_size, auto_unzip=True
+            )
+        else:
+            new_etag = network_requests.fetch_file(
+                url,
+                dst_path,
+                etag=etag,
+                auto_unzip=True,
+            )
         if etag != new_etag or new_etag is None:
             # save metadata file
             metadata = {
                 "url": url,
-                "expiry": (datetime.now() + timedelta(hours=12)).strftime(
+                "expiry": (datetime.now() + timedelta(hours=expire_hours)).strftime(
                     EXPIRY_TIME_FORMAT
                 ),
                 "etag": new_etag,

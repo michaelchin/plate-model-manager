@@ -4,14 +4,8 @@ import lzma
 import shutil
 import tarfile
 import zipfile
-import warnings
 
-
-def my_warningformat(message, category, filename, lineno, line=None):
-    return f"{filename}:{lineno}: {category.__name__}: {message}\n"
-
-
-warnings.formatwarning = my_warningformat
+from . import misc_utils
 
 
 def save_compressed_data(url, data, dst_path):
@@ -24,7 +18,7 @@ def save_compressed_data(url, data, dst_path):
     # .zip
     if url.endswith(".zip"):
         if not zipfile.is_zipfile(data):
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a zip file. But it is in fact not. Will not decompress the file."
             )
         else:
@@ -34,7 +28,7 @@ def save_compressed_data(url, data, dst_path):
     # .tar.gz or .tgz
     elif url.endswith(".tar.gz") or url.endswith(".tgz"):
         if not tarfile.is_tarfile(data):
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a tar gzip file. But it is in fact not. Will not decompress the file."
             )
         else:
@@ -51,13 +45,13 @@ def save_compressed_data(url, data, dst_path):
                     f_in.close()
                 f_out.close()
         except:
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a gzip file. But it is in fact not. Will not decompress the file."
             )
     # .tar.bz2 or .tbz2
     elif url.endswith(".tar.bz2") or url.endswith(".tbz2"):
         if not tarfile.is_tarfile(data):
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a tar bz2 file. But it is in fact not. Will not decompress the file."
             )
         else:
@@ -73,7 +67,7 @@ def save_compressed_data(url, data, dst_path):
                 f_out.write(data)
                 f_out.close()
         except:
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a bz2 file. But it is in fact not. Will not decompress the file."
             )
     # .lzma
@@ -85,13 +79,13 @@ def save_compressed_data(url, data, dst_path):
                 f_out.write(data)
                 f_out.close()
         except:
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a lzma file. But it is in fact not. Will not decompress the file."
             )
     # .tar.xz or .txz
     elif url.endswith(".tar.xz") or url.endswith(".txz"):
         if not tarfile.is_tarfile(data):
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a tar xz file. But it is in fact not. Will not decompress the file."
             )
         else:
@@ -107,6 +101,6 @@ def save_compressed_data(url, data, dst_path):
                 f_out.write(data)
                 f_out.close()
         except:
-            warnings.warn(
+            misc_utils.print_warning(
                 f"The {url} seems a xz file. But it is in fact not. Will not decompress the file."
             )
