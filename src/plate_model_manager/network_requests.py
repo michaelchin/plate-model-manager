@@ -63,7 +63,10 @@ def fetch_file(
         )
     elif r.status_code == 200:
         if auto_unzip:
-            unzip_utils.save_compressed_data(url, io.BytesIO(r.content), filepath)
+            try:
+                unzip_utils.save_compressed_data(url, io.BytesIO(r.content), filepath)
+            except:
+                _save_file(url, filepath, filename, r.content)
         else:
             _save_file(url, filepath, filename, r.content)
     else:
@@ -170,7 +173,12 @@ def fetch_large_file(
     data[0].seek(0)
     # save the file
     if auto_unzip:
-        unzip_utils.save_compressed_data(url, data[0], filepath)
+        try:
+            unzip_utils.save_compressed_data(url, data[0], filepath)
+        except:
+            print("failed to save zip. try save directly")
+            data[0].seek(0)
+            _save_file(url, filepath, filename, data[0].read())
     else:
         _save_file(url, filepath, filename, data[0].read())
 

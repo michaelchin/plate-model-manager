@@ -21,6 +21,7 @@ def save_compressed_data(url, data, dst_path):
             misc_utils.print_warning(
                 f"The {url} seems a zip file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")
         else:
             with zipfile.ZipFile(data) as z:
                 z.extractall(dst_path)
@@ -31,6 +32,7 @@ def save_compressed_data(url, data, dst_path):
             misc_utils.print_warning(
                 f"The {url} seems a tar gzip file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")
         else:
             with tarfile.open(fileobj=data, mode="r:gz") as tar:
                 tar.extractall(path=dst_path)
@@ -48,12 +50,14 @@ def save_compressed_data(url, data, dst_path):
             misc_utils.print_warning(
                 f"The {url} seems a gzip file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")
     # .tar.bz2 or .tbz2
     elif url.endswith(".tar.bz2") or url.endswith(".tbz2"):
         if not tarfile.is_tarfile(data):
             misc_utils.print_warning(
                 f"The {url} seems a tar bz2 file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")
         else:
             with tarfile.open(fileobj=data, mode="r:bz2") as tar:
                 tar.extractall(path=dst_path)
@@ -70,6 +74,7 @@ def save_compressed_data(url, data, dst_path):
             misc_utils.print_warning(
                 f"The {url} seems a bz2 file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")
     # .lzma
     elif url.endswith(".lzma"):
         try:
@@ -82,12 +87,14 @@ def save_compressed_data(url, data, dst_path):
             misc_utils.print_warning(
                 f"The {url} seems a lzma file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")
     # .tar.xz or .txz
     elif url.endswith(".tar.xz") or url.endswith(".txz"):
         if not tarfile.is_tarfile(data):
             misc_utils.print_warning(
                 f"The {url} seems a tar xz file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")
         else:
             with tarfile.open(fileobj=data, mode="r:xz") as tar:
                 tar.extractall(path=dst_path)
@@ -104,3 +111,4 @@ def save_compressed_data(url, data, dst_path):
             misc_utils.print_warning(
                 f"The {url} seems a xz file. But it is in fact not. Will not decompress the file."
             )
+            raise Exception("Bad compressed data!")

@@ -27,3 +27,9 @@ for file in files:
         f"test-download-file/{file}/.metadata.json",
         f"test-download-file/{file}",
     )
+
+download_utils.download_file(
+    "http://212.183.159.230/100MB.zip",
+    f"test-download-file/.metadata.json",
+    f"test-download-file/",
+)

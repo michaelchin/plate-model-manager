@@ -9,8 +9,6 @@ from plate_model_manager import network_aiohttp, network_requests, network_utils
 # the performance improvement depends on the server/network's configuration
 
 test_url = "http://212.183.159.230/100MB.zip"
-# test_url="https://www.earthbyte.org/webdav/ftp/Data_Collections/Zahirovic_etal_2016_ESR_AgeGrid/jpegs.zip"
-
 auto_unzip = True
 
 

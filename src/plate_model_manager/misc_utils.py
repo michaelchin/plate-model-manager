@@ -1,4 +1,5 @@
 import warnings
+import logging
 
 
 def my_warningformat(message, category, filename, lineno, line=None):
@@ -9,4 +10,5 @@ warnings.formatwarning = my_warningformat
 
 
 def print_warning(msg):
-    warnings.warn(msg)
+    # warnings.warn(msg)
+    logging.warn(msg)
