@@ -139,14 +139,20 @@
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;downloading </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">download_flag</span><span class="p">,</span> <span class="n">etag</span> <span class="o">=</span> <span class="n">check_redownload_need</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
 
+    <span class="n">file_size</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">download_flag</span> <span class="ow">and</span> <span class="n">large_file_hint</span><span class="p">:</span>
+        <span class="c1"># check the file size and etag for large file</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_headers</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">file_size</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_content_length</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_etag</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">etag</span> <span class="o">==</span> <span class="n">new_etag</span><span class="p">:</span>
+            <span class="n">download_flag</span> <span class="o">=</span> <span class="kc">False</span>
+
     <span class="c1"># only redownload when necessary</span>
     <span class="k">if</span> <span class="n">download_flag</span><span class="p">:</span>
-        <span class="n">file_size</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">large_file_hint</span><span class="p">:</span>
-            <span class="n">file_size</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_content_length</span><span class="p">(</span><span class="n">network_utils</span><span class="o">.</span><span class="n">get_headers</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">file_size</span> <span class="ow">and</span> <span class="n">file_size</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">:</span>
             <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_requests</span><span class="o">.</span><span class="n">fetch_large_file</span><span class="p">(</span>
-                <span class="n">url</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">,</span> <span class="n">file_size</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="kc">True</span>
+                <span class="n">url</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">,</span> <span class="n">filesize</span><span class="o">=</span><span class="n">file_size</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check_etag</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_requests</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">(</span>
