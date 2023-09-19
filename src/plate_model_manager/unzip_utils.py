@@ -112,3 +112,5 @@ def save_compressed_data(url, data, dst_path):
                 f"The {url} seems a xz file. But it is in fact not. Will not decompress the file."
             )
             raise Exception("Bad compressed data!")
+    else:
+        raise Exception("Unrecognized zip data!")

@@ -19,6 +19,11 @@ def get_content_length(headers):
 
 
 def get_etag(headers):
+    """return the etag in the headers. The return could be none if the server does not support etag.
+
+    :param headers: call get_headers(url) to get headers
+
+    """
     new_etag = headers.get("ETag")
     if new_etag:
         # remove the content-encoding awareness thing if present
