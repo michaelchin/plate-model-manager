@@ -184,7 +184,9 @@
             <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> seems a xz file. But it is in fact not. Will not decompress the file.&quot;</span>
             <span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Bad compressed data!&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Bad compressed data!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unrecognized zip data!&quot;</span><span class="p">)</span></div>
 
 </pre></div>
 

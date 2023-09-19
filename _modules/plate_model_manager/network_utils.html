@@ -98,6 +98,11 @@
 <div class="viewcode-block" id="get_etag">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_utils.get_etag">[docs]</a>
 <span class="k">def</span> <span class="nf">get_etag</span><span class="p">(</span><span class="n">headers</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;return the etag in the headers. The return could be none if the server does not support etag.</span>
+
+<span class="sd">    :param headers: call get_headers(url) to get headers</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">new_etag</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ETag&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">new_etag</span><span class="p">:</span>
         <span class="c1"># remove the content-encoding awareness thing if present</span>

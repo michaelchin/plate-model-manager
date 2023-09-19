@@ -75,9 +75,9 @@
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">aiohttp</span>
-<span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">unzip_utils</span>
+<span class="kn">from</span> <span class="nn">.file_fetcher</span> <span class="kn">import</span> <span class="n">FileFetcher</span>
 
 <span class="c1"># This file contains experimental code to download files concurrently using aiohttp.</span>
 <span class="c1"># Later, I realized that &quot;requests&quot;+&quot;ThreadPoolExecutor&quot; works as well.</span>
@@ -85,11 +85,221 @@
 <span class="c1"># So, keep this file just for record keeping in case we need aiohttp in the future.</span>
 
 
-<div class="viewcode-block" id="get_etag">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.get_etag">[docs]</a>
-<span class="k">def</span> <span class="nf">get_etag</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;return the etag of the given url. could be none&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ETag&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="AiohttpFetcher">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher">[docs]</a>
+<span class="k">class</span> <span class="nc">AiohttpFetcher</span><span class="p">(</span><span class="n">FileFetcher</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="AiohttpFetcher.fetch_file">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher.fetch_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;download a file from &quot;url&quot; and save to &quot;filepath&quot;</span>
+<span class="sd">            You can give a new &quot;filename&quot; for the file.</span>
+<span class="sd">            If &quot;etag&quot; is given, check if etag has changed. If not changed, do not download again.</span>
+
+<span class="sd">        :param url: the url to download file from</span>
+<span class="sd">        :param filepath: location to keep the file</span>
+<span class="sd">        :param filename: new file name (optional)</span>
+<span class="sd">        :param etag: old etag. if the old etag is the same with the one on server, do not download again.</span>
+<span class="sd">        :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_file</span><span class="p">(</span>
+                    <span class="n">session</span><span class="p">,</span>
+                    <span class="n">url</span><span class="p">,</span>
+                    <span class="n">filepath</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
+                    <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">f</span><span class="p">())</span></div>
+
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">session</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;async &quot;fetch_file&quot; implementation. See the docstring of &quot;fetch_file&quot; &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">etag</span><span class="p">:</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;If-None-Match&quot;</span><span class="p">:</span> <span class="n">etag</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The &#39;filepath&#39; is in fact a file. The &#39;filepath&#39; should be a folder path(non-exist is fine). </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="c1"># r = requests.get(url, allow_redirects=True, headers=headers)</span>
+            <span class="c1"># print(r.headers)</span>
+
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">304</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;The file has not been changed since it was downloaded last time. Do nothing and return.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">auto_unzip</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">unzip_utils</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span>
+                            <span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span>
+                        <span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HTTP request failed with code </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="n">new_etag</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ETag&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">new_etag</span><span class="p">:</span>
+                <span class="c1"># remove the content-encoding awareness thing</span>
+                <span class="n">new_etag</span> <span class="o">=</span> <span class="n">new_etag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-gzip&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">new_etag</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;async funtion to get patial content of a file from the server</span>
+<span class="sd">        Be careful, some server does not support this function.</span>
+<span class="sd">        And some firewall sequences these requests to shape network traffic and defeat the purpose</span>
+<span class="sd">        of this function completely.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># print(index)</span>
+        <span class="c1"># st = time.time()</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Range&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;bytes=</span><span class="si">{</span><span class="n">index</span><span class="o">*</span><span class="n">chunk_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">chunk_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Accept-Encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;identity&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># r = requests.get(url, headers=headers)</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">206</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="k">await</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to fetch range from </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> at index </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># et = time.time()</span>
+        <span class="c1"># print(f&quot;{index} -- time: {et - st}&quot;)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_large_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;async implementation of fetch_large_file&quot;&quot;&quot;</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">num_chunks</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">//</span> <span class="n">chunk_size</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">data_array</span> <span class="o">=</span> <span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">)]</span>
+            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_range</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">data_array</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">)</span>
+            <span class="p">]</span>
+
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
+                <span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_run_fetch_large_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;run async function&quot;&quot;&quot;</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+
+<div class="viewcode-block" id="AiohttpFetcher.fetch_files">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher.fetch_files">[docs]</a>
+    <span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">urls</span><span class="p">,</span>
+        <span class="n">filepaths</span><span class="p">,</span>
+        <span class="n">filenames</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;fetch multiple files concurrently</span>
+
+<span class="sd">        :param urls: the urls to download files from</span>
+<span class="sd">        :param filepaths: location(s) to keep the files. This can be one path for all files or one path for each file.</span>
+<span class="sd">        :param filenames: new file names (optional)</span>
+<span class="sd">        :param etags: old etags. if the old etag is the same with the one on server, do not download again.</span>
+<span class="sd">        :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">urls</span><span class="p">):</span>
+                    <span class="c1"># get filename</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
+                        <span class="n">filename</span> <span class="o">=</span> <span class="n">filenames</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
+
+                    <span class="c1"># get filepath</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepaths</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">filepaths</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
+                        <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepaths</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                            <span class="s2">&quot;The &#39;filepaths&#39; should be either one string or a list of strings. And the length of the list should be the same with the length of urls. &quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="c1"># get etag</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">etags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
+                        <span class="n">etag</span> <span class="o">=</span> <span class="n">etags</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">etag</span> <span class="o">=</span> <span class="kc">None</span>
+
+                    <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_file</span><span class="p">(</span>
+                                <span class="n">session</span><span class="p">,</span>
+                                <span class="n">url</span><span class="p">,</span>
+                                <span class="n">filepath</span><span class="p">,</span>
+                                <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+                                <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
+                                <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+
+                <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+
+        <span class="c1"># set up concurrent functions</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span>
+        <span class="n">new_etags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">new_etags</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">f</span><span class="p">())</span>
+            <span class="c1"># print(new_etags)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">new_etags</span></div>
+</div>
 
 
 
@@ -102,194 +312,11 @@
     <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;download a file from &quot;url&quot; and save to &quot;filepath&quot;</span>
-<span class="sd">        You can give a new &quot;filename&quot; for the file.</span>
-<span class="sd">        If &quot;etag&quot; is given, check if etag has changed. If not changed, do not download again.</span>
+    <span class="n">fetcher</span> <span class="o">=</span> <span class="n">AiohttpFetcher</span><span class="p">()</span>
+    <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">(</span>
+        <span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span>
+    <span class="p">)</span></div>
 
-<span class="sd">    :param url: the url to download file from</span>
-<span class="sd">    :param filepath: location to keep the file</span>
-<span class="sd">    :param filename: new file name (optional)</span>
-<span class="sd">    :param etag: old etag. if the old etag is the same with the one on server, do not download again.</span>
-<span class="sd">    :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-            <span class="k">await</span> <span class="n">_fetch_file</span><span class="p">(</span>
-                <span class="n">session</span><span class="p">,</span>
-                <span class="n">url</span><span class="p">,</span>
-                <span class="n">filepath</span><span class="p">,</span>
-                <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
-                <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
-                <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
-            <span class="p">)</span>
-
-    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">f</span><span class="p">())</span></div>
-
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_file</span><span class="p">(</span>
-    <span class="n">session</span><span class="p">,</span>
-    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;async &quot;fetch_file&quot; implementation. See the docstring of &quot;fetch_file&quot; &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">etag</span><span class="p">:</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;If-None-Match&quot;</span><span class="p">:</span> <span class="n">etag</span><span class="p">}</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The &#39;filepath&#39; is in fact a file. The &#39;filepath&#39; should be a folder path(non-exist is fine). </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-    <span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="c1"># r = requests.get(url, allow_redirects=True, headers=headers)</span>
-        <span class="c1"># print(r.headers)</span>
-
-        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">304</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;The file has not been changed since it was downloaded last time. Do nothing and return.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">auto_unzip</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">unzip_utils</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span>
-                        <span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span>
-                    <span class="p">)</span>
-                <span class="k">except</span><span class="p">:</span>
-                    <span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HTTP request failed with code </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="n">new_etag</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ETag&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">new_etag</span><span class="p">:</span>
-            <span class="c1"># remove the content-encoding awareness thing</span>
-            <span class="n">new_etag</span> <span class="o">=</span> <span class="n">new_etag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-gzip&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">new_etag</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;async funtion to get patial content of a file from the server</span>
-<span class="sd">    Be careful, some server does not support this function.</span>
-<span class="sd">    And some firewall sequences these requests to shape network traffic and defeat the purpose</span>
-<span class="sd">    of this function completely.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># print(index)</span>
-    <span class="c1"># st = time.time()</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;Range&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;bytes=</span><span class="si">{</span><span class="n">index</span><span class="o">*</span><span class="n">chunk_size</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">chunk_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Accept-Encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;identity&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-
-    <span class="c1"># r = requests.get(url, headers=headers)</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="k">await</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-    <span class="c1"># et = time.time()</span>
-    <span class="c1"># print(f&quot;{index} -- time: {et - st}&quot;)</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_large_file</span><span class="p">(</span>
-    <span class="n">url</span><span class="p">,</span> <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;async implementation of fetch_large_file&quot;&quot;&quot;</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="n">num_chunks</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">//</span> <span class="n">chunk_size</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">data_array</span> <span class="o">=</span> <span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">)]</span>
-        <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">_fetch_range</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">data_array</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">)</span>
-        <span class="p">]</span>
-
-        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
-            <span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-
-
-<div class="viewcode-block" id="fetch_large_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.fetch_large_file">[docs]</a>
-<span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
-    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">filesize</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;use multi-thread to fetch a large file.</span>
-<span class="sd">        Be careful when use this function. You cannot get partial content if the content is gzip encoded.</span>
-<span class="sd">        So the file might be larger than the one download directly.</span>
-<span class="sd">        It is useful when downloading large .zip file.</span>
-<span class="sd">        Warning: this could be slower than single thread download.</span>
-<span class="sd">        Some firewall sequences these requests to shape network traffic and defeat the purpose of this function completely.</span>
-
-<span class="sd">    :param url: the file url</span>
-<span class="sd">    :param filepath: location to keep the file</span>
-<span class="sd">    :param filesize: the size of file (in bytes)</span>
-<span class="sd">    :param filename: new file name (optional)</span>
-<span class="sd">    :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
-
-<span class="sd">    :returns: new etag</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1"># create folder to keep the file</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The &#39;filepath&#39; is in fact a file. The &#39;filepath&#39; should be a folder path(non-exist is fine). </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-    <span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="c1"># set up concurrent functions</span>
-    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
-    <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span>
-
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()]</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-    <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="c1"># save the file</span>
-    <span class="k">if</span> <span class="n">auto_unzip</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">unzip_utils</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">filepath</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;failed to save zip. try save directly&quot;</span><span class="p">)</span>
-            <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-
-    <span class="k">return</span></div>
-
-
-
-<span class="k">def</span> <span class="nf">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;helper function to save file to hard drive&quot;&quot;&quot;</span>
-    <span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># use the filename in the url</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: overwriting </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;wb+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">of</span><span class="p">:</span>
-        <span class="n">of</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="fetch_files">
@@ -301,67 +328,26 @@
     <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;fetch multiple files concurrently</span>
+    <span class="n">fetcher</span> <span class="o">=</span> <span class="n">AiohttpFetcher</span><span class="p">()</span>
+    <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_files</span><span class="p">(</span>
+        <span class="n">urls</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">,</span> <span class="n">filenames</span><span class="o">=</span><span class="n">filenames</span><span class="p">,</span> <span class="n">etag</span><span class="o">=</span><span class="n">etags</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span>
+    <span class="p">)</span></div>
 
-<span class="sd">    :param urls: the urls to download files from</span>
-<span class="sd">    :param filepaths: location(s) to keep the files. This can be one path for all files or one path for each file.</span>
-<span class="sd">    :param filenames: new file names (optional)</span>
-<span class="sd">    :param etags: old etags. if the old etag is the same with the one on server, do not download again.</span>
-<span class="sd">    :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">urls</span><span class="p">):</span>
-                <span class="c1"># get filename</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
-                    <span class="n">filename</span> <span class="o">=</span> <span class="n">filenames</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
-
-                <span class="c1"># get filepath</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                    <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepaths</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">filepaths</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
-                    <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepaths</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                        <span class="s2">&quot;The &#39;filepaths&#39; should be either one string or a list of strings. And the length of the list should be the same with the length of urls. &quot;</span>
-                    <span class="p">)</span>
-
-                <span class="c1"># get etag</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">etags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
-                    <span class="n">etag</span> <span class="o">=</span> <span class="n">etags</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">etag</span> <span class="o">=</span> <span class="kc">None</span>
-
-                <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span>
-                        <span class="n">_fetch_file</span><span class="p">(</span>
-                            <span class="n">session</span><span class="p">,</span>
-                            <span class="n">url</span><span class="p">,</span>
-                            <span class="n">filepath</span><span class="p">,</span>
-                            <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
-                            <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
-                            <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
-                        <span class="p">)</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-
-            <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
-
-    <span class="c1"># set up concurrent functions</span>
-    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
-    <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="n">loop</span><span class="p">)</span>
-    <span class="n">new_etags</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">new_etags</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">f</span><span class="p">())</span>
-        <span class="c1"># print(new_etags)</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">new_etags</span></div>
+<div class="viewcode-block" id="fetch_large_file">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.fetch_large_file">[docs]</a>
+<span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">filesize</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">fetcher</span> <span class="o">=</span> <span class="n">AiohttpFetcher</span><span class="p">()</span>
+    <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_large_file</span><span class="p">(</span>
+        <span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span>
+    <span class="p">)</span></div>
 
 </pre></div>
 

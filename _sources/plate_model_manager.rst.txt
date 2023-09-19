@@ -12,6 +12,14 @@ plate\_model\_manager.download\_utils module
    :undoc-members:
    :show-inheritance:
 
+plate\_model\_manager.file\_fetcher module
+------------------------------------------
+
+.. automodule:: plate_model_manager.file_fetcher
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 plate\_model\_manager.misc\_utils module
 ----------------------------------------
 
