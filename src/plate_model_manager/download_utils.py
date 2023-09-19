@@ -63,14 +63,20 @@ def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint
     print(f"downloading {url}")
     download_flag, etag = check_redownload_need(metadata_file, url)
 
+    file_size = None
+    if download_flag and large_file_hint:
+        # check the file size and etag for large file
+        headers = network_utils.get_headers(url)
+        file_size = network_utils.get_content_length(headers)
+        new_etag = network_utils.get_etag(headers)
+        if etag == new_etag:
+            download_flag = False
+
     # only redownload when necessary
     if download_flag:
-        file_size = None
-        if large_file_hint:
-            file_size = network_utils.get_content_length(network_utils.get_headers(url))
         if file_size and file_size > 20 * 1000 * 1000:
             new_etag = network_requests.fetch_large_file(
-                url, dst_path, file_size, auto_unzip=True
+                url, dst_path, filesize=file_size, auto_unzip=True, check_etag=False
             )
         else:
             new_etag = network_requests.fetch_file(

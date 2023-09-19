@@ -2,7 +2,7 @@ import sys
 import time
 
 sys.path.insert(0, "../src")
-from plate_model_manager import network_aiohttp, network_requests, network_utils
+from plate_model_manager import network_aiohttp, network_requests
 
 # concurrent download from www.earthbyte.org does not work because of Cloud provider's network traffic control
 # use "http://212.183.159.230/100MB.zip" to test. you can see the performance improvement
@@ -37,9 +37,10 @@ def test_requests():
 
     print("Start download with requests+executor ...")
 
-    file_size = network_utils.get_content_length(network_utils.get_headers(test_url))
     network_requests.fetch_large_file(
-        test_url, "./download-with-requests-executor", file_size, auto_unzip=auto_unzip
+        test_url,
+        "./download-with-requests-executor",
+        auto_unzip=auto_unzip,
     )
 
     et = time.time()
@@ -58,9 +59,8 @@ def test_aiohttp():
 
     print("Start download with aiohttp ...")
 
-    file_size = network_utils.get_content_length(network_utils.get_headers(test_url))
     network_aiohttp.fetch_large_file(
-        test_url, "./download-with-aiohttp", file_size, auto_unzip=auto_unzip
+        test_url, "./download-with-aiohttp", auto_unzip=auto_unzip
     )
 
     et = time.time()

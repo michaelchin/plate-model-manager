@@ -231,7 +231,7 @@ def fetch_file(
     auto_unzip: bool = True,
 ):
     fetcher = AiohttpFetcher()
-    fetcher.fetch_file(
+    return fetcher.fetch_file(
         url, filepath, filename=filename, etag=etag, auto_unzip=auto_unzip
     )
 
@@ -244,7 +244,7 @@ def fetch_files(
     auto_unzip: bool = True,
 ):
     fetcher = AiohttpFetcher()
-    fetcher.fetch_files(
+    return fetcher.fetch_files(
         urls, filepaths, filenames=filenames, etag=etags, auto_unzip=auto_unzip
     )
 
@@ -252,11 +252,19 @@ def fetch_files(
 def fetch_large_file(
     url: str,
     filepath: str,
-    filesize: int,
+    filesize: int = None,
     filename: str = None,
+    etag: str = None,
     auto_unzip: bool = True,
+    check_etag: bool = True,
 ):
     fetcher = AiohttpFetcher()
-    fetcher.fetch_large_file(
-        url, filepath, filesize, filename=filename, auto_unzip=auto_unzip
+    return fetcher.fetch_large_file(
+        url,
+        filepath,
+        filesize=filesize,
+        filename=filename,
+        etag=etag,
+        auto_unzip=auto_unzip,
+        check_etag=check_etag,
     )

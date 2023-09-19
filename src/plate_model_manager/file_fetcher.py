@@ -4,7 +4,7 @@ import io
 import os
 from pathlib import Path
 
-from . import misc_utils, unzip_utils
+from . import misc_utils, unzip_utils, network_utils
 
 
 class FileFetcher(metaclass=abc.ABCMeta):
@@ -72,9 +72,11 @@ class FileFetcher(metaclass=abc.ABCMeta):
         self,
         url: str,
         filepath: str,
-        filesize: int,
+        filesize: int = None,
         filename: str = None,
+        etag: str = None,
         auto_unzip: bool = True,
+        check_etag: bool = True,
     ):
         """use multi-thread to fetch a large file.
             LOOK HERE!!!
@@ -90,9 +92,24 @@ class FileFetcher(metaclass=abc.ABCMeta):
         :param filepath: location to keep the file
         :param filesize: the size of file (in bytes)
         :param filename: new file name (optional)
+        :param etag: old etag. if the old etag is the same with the one on server, do not download again.
         :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
+        :returns: new etag
+
         """
+        if filesize is None or check_etag:
+            headers = network_utils.get_headers(url)
+            file_size = network_utils.get_content_length(headers)
+            new_etag = network_utils.get_etag(headers)
+            # if the etags are the same, do not download again
+            if etag and etag == new_etag:
+                return etag
+        else:
+            # if the caller has provided file size and checked etag
+            file_size = filesize
+            new_etag = etag
+
         # create folder to keep the file
         if os.path.isfile(filepath):
             raise Exception(
@@ -107,7 +124,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
         data = [io.BytesIO()]
 
         try:
-            self._run_fetch_large_file(loop, url, filesize, data)
+            self._run_fetch_large_file(loop, url, file_size, data)
         except Exception as e:
             misc_utils.print_error("Failed to fetch large file!")
             raise Exception("Failed to fetch large file!") from e
@@ -126,7 +143,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
         else:
             self._save_file(url, filepath, filename, data[0].read())
 
-        return
+        return new_etag
 
     def _save_file(self, url, filepath, filename, data):
         """helper function to save file to hard drive"""
