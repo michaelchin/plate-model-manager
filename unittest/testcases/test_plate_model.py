@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0, f"{os.path.dirname(__file__)}/../../src")
 from plate_model_manager import PlateModel, PlateModelManager
 
-logger = logging.getLogger("test")
+logger = logging.getLogger(__name__)
 Path("logs").mkdir(parents=True, exist_ok=True)
 fh = logging.FileHandler(f"logs/{__name__}.log")
 fh.setLevel(logging.INFO)
@@ -19,7 +19,7 @@ logger.setLevel(logging.INFO)
 
 class PlateModelTestCase(unittest.TestCase):
     def setUp(self):
-        self.logger = logging.getLogger("test")
+        self.logger = logging.getLogger(__name__)
 
         print(self.logger.level)
         self.logger.info("setup PlateModelTestCase")
