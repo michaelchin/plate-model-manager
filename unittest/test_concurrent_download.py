@@ -1,15 +1,48 @@
+#!/usr/bin/env python
+import os
 import sys
 import time
 
-sys.path.insert(0, "../")
+sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
+from common import TEMP_TEST_DIR
+
 from plate_model_manager import network_aiohttp, network_requests
 
 test_urls = [
+    "https://repo.gplates.org/webdav/pmm/present-day-rasters/topo15-3601x1801.nc.gz",
+    "https://repo.gplates.org/webdav/pmm/matthews2016/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/merdith2021/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/merdith2021/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2016/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2016/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2016/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2019/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2019/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2019/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2022/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2022/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/muller2022/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/seton2012/Coastlines.zip",
+    "https://repo.gplates.org/webdav/pmm/seton2012/StaticPolygons.zip",
+    "https://repo.gplates.org/webdav/pmm/seton2012/Rotations.zip",
+    "https://repo.gplates.org/webdav/pmm/models.json",
+    "https://repo.gplates.org/webdav/pmm/present_day_rasters.json",
+]
+test_urls += [
     f"https://www.earthbyte.org/webdav/ftp/Data_Collections/Zahirovic_etal_2016_ESR_AgeGrid/jpegs/EarthByte_Zahirovic_etal_2016_ESR_r888_AgeGrid-{i}.jpg"
     for i in range(20)
 ]
 
-auto_unzip = False
+auto_unzip = True
 
 
 def test_with_for_loop():
@@ -22,7 +55,7 @@ def test_with_for_loop():
     for url in test_urls:
         network_requests.fetch_file(
             url,
-            "./download-with-for-loop/",
+            f"{TEMP_TEST_DIR}/download-with-for-loop/",
             auto_unzip=auto_unzip,
         )
 
@@ -39,7 +72,7 @@ def test_concurrent_aiohttp():
     """asyncio + aiohttp"""
     st = time.time()
     spt = time.process_time()
-    paths = "./download-concurrently-with-aiohttp/"
+    paths = f"{TEMP_TEST_DIR}/download-concurrently-with-aiohttp/"
 
     print("Start test_concurrent_aiohttp ... ")
 
@@ -63,7 +96,7 @@ def test_concurrent_executor():
     st = time.time()
     spt = time.process_time()
 
-    paths = "./download-concurrently-with-executor/"
+    paths = f"{TEMP_TEST_DIR}/download-concurrently-with-executor/"
 
     print("Start test_concurrent_executor ... ")
 
@@ -82,6 +115,7 @@ def test_concurrent_executor():
     print("End test_concurrent_executor ... ")
 
 
-test_with_for_loop()
-test_concurrent_aiohttp()
-test_concurrent_executor()
+if __name__ == "__main__":
+    test_with_for_loop()
+    test_concurrent_aiohttp()
+    test_concurrent_executor()

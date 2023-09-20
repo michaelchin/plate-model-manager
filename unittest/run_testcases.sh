@@ -2,5 +2,5 @@
 
 BASEDIR=$(dirname "$0")
 #echo "$BASEDIR"
-cd $BASEDIR/testcases
+cd $BASEDIR
 python3 -m unittest 

@@ -245,7 +245,7 @@ def fetch_files(
 ):
     fetcher = AiohttpFetcher()
     return fetcher.fetch_files(
-        urls, filepaths, filenames=filenames, etag=etags, auto_unzip=auto_unzip
+        urls, filepaths, filenames=filenames, etags=etags, auto_unzip=auto_unzip
     )
 
 

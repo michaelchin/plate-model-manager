@@ -1,7 +1,11 @@
+#!/usr/bin/env python
+import os
 import sys
 import time
 
-sys.path.insert(0, "../src")
+sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
+from common import TEMP_TEST_DIR
+
 from plate_model_manager import network_aiohttp, network_requests
 
 # concurrent download from www.earthbyte.org does not work because of Cloud provider's network traffic control
@@ -19,7 +23,9 @@ def test_download_directly():
 
     print("Start download directly ...")
 
-    network_requests.fetch_file(test_url, "./download-directly", auto_unzip=auto_unzip)
+    network_requests.fetch_file(
+        test_url, f"{TEMP_TEST_DIR}/download-directly", auto_unzip=auto_unzip
+    )
 
     et = time.time()
     ept = time.process_time()
@@ -39,7 +45,7 @@ def test_requests():
 
     network_requests.fetch_large_file(
         test_url,
-        "./download-with-requests-executor",
+        f"{TEMP_TEST_DIR}/download-with-requests-executor",
         auto_unzip=auto_unzip,
     )
 
@@ -60,7 +66,7 @@ def test_aiohttp():
     print("Start download with aiohttp ...")
 
     network_aiohttp.fetch_large_file(
-        test_url, "./download-with-aiohttp", auto_unzip=auto_unzip
+        test_url, f"{TEMP_TEST_DIR}/download-with-aiohttp", auto_unzip=auto_unzip
     )
 
     et = time.time()
@@ -72,6 +78,7 @@ def test_aiohttp():
     print("End download with aiohttp ...")
 
 
-test_download_directly()
-test_requests()
-test_aiohttp()
+if __name__ == "__main__":
+    test_download_directly()
+    test_requests()
+    test_aiohttp()
