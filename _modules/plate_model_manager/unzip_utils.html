@@ -88,6 +88,7 @@
 <span class="sd">    :param data: bytes-like object</span>
 <span class="sd">    :param dst_path: location to save the files</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># print(f&quot;save_compressed_data:{url}&quot;)</span>
     <span class="c1"># .zip</span>
     <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.zip&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">is_zipfile</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>

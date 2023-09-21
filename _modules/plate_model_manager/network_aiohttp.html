@@ -97,7 +97,6 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
@@ -107,7 +106,6 @@
 
 <span class="sd">        :param url: the url to download file from</span>
 <span class="sd">        :param filepath: location to keep the file</span>
-<span class="sd">        :param filename: new file name (optional)</span>
 <span class="sd">        :param etag: old etag. if the old etag is the same with the one on server, do not download again.</span>
 <span class="sd">        :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
 
@@ -119,7 +117,6 @@
                     <span class="n">session</span><span class="p">,</span>
                     <span class="n">url</span><span class="p">,</span>
                     <span class="n">filepath</span><span class="p">,</span>
-                    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
                     <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
                     <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
                 <span class="p">)</span>
@@ -132,7 +129,6 @@
         <span class="n">session</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
@@ -160,15 +156,17 @@
                     <span class="s2">&quot;The file has not been changed since it was downloaded last time. Do nothing and return.&quot;</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># use the filename in the url</span>
                 <span class="k">if</span> <span class="n">auto_unzip</span><span class="p">:</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">unzip_utils</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span>
-                            <span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span>
+                            <span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span>
                         <span class="p">)</span>
-                    <span class="k">except</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                        <span class="c1"># print(ex)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HTTP request failed with code </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
             <span class="n">new_etag</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ETag&quot;</span><span class="p">)</span>
@@ -234,7 +232,6 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">urls</span><span class="p">,</span>
         <span class="n">filepaths</span><span class="p">,</span>
-        <span class="n">filenames</span><span class="o">=</span><span class="p">[],</span>
         <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
         <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
@@ -242,7 +239,6 @@
 
 <span class="sd">        :param urls: the urls to download files from</span>
 <span class="sd">        :param filepaths: location(s) to keep the files. This can be one path for all files or one path for each file.</span>
-<span class="sd">        :param filenames: new file names (optional)</span>
 <span class="sd">        :param etags: old etags. if the old etag is the same with the one on server, do not download again.</span>
 <span class="sd">        :param auto_unzip: bool flag to indicate if unzip .zip file automatically</span>
 
@@ -252,12 +248,6 @@
             <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
                 <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">urls</span><span class="p">):</span>
-                    <span class="c1"># get filename</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="p">:</span>
-                        <span class="n">filename</span> <span class="o">=</span> <span class="n">filenames</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
-
                     <span class="c1"># get filepath</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filepaths</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                         <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepaths</span>
@@ -280,7 +270,6 @@
                                 <span class="n">session</span><span class="p">,</span>
                                 <span class="n">url</span><span class="p">,</span>
                                 <span class="n">filepath</span><span class="p">,</span>
-                                <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
                                 <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
                                 <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
                             <span class="p">)</span>
@@ -308,14 +297,11 @@
 <span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">fetcher</span> <span class="o">=</span> <span class="n">AiohttpFetcher</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">(</span>
-        <span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">)</span></div>
 
 
 
@@ -324,14 +310,11 @@
 <span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
     <span class="n">urls</span><span class="p">,</span>
     <span class="n">filepaths</span><span class="p">,</span>
-    <span class="n">filenames</span><span class="o">=</span><span class="p">[],</span>
     <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">fetcher</span> <span class="o">=</span> <span class="n">AiohttpFetcher</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_files</span><span class="p">(</span>
-        <span class="n">urls</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">,</span> <span class="n">filenames</span><span class="o">=</span><span class="n">filenames</span><span class="p">,</span> <span class="n">etags</span><span class="o">=</span><span class="n">etags</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_files</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">,</span> <span class="n">etags</span><span class="o">=</span><span class="n">etags</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">)</span></div>
 
 
 
@@ -341,7 +324,6 @@
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filesize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_etag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -351,7 +333,6 @@
         <span class="n">url</span><span class="p">,</span>
         <span class="n">filepath</span><span class="p">,</span>
         <span class="n">filesize</span><span class="o">=</span><span class="n">filesize</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
         <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
         <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
         <span class="n">check_etag</span><span class="o">=</span><span class="n">check_etag</span><span class="p">,</span>
