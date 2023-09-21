@@ -22,7 +22,6 @@ class AiohttpFetcher(FileFetcher):
         self,
         url: str,
         filepath: str,
-        filename: str = None,
         etag: str = None,
         auto_unzip: bool = True,
     ):
@@ -32,7 +31,6 @@ class AiohttpFetcher(FileFetcher):
 
         :param url: the url to download file from
         :param filepath: location to keep the file
-        :param filename: new file name (optional)
         :param etag: old etag. if the old etag is the same with the one on server, do not download again.
         :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
@@ -44,7 +42,6 @@ class AiohttpFetcher(FileFetcher):
                     session,
                     url,
                     filepath,
-                    filename=filename,
                     etag=etag,
                     auto_unzip=auto_unzip,
                 )
@@ -56,7 +53,6 @@ class AiohttpFetcher(FileFetcher):
         session,
         url: str,
         filepath: str,
-        filename: str = None,
         etag: str = None,
         auto_unzip: bool = True,
     ):
@@ -84,15 +80,17 @@ class AiohttpFetcher(FileFetcher):
                     "The file has not been changed since it was downloaded last time. Do nothing and return."
                 )
             elif r.status == 200:
+                filename = url.split("/")[-1]  # use the filename in the url
                 if auto_unzip:
                     try:
                         unzip_utils.save_compressed_data(
-                            url, io.BytesIO(r.content), filepath
+                            url, io.BytesIO(content), filepath
                         )
-                    except:
-                        self._save_file(url, filepath, filename, content)
+                    except Exception as ex:
+                        # print(ex)
+                        self._save_file(filepath, filename, content)
                 else:
-                    self._save_file(url, filepath, filename, content)
+                    self._save_file(filepath, filename, content)
             else:
                 raise Exception(f"HTTP request failed with code {r.status_code}.")
             new_etag = r.headers.get("ETag")
@@ -156,7 +154,6 @@ class AiohttpFetcher(FileFetcher):
         self,
         urls,
         filepaths,
-        filenames=[],
         etags=[],
         auto_unzip: bool = True,
     ):
@@ -164,7 +161,6 @@ class AiohttpFetcher(FileFetcher):
 
         :param urls: the urls to download files from
         :param filepaths: location(s) to keep the files. This can be one path for all files or one path for each file.
-        :param filenames: new file names (optional)
         :param etags: old etags. if the old etag is the same with the one on server, do not download again.
         :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
@@ -174,12 +170,6 @@ class AiohttpFetcher(FileFetcher):
             async with aiohttp.ClientSession() as session:
                 tasks = []
                 for idx, url in enumerate(urls):
-                    # get filename
-                    if len(filenames) > idx:
-                        filename = filenames[idx]
-                    else:
-                        filename = None
-
                     # get filepath
                     if isinstance(filepaths, str):
                         filepath = filepaths
@@ -202,7 +192,6 @@ class AiohttpFetcher(FileFetcher):
                                 session,
                                 url,
                                 filepath,
-                                filename=filename,
                                 etag=etag,
                                 auto_unzip=auto_unzip,
                             )
@@ -226,34 +215,27 @@ class AiohttpFetcher(FileFetcher):
 def fetch_file(
     url: str,
     filepath: str,
-    filename: str = None,
     etag: str = None,
     auto_unzip: bool = True,
 ):
     fetcher = AiohttpFetcher()
-    return fetcher.fetch_file(
-        url, filepath, filename=filename, etag=etag, auto_unzip=auto_unzip
-    )
+    return fetcher.fetch_file(url, filepath, etag=etag, auto_unzip=auto_unzip)
 
 
 def fetch_files(
     urls,
     filepaths,
-    filenames=[],
     etags=[],
     auto_unzip: bool = True,
 ):
     fetcher = AiohttpFetcher()
-    return fetcher.fetch_files(
-        urls, filepaths, filenames=filenames, etags=etags, auto_unzip=auto_unzip
-    )
+    return fetcher.fetch_files(urls, filepaths, etags=etags, auto_unzip=auto_unzip)
 
 
 def fetch_large_file(
     url: str,
     filepath: str,
     filesize: int = None,
-    filename: str = None,
     etag: str = None,
     auto_unzip: bool = True,
     check_etag: bool = True,
@@ -263,7 +245,6 @@ def fetch_large_file(
         url,
         filepath,
         filesize=filesize,
-        filename=filename,
         etag=etag,
         auto_unzip=auto_unzip,
         check_etag=check_etag,

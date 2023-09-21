@@ -73,7 +73,6 @@ class FileFetcher(metaclass=abc.ABCMeta):
         url: str,
         filepath: str,
         filesize: int = None,
-        filename: str = None,
         etag: str = None,
         auto_unzip: bool = True,
         check_etag: bool = True,
@@ -91,7 +90,6 @@ class FileFetcher(metaclass=abc.ABCMeta):
         :param url: the file url
         :param filepath: location to keep the file
         :param filesize: the size of file (in bytes)
-        :param filename: new file name (optional)
         :param etag: old etag. if the old etag is the same with the one on server, do not download again.
         :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
@@ -132,6 +130,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
             loop.close()
 
         data[0].seek(0)
+        filename = url.split("/")[-1]  # use the filename in the url
         # save the file
         if auto_unzip:
             try:
@@ -139,18 +138,16 @@ class FileFetcher(metaclass=abc.ABCMeta):
             except:
                 print("failed to save zip. try save directly")
                 data[0].seek(0)
-                self._save_file(url, filepath, filename, data[0].read())
+                self._save_file(filepath, filename, data[0].read())
         else:
-            self._save_file(url, filepath, filename, data[0].read())
+            self._save_file(filepath, filename, data[0].read())
 
         return new_etag
 
-    def _save_file(self, url, filepath, filename, data):
+    def _save_file(self, filepath, filename, data):
         """helper function to save file to hard drive"""
 
         Path(filepath).mkdir(parents=True, exist_ok=True)
-        if not filename:
-            filename = url.split("/")[-1]  # use the filename in the url
         if os.path.isfile(f"{filepath}/{filename}"):
             print(f"Warning: overwriting {filename}")
         with open(f"{filepath}/{filename}", "wb+") as of:

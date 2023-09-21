@@ -15,6 +15,7 @@ def save_compressed_data(url, data, dst_path):
     :param data: bytes-like object
     :param dst_path: location to save the files
     """
+    # print(f"save_compressed_data:{url}")
     # .zip
     if url.endswith(".zip"):
         if not zipfile.is_zipfile(data):

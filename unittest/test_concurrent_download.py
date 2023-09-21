@@ -52,12 +52,14 @@ def test_with_for_loop():
 
     print("Start test_with_for_loop ... ")
 
+    count = 0
     for url in test_urls:
         network_requests.fetch_file(
             url,
-            f"{TEMP_TEST_DIR}/download-with-for-loop/",
+            f"{TEMP_TEST_DIR}/download-with-for-loop/{str(count)}",
             auto_unzip=auto_unzip,
         )
+        count += 1
 
     et = time.time()
     ept = time.process_time()
@@ -72,7 +74,10 @@ def test_concurrent_aiohttp():
     """asyncio + aiohttp"""
     st = time.time()
     spt = time.process_time()
-    paths = f"{TEMP_TEST_DIR}/download-concurrently-with-aiohttp/"
+    paths = [
+        f"{TEMP_TEST_DIR}/download-concurrently-with-aiohttp/{str(i)}"
+        for i in range(len(test_urls))
+    ]
 
     print("Start test_concurrent_aiohttp ... ")
 
@@ -96,7 +101,10 @@ def test_concurrent_executor():
     st = time.time()
     spt = time.process_time()
 
-    paths = f"{TEMP_TEST_DIR}/download-concurrently-with-executor/"
+    paths = [
+        f"{TEMP_TEST_DIR}/download-concurrently-with-executor/{i}"
+        for i in range(len(test_urls))
+    ]
 
     print("Start test_concurrent_executor ... ")
 
