@@ -1,12 +1,21 @@
 #!/usr/bin/env python
+import glob
 import os
 import sys
 import time
+import unittest
 
 sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
-from common import TEMP_TEST_DIR
+from common import TEMP_TEST_DIR, get_test_logger
 
 from plate_model_manager import network_aiohttp, network_requests
+
+if __name__ == "__main__":
+    logger_name = "test_concurrent_download_main"
+else:
+    logger_name = __name__
+
+logger = get_test_logger(logger_name)
 
 test_urls = [
     "https://repo.gplates.org/webdav/pmm/present-day-rasters/topo15-3601x1801.nc.gz",
@@ -45,85 +54,105 @@ test_urls += [
 auto_unzip = True
 
 
-def test_with_for_loop():
-    """requests + "for loop" """
-    st = time.time()
-    spt = time.process_time()
+@unittest.skipIf(
+    int(os.getenv("TEST_LEVEL", 0)) < 1, "this will download a large volume of data"
+)
+class ConcurrentDownloadTestCase(unittest.TestCase):
+    def setUp(self):
+        pass
 
-    print("Start test_with_for_loop ... ")
+    def test_with_for_loop(self):
+        """requests + "for loop" """
+        st = time.time()
+        spt = time.process_time()
 
-    count = 0
-    for url in test_urls:
-        network_requests.fetch_file(
-            url,
-            f"{TEMP_TEST_DIR}/download-with-for-loop/{str(count)}",
+        print("Start test_with_for_loop ... ")
+
+        count = 0
+        for url in test_urls:
+            network_requests.fetch_file(
+                url,
+                f"{TEMP_TEST_DIR}/download-with-for-loop/{str(count)}",
+                auto_unzip=auto_unzip,
+            )
+            count += 1
+
+        f_list = glob.glob(f"{TEMP_TEST_DIR}/download-with-for-loop/*")
+        self.assertTrue(len(f_list) == len(test_urls))
+
+        et = time.time()
+        ept = time.process_time()
+
+        print(f"time: {et - st}")
+        print(f"process time: {ept - spt}")
+
+        print("End test_with_for_loop ... ")
+
+    def test_concurrent_aiohttp(self):
+        """asyncio + aiohttp"""
+        st = time.time()
+        spt = time.process_time()
+        paths = [
+            f"{TEMP_TEST_DIR}/download-concurrently-with-aiohttp/{str(i)}"
+            for i in range(len(test_urls))
+        ]
+
+        print("Start test_concurrent_aiohttp ... ")
+
+        network_aiohttp.fetch_files(
+            test_urls,
+            paths,
             auto_unzip=auto_unzip,
         )
-        count += 1
 
-    et = time.time()
-    ept = time.process_time()
+        f_list = glob.glob(f"{TEMP_TEST_DIR}/download-concurrently-with-aiohttp/*")
+        self.assertTrue(len(f_list) == len(test_urls))
 
-    print(f"time: {et - st}")
-    print(f"process time: {ept - spt}")
+        et = time.time()
+        ept = time.process_time()
 
-    print("End test_with_for_loop ... ")
+        print(f"time: {et - st}")
+        print(f"process time: {ept - spt}")
 
+        print("End test_concurrent_aiohttp ... ")
 
-def test_concurrent_aiohttp():
-    """asyncio + aiohttp"""
-    st = time.time()
-    spt = time.process_time()
-    paths = [
-        f"{TEMP_TEST_DIR}/download-concurrently-with-aiohttp/{str(i)}"
-        for i in range(len(test_urls))
-    ]
+    def test_concurrent_executor(self):
+        """requests + ThreadPoolExecutor + asyncio"""
+        st = time.time()
+        spt = time.process_time()
 
-    print("Start test_concurrent_aiohttp ... ")
+        paths = [
+            f"{TEMP_TEST_DIR}/download-concurrently-with-executor/{i}"
+            for i in range(len(test_urls))
+        ]
 
-    network_aiohttp.fetch_files(
-        test_urls,
-        paths,
-        auto_unzip=auto_unzip,
-    )
+        print("Start test_concurrent_executor ... ")
 
-    et = time.time()
-    ept = time.process_time()
+        network_requests.fetch_files(
+            test_urls,
+            paths,
+            auto_unzip=auto_unzip,
+        )
 
-    print(f"time: {et - st}")
-    print(f"process time: {ept - spt}")
+        f_list = glob.glob(f"{TEMP_TEST_DIR}/download-concurrently-with-executor/*")
+        self.assertTrue(len(f_list) == len(test_urls))
 
-    print("End test_concurrent_aiohttp ... ")
+        et = time.time()
+        ept = time.process_time()
 
+        print(f"time: {et - st}")
+        print(f"process time: {ept - spt}")
 
-def test_concurrent_executor():
-    """requests + ThreadPoolExecutor + asyncio"""
-    st = time.time()
-    spt = time.process_time()
-
-    paths = [
-        f"{TEMP_TEST_DIR}/download-concurrently-with-executor/{i}"
-        for i in range(len(test_urls))
-    ]
-
-    print("Start test_concurrent_executor ... ")
-
-    network_requests.fetch_files(
-        test_urls,
-        paths,
-        auto_unzip=auto_unzip,
-    )
-
-    et = time.time()
-    ept = time.process_time()
-
-    print(f"time: {et - st}")
-    print(f"process time: {ept - spt}")
-
-    print("End test_concurrent_executor ... ")
+        print("End test_concurrent_executor ... ")
 
 
 if __name__ == "__main__":
-    test_with_for_loop()
-    test_concurrent_aiohttp()
-    test_concurrent_executor()
+    # use the following code to run a list of tests
+    # suite = unittest.TestSuite()
+    # suite.addTest(ConcurrentDownloadTestCase("test_concurrent_executor"))
+    # runner = unittest.TextTestRunner()
+    # runner.run(suite)
+
+    # use the following code to run all tests in this file
+    runner = unittest.TextTestRunner()
+    runner.run(unittest.TestLoader().loadTestsFromTestCase(ConcurrentDownloadTestCase))

@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+
 import os
-import sys, logging, unittest
-from pathlib import Path
+import sys
+import unittest
+
 
 sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
-from common import TEMP_TEST_DIR
+from common import TEMP_TEST_DIR, get_test_logger
 
 from plate_model_manager import PlateModelManager
 
@@ -13,14 +15,7 @@ if __name__ == "__main__":
 else:
     logger_name = __name__
 
-logger = logging.getLogger(logger_name)
-Path("logs").mkdir(parents=True, exist_ok=True)
-fh = logging.FileHandler(f"logs/{logger_name}.log")
-fh.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s \n\n%(message)s\n")
-fh.setFormatter(formatter)
-logger.addHandler(fh)
-logger.setLevel(logging.INFO)
+logger = get_test_logger(logger_name)
 
 
 class PlateModelTestCase(unittest.TestCase):
@@ -89,7 +84,9 @@ class PlateModelTestCase(unittest.TestCase):
 
         self.model.download_time_dependent_rasters("AgeGrids", times=[1, 2])
 
-    @unittest.skip("this will download a large volume of data")
+    @unittest.skipIf(
+        int(os.getenv("TEST_LEVEL", 0)) < 1, "this will download a large volume of data"
+    )
     def test_download_all(self):
         self.model.download_all()
 
@@ -103,4 +100,4 @@ if __name__ == "__main__":
 
     # use the following code to run all tests in this file
     runner = unittest.TextTestRunner()
-    runner.run(unittest.makeSuite(PlateModelTestCase))
+    runner.run(unittest.TestLoader().loadTestsFromTestCase(PlateModelTestCase))

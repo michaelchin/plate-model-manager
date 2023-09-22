@@ -3,4 +3,5 @@
 BASEDIR=$(dirname "$0")
 #echo "$BASEDIR"
 cd $BASEDIR
-python3 -m unittest -vv --buffer
+export TEST_LEVEL=1
+python3 -m unittest -vv --buffer 
