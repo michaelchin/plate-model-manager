@@ -69,7 +69,7 @@ def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint
         headers = network_utils.get_headers(url)
         file_size = network_utils.get_content_length(headers)
         new_etag = network_utils.get_etag(headers)
-        if etag == new_etag:
+        if etag is not None and etag == new_etag:
             download_flag = False
 
     # only redownload when necessary
