@@ -32,6 +32,8 @@
 - `twine check dist/*`
 - `twine upload -r testpypi dist/*`
 - `twine upload dist/*`
+- username is \_\_token\_\_
+- password is the API token. go to https://pypi.org/manage/account/token/ to get a one-time token
 
 #### gh-pages branch
 
