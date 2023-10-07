@@ -68,7 +68,14 @@ class PlateModel:
             self.loop.close()
 
     def get_model_dir(self):
-        return self.create_model_dir()
+        if PlateModel.is_model_dir(self.model_dir):
+            return self.model_dir
+        elif not self.readonly:
+            return self.create_model_dir()
+        else:
+            raise Exception(
+                f"The model dir {self.model_dir} is invalid and could not create it (in readonly mode)."
+            )
 
     def get_data_dir(self):
         return self.data_dir
@@ -258,8 +265,6 @@ class PlateModel:
             raise Exception("Unable to download layer files in readonly mode.")
 
         print(f"downloading {layer_name}")
-        download_flag = False
-        meta_etag = None
 
         # find layer file url. two parts. one is the rotation, the other is all other geometry layers
         if layer_name in self.model:
