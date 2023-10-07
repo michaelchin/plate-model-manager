@@ -62,6 +62,11 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Topologies.zip"
+        },
+        "TimeDepRasters": {
+            "AgeGrids": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/agegrids/agegrid-{}-Ma.png",
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/coastlines/coastlines-{}-Ma.png",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/topologies/topologies-{}-Ma.png"
         }
     },
     "matthews2016_pmag_ref": {

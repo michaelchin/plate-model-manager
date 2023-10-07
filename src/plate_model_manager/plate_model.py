@@ -152,9 +152,9 @@ class PlateModel:
         url = self.model["TimeDepRasters"][raster_name].format(time)
 
         if not self.readonly:
-            self.download_raster(url, f"{self.get_model_dir()}/{raster_name}")
+            self.download_raster(url, f"{self.get_model_dir()}/Rasters/{raster_name}")
         file_name = url.split("/")[-1]
-        local_path = f"{self.get_model_dir()}/{raster_name}/{file_name}"
+        local_path = f"{self.get_model_dir()}/Rasters/{raster_name}/{file_name}"
         if os.path.isfile(local_path):
             return local_path
         elif self.readonly:
@@ -184,7 +184,7 @@ class PlateModel:
         for time in times:
             url = self.model["TimeDepRasters"][raster_name].format(time)
             file_name = url.split("/")[-1]
-            local_path = f"{self.get_model_dir()}/{raster_name}/{file_name}"
+            local_path = f"{self.get_model_dir()}/Rasters/{raster_name}/{file_name}"
             if os.path.isfile(local_path):
                 paths.append(local_path)
             elif self.readonly:
@@ -322,7 +322,7 @@ class PlateModel:
                 nonlocal times
                 tasks = []
 
-                dst_path = f"{self.get_model_dir()}/{raster_name}"
+                dst_path = f"{self.get_model_dir()}/Rasters/{raster_name}"
                 if not times:
                     times = range(self.model["SmallTime"], self.model["BigTime"])
                 for time in times:
