@@ -4,6 +4,7 @@ import functools
 import io
 import os
 from pathlib import Path
+from typing import Union
 
 import requests
 
@@ -132,7 +133,7 @@ class RequestsFetcher(FileFetcher):
         self,
         run,
         urls,
-        filepaths: list | str,
+        filepaths: Union[list, str],
         etags=[],
         auto_unzip: bool = True,
     ):
@@ -170,7 +171,7 @@ class RequestsFetcher(FileFetcher):
     def fetch_files(
         self,
         urls,
-        filepaths: list | str,
+        filepaths: Union[list, str],
         etags=[],
         auto_unzip: bool = True,
     ):
@@ -216,7 +217,7 @@ def fetch_file(
 
 def fetch_files(
     urls,
-    filepaths: list | str,
+    filepaths: Union[list, str],
     etags=[],
     auto_unzip: bool = True,
 ):
