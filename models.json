@@ -12,7 +12,8 @@
         },
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#muller2019"
     },
     "muller2022": {
         "BigTime": 1000,
@@ -21,7 +22,8 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/muller2022/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2022/StaticPolygons.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#muller2022"
     },
     "muller2016": {
         "BigTime": 230,
@@ -31,7 +33,8 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/muller2016/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2016/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/muller2016/Topologies.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#muller2016"
     },
     "merdith2021": {
         "BigTime": 1000,
@@ -42,7 +45,8 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip",
             "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/ContinentalPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#merdith2021"
     },
     "matthews2016": {
         "BigTime": 410,
@@ -52,7 +56,8 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016/Topologies.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#matthews2016"
     },
     "matthews2016_mantle_ref": {
         "BigTime": 410,
@@ -67,7 +72,8 @@
             "AgeGrids": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/agegrids/agegrid-{}-Ma.png",
             "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/coastlines/coastlines-{}-Ma.png",
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/topologies/topologies-{}-Ma.png"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#matthews2016_mantle_ref"
     },
     "matthews2016_pmag_ref": {
         "BigTime": 410,
@@ -77,7 +83,8 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/Topologies.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#matthews2016_pmag_ref"
     },
     "domeier2014": {
         "BigTime": 410,
@@ -87,7 +94,8 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/domeier2014/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/domeier2014/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/domeier2014/Topologies.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#domeier2014"
     },
     "golonka": {
         "BigTime": 540,
@@ -96,7 +104,8 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/golonka/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/golonka/StaticPolygons.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#golonka"
     },
     "pehrsson2015": {
         "BigTime": 2100,
@@ -105,7 +114,8 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/pehrsson2015/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/pehrsson2015/StaticPolygons.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#pehrsson2015"
     },
     "paleomap": {
         "BigTime": 750,
@@ -114,7 +124,8 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/paleomap/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/paleomap/StaticPolygons.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#paleomap"
     },
     "torsvikcocks2017": {
         "BigTime": 1100,
@@ -123,7 +134,8 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/StaticPolygons.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#torsvikcocks2017"
     },
     "rodinia": {
         "BigTime": 1100,
@@ -132,7 +144,8 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/rodinia/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/rodinia/StaticPolygons.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#rodinia"
     },
     "seton2012": {
         "BigTime": 200,
@@ -144,6 +157,7 @@
             "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/seton2012/ContinentalPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/seton2012/Topologies.zip",
             "COBs": "https://repo.gplates.org/webdav/pmm/seton2012/COBs.zip"
-        }
+        },
+        "info": "https://gwsdoc.gplates.org/models#seton2012"
     }
 }

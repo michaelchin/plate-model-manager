@@ -267,7 +267,7 @@ class PlateModel:
         if self.readonly:
             raise Exception("Unable to download layer files in readonly mode.")
 
-        print(f"downloading {layer_name}")
+        # print(f"downloading {layer_name}")
 
         # find layer file url. two parts. one is the rotation, the other is all other geometry layers
         if layer_name in self.model:

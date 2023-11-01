@@ -75,7 +75,7 @@ class AiohttpFetcher(FileFetcher):
             # print(r.headers)
 
             if r.status == 304:
-                print(url)
+                # print(url)
                 print(
                     "The file has not been changed since it was downloaded last time. Do nothing and return."
                 )
