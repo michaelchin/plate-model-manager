@@ -14,7 +14,7 @@ def check_redownload_need(metadata_file, url):
     :param metadata_file: metadata file path
     :param url: url for the target file
 
-    :returns download_flag, etag: a flag indicates if redownload is neccesarry and old etag if needed.
+    :returns download_flag, etag: a flag indicates if redownload is neccesarry and old etag in the meta file.
     """
     download_flag = False
     meta_etag = None
@@ -43,7 +43,7 @@ def check_redownload_need(metadata_file, url):
                 else:
                     download_flag = True  # no expiry date in metafile
 
-                if download_flag and "etag" in meta:
+                if "etag" in meta:
                     meta_etag = meta["etag"]
     else:
         download_flag = True  # if metadata_file does not exist
@@ -64,13 +64,17 @@ def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint
     download_flag, etag = check_redownload_need(metadata_file, url)
 
     file_size = None
-    if download_flag and large_file_hint:
+    update_meta = False
+    new_etag = etag
+    if download_flag or large_file_hint:
+        # print(f"Checking the etag {url}...")
         # check the file size and etag for large file
         headers = network_utils.get_headers(url)
         file_size = network_utils.get_content_length(headers)
         new_etag = network_utils.get_etag(headers)
         if etag is not None and etag == new_etag:
             download_flag = False
+            update_meta = True
 
     # only redownload when necessary
     if download_flag:
@@ -85,19 +89,21 @@ def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint
                 etag=etag,
                 auto_unzip=True,
             )
-        if etag != new_etag or new_etag is None:
-            # save metadata file
-            metadata = {
-                "url": url,
-                "expiry": (datetime.now() + timedelta(hours=expire_hours)).strftime(
-                    EXPIRY_TIME_FORMAT
-                ),
-                "etag": new_etag,
-            }
-            Path("/".join(metadata_file.split("/")[:-1])).mkdir(
-                parents=True, exist_ok=True
-            )
-            with open(metadata_file, "w+") as f:
-                json.dump(metadata, f)
+
     else:
-        print("The local files are still good. Will not download again.")
+        print(
+            "The local file(s) is/are still good. Will not download again at this moment."
+        )
+
+    if etag != new_etag or new_etag is None or update_meta:
+        # update metadata file
+        metadata = {
+            "url": url,
+            "expiry": (datetime.now() + timedelta(hours=expire_hours)).strftime(
+                EXPIRY_TIME_FORMAT
+            ),
+            "etag": new_etag,
+        }
+        Path("/".join(metadata_file.split("/")[:-1])).mkdir(parents=True, exist_ok=True)
+        with open(metadata_file, "w+") as f:
+            json.dump(metadata, f)

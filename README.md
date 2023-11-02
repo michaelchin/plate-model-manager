@@ -69,3 +69,8 @@ The above Python code download the "Muller2019" model. The model.get_rotation_mo
 This Python module is mostly used in [GPlately](https://github.com/GPlates/gplately), [GPlates Web Service](https://github.com/GPlates/gplates-web-service) and [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials).
 
 A good example of using PlateModelManager with PyGPlates can be found [here](https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb).
+
+The examples of using PlateModelManager with GPlately:
+
+- https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/introducing-plate-model-manager.py
+- https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working-with-plate-model-manager.py
