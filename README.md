@@ -41,6 +41,8 @@ This is a dataset manager for plate tectonic models. It is similar to NPM or Con
 
 #### Use in Python script
 
+The Python code below prints all available model names.
+
 ```python
     # print all available model names
     from plate_model_manager import PlateModelManager
@@ -50,23 +52,23 @@ This is a dataset manager for plate tectonic models. It is similar to NPM or Con
       print(name)
 ```
 
+The Python code below downloads the "Muller2019" model into folder "plate-models-data-dir".
+The model.get_rotation_model() function returns the rotation file location.
+
 ```python
     from plate_model_manager import PlateModelManager
 
     pm_manager = PlateModelManager()
-    model = pm_manager.get_model("Muller2019")
-    model.set_data_dir("plate-models-data-dir")
+    model = pm_manager.get_model("Muller2019",data_dir="plate-models-data-dir")
     model.download_all_layers()
     print(model.get_rotation_model())
 ```
 
     ['plate-models-data-dir/muller2019//Rotations/Muller2019-Young2019-Cao2020.rot']
 
-The above Python code download the "Muller2019" model. The model.get_rotation_model() function returns the rotation file location.
-
 ### Examples
 
-This Python module is mostly used in [GPlately](https://github.com/GPlates/gplately), [GPlates Web Service](https://github.com/GPlates/gplates-web-service) and [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials).
+This Python module is mostly used in [GPlately](https://github.com/GPlates/gplately), [GPlates Web Service](https://github.com/GPlates/gplates-web-service), [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials) and [GPlates Python Proxy](https://github.com/michaelchin/gplates-python-proxy).
 
 A good example of using PlateModelManager with PyGPlates can be found [here](https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb).
 
