@@ -87,7 +87,7 @@
 <span class="sd">    :param metadata_file: metadata file path</span>
 <span class="sd">    :param url: url for the target file</span>
 
-<span class="sd">    :returns download_flag, etag: a flag indicates if redownload is neccesarry and old etag if needed.</span>
+<span class="sd">    :returns download_flag, etag: a flag indicates if redownload is neccesarry and old etag in the meta file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">download_flag</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">meta_etag</span> <span class="o">=</span> <span class="kc">None</span>
@@ -116,7 +116,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">download_flag</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># no expiry date in metafile</span>
 
-                <span class="k">if</span> <span class="n">download_flag</span> <span class="ow">and</span> <span class="s2">&quot;etag&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;etag&quot;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
                     <span class="n">meta_etag</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;etag&quot;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">download_flag</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># if metadata_file does not exist</span>
@@ -140,13 +140,17 @@
     <span class="n">download_flag</span><span class="p">,</span> <span class="n">etag</span> <span class="o">=</span> <span class="n">check_redownload_need</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
 
     <span class="n">file_size</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="n">download_flag</span> <span class="ow">and</span> <span class="n">large_file_hint</span><span class="p">:</span>
+    <span class="n">update_meta</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">new_etag</span> <span class="o">=</span> <span class="n">etag</span>
+    <span class="k">if</span> <span class="n">download_flag</span> <span class="ow">or</span> <span class="n">large_file_hint</span><span class="p">:</span>
+        <span class="c1"># print(f&quot;Checking the etag {url}...&quot;)</span>
         <span class="c1"># check the file size and etag for large file</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_headers</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">file_size</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_content_length</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
         <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_etag</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">etag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">etag</span> <span class="o">==</span> <span class="n">new_etag</span><span class="p">:</span>
             <span class="n">download_flag</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">update_meta</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="c1"># only redownload when necessary</span>
     <span class="k">if</span> <span class="n">download_flag</span><span class="p">:</span>
@@ -161,22 +165,24 @@
                 <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
                 <span class="n">auto_unzip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">if</span> <span class="n">etag</span> <span class="o">!=</span> <span class="n">new_etag</span> <span class="ow">or</span> <span class="n">new_etag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># save metadata file</span>
-            <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
-                <span class="s2">&quot;expiry&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">expire_hours</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
-                    <span class="n">EXPIRY_TIME_FORMAT</span>
-                <span class="p">),</span>
-                <span class="s2">&quot;etag&quot;</span><span class="p">:</span> <span class="n">new_etag</span><span class="p">,</span>
-            <span class="p">}</span>
-            <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">metadata_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span>
-                <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The local files are still good. Will not download again.&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;The local file(s) is/are still good. Will not download again at this moment.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">etag</span> <span class="o">!=</span> <span class="n">new_etag</span> <span class="ow">or</span> <span class="n">new_etag</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">update_meta</span><span class="p">:</span>
+        <span class="c1"># update metadata file</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+            <span class="s2">&quot;expiry&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">expire_hours</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                <span class="n">EXPIRY_TIME_FORMAT</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;etag&quot;</span><span class="p">:</span> <span class="n">new_etag</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">metadata_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
 
 </pre></div>
 
