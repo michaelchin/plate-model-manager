@@ -60,7 +60,6 @@ The model.get_rotation_model() function returns the rotation file location.
 
     pm_manager = PlateModelManager()
     model = pm_manager.get_model("Muller2019",data_dir="plate-models-data-dir")
-    model.download_all_layers()
     print(model.get_rotation_model())
 ```
 

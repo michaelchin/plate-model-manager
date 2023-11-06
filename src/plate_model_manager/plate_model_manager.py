@@ -82,6 +82,7 @@ class PlateModelManager:
         return "https://repo.gplates.org/webdav/pmm/models.json"
 
     def download_all_models(self, data_dir="./"):
+        """download all available models into data_dir"""
         model_names = self.get_available_model_names()
         for name in model_names:
             print(f"download {name}")

@@ -24,6 +24,7 @@ class RequestsFetcher(FileFetcher):
         self,
         url: str,
         filepath: str,
+        filename: str = None,
         etag: str = None,
         auto_unzip: bool = True,
     ):
@@ -58,7 +59,8 @@ class RequestsFetcher(FileFetcher):
                 "The file has not been changed since it was downloaded last time. Do nothing and return."
             )
         elif r.status_code == 200:
-            filename = url.split("/")[-1]  # use the filename in the url
+            if filename is None:
+                filename = url.split("/")[-1]  # use the filename in the url
             if auto_unzip:
                 try:
                     unzip_utils.save_compressed_data(
@@ -208,11 +210,14 @@ class RequestsFetcher(FileFetcher):
 def fetch_file(
     url: str,
     filepath: str,
+    filename: str = None,
     etag: str = None,
     auto_unzip: bool = True,
 ):
     fetcher = RequestsFetcher()
-    return fetcher.fetch_file(url, filepath, etag=etag, auto_unzip=auto_unzip)
+    return fetcher.fetch_file(
+        url, filepath, filename=filename, etag=etag, auto_unzip=auto_unzip
+    )
 
 
 def fetch_files(
