@@ -91,6 +91,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.present_day_rasters">plate_model_manager.present_day_rasters module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.present_day_rasters.RasterNameNotFound"><code class="docutils literal notranslate"><span class="pre">RasterNameNotFound</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.unzip_utils">plate_model_manager.unzip_utils module</a><ul>
@@ -683,8 +684,14 @@ see an example models.json file at PlateModelManager.get_default_repo_url()</p>
 <p>manage present-day rasters</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster">
-<span class="sig-name descname"><span class="pre">get_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.get_raster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.get_raster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster" title="Link to this definition"></a></dt>
 <dd><p>download the raster by name. Save the raster in self.data_dir</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.PresentDayRasterManager.is_wms">
+<span class="sig-name descname"><span class="pre">is_wms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.is_wms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.is_wms" title="Link to this definition"></a></dt>
+<dd><p>return True if the raster is served by Web Map Service, otherwise False</p>
 </dd></dl>
 
 <dl class="py method">
@@ -697,6 +704,12 @@ see an example models.json file at PlateModelManager.get_default_repo_url()</p>
 <span class="sig-name descname"><span class="pre">set_data_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.set_data_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.PresentDayRasterManager.set_data_dir" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="plate_model_manager.present_day_rasters.RasterNameNotFound">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.present_day_rasters.</span></span><span class="sig-name descname"><span class="pre">RasterNameNotFound</span></span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#RasterNameNotFound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.present_day_rasters.RasterNameNotFound" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 </section>
