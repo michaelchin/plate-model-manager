@@ -6,7 +6,9 @@
 ![platforms](https://anaconda.org/conda-forge/plate-model-manager/badges/platforms.svg)
 ![downloads](https://anaconda.org/conda-forge/plate-model-manager/badges/downloads.svg)
 
-This is a dataset manager for plate tectonic models. It is similar to NPM or Conda for software packages.
+Originally the plate-model-manager was designed for [GPlately](https://github.com/GPlates/gplately). Later, it was found also useful in other scenarios and contexts. The plate-model-manager downloads and manages the plate reconstruction model files. It is a dataset manager for plate tectonic models, similar to NPM or Conda for software packages.
+
+Have you ever wondered where to get the plate tectonic reconstruction models? If the answer is yes, you probably want to check out this plate-model-manager Python module.
 
 ### How to install
 
@@ -17,53 +19,56 @@ This is a dataset manager for plate tectonic models. It is similar to NPM or Con
 #### Use the command line
 
 - `pmm ls`
-  This command will list all available reconstruction models, such as
-  - muller2019
-  - muller2022
-  - muller2016
-  - merdith2021
-  - matthews2016
-  - matthews2016_mantle_ref
-  - matthews2016_pmag_ref
-  - domeier2014
-  - golonka
-  - pehrsson2015
-  - paleomap
-  - torsvikcocks2017
-  - rodinia
-  - seton2012
+
+  This command will list all available plate tectonic reconstruction models.
+
+  ![pmm ls command screenshot](images/screenshot-pmm-ls-command.png)
+
 - `pmm ls Muller2019`
+
   This command will show the details of model 'Muller2019'.
+
+  ![pmm ls model command screenshot](images/screenshot-pmm-ls-model.png)
+
 - `pmm download Muller2019 plate-models-data-dir`
+
   This command will download model "Muller2019" into a folder 'plate-models-data-dir'.
+
+  ![pmm download model screenshot](images/screenshot-pmm-download-model.png)
+
 - `pmm download all`
+
   This command will download all available models into the current working directory.
+
+  ![pmm download all screenshot](images/screenshot-pmm-download-all.png)
 
 #### Use in Python script
 
-The Python code below prints all available model names.
+👉 The Python code below prints all available model names.
 
 ```python
-    # print all available model names
-    from plate_model_manager import PlateModelManager
+# print all available model names
+from plate_model_manager import PlateModelManager
 
-    m_manager = PlateModelManager()
-    for name in pm_manager.get_available_model_names():
-      print(name)
+pm_manager = PlateModelManager()
+for name in pm_manager.get_available_model_names():
+  print(name)
 ```
 
-The Python code below downloads the "Muller2019" model into folder "plate-models-data-dir".
+![python list all models screenshot](images/screenshot-python-list-all-models.png)
+
+👉 The Python code below downloads the "Muller2019" model into folder "plate-models-data-dir".
 The model.get_rotation_model() function returns the rotation file location.
 
 ```python
-    from plate_model_manager import PlateModelManager
+from plate_model_manager import PlateModelManager
 
-    pm_manager = PlateModelManager()
-    model = pm_manager.get_model("Muller2019",data_dir="plate-models-data-dir")
-    print(model.get_rotation_model())
+pm_manager = PlateModelManager()
+model = pm_manager.get_model("Muller2019",data_dir="plate-models-data-dir")
+print(model.get_rotation_model())
 ```
 
-    ['plate-models-data-dir/muller2019//Rotations/Muller2019-Young2019-Cao2020.rot']
+![python print rotation screenshot](images/screenshot-python-print-rotation.png)
 
 ### Examples
 
@@ -75,3 +80,5 @@ The examples of using PlateModelManager with GPlately:
 
 - https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/introducing-plate-model-manager.py
 - https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working-with-plate-model-manager.py
+
+The PlateModelManager can also be used with the GPlates desktop. Use the command line to download the plate model files and open the files with GPlates desktop. This will save the trouble of downloading files from Internet manually.
