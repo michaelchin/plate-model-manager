@@ -2,5 +2,26 @@
     "etopo1_grd": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO1/data/ice_surface/grid_registered/netcdf/ETOPO1_Ice_g_gmt4.grd.gz",
     "etopo1_tif": "https://www.ngdc.noaa.gov/mgg/global/relief/ETOPO1/image/color_etopo1_ice_low.tif.gz",
     "topography": "https://repo.gplates.org/webdav/pmm/present-day-rasters/topo15-3601x1801.nc.gz",
-    "agegrid": "https://repo.gplates.org/webdav/pmm/present-day-rasters/agegrid.tiff.gz"
+    "agegrid": "https://repo.gplates.org/webdav/pmm/present-day-rasters/agegrid.tiff.gz",
+    "vgg": {
+        "fullname": "Vertical Gravity Gradient",
+        "server_url": "https://geoserver.gplates.org/geoserver/wms",
+        "service": "WMS",
+        "version": "1.1.0",
+        "layers": [
+            "gplates:vertical-gravity-gradient"
+        ],
+        "hillshade_layer": "gplates:vgg-hillshade-intensity",
+        "styles": [
+            "vgg-grey-style"
+        ],
+        "hillshade_style": "vgg-hillshade-style",
+        "bbox": [
+            -180,
+            -80,
+            180,
+            80
+        ],
+        "srs": "EPSG:4326"
+    }
 }

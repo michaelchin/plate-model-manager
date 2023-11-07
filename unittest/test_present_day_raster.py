@@ -3,11 +3,11 @@ import os
 import sys
 import unittest
 
-
 sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
 from common import TEMP_TEST_DIR, get_test_logger
 
 from plate_model_manager import PresentDayRasterManager
+from plate_model_manager.present_day_rasters import RasterNameNotFound
 
 if __name__ == "__main__":
     logger_name = "test_present_day_raster_main"
@@ -29,6 +29,11 @@ class RasterTestCase(unittest.TestCase):
         logger.info(rasters)
         raster_file = self.manager.get_raster("TOPOGRAPHY")
         self.assertTrue(os.path.isfile(raster_file))
+
+    def test_wms(self):
+        self.assertTrue(self.manager.is_wms("vgg"))
+        self.assertFalse(self.manager.is_wms("agegrid"))
+        self.assertRaises(RasterNameNotFound, self.manager.is_wms, "no-such-raster")
 
 
 if __name__ == "__main__":

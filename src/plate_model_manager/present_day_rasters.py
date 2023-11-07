@@ -6,10 +6,13 @@ import requests
 
 from . import download_utils, misc_utils
 
-
 DEFAULT_PRESENT_DAY_RASTERS_MANIFEST = (
     "https://repo.gplates.org/webdav/pmm/present_day_rasters.json"
 )
+
+
+class RasterNameNotFound(Exception):
+    pass
 
 
 class PresentDayRasterManager:
@@ -57,11 +60,24 @@ class PresentDayRasterManager:
     def list_present_day_rasters(self):
         return [name for name in self.rasters]
 
-    def get_raster(self, _name):
-        """download the raster by name. Save the raster in self.data_dir"""
+    def _check_raster_avail(self, _name: str):
+        """check if the raster name is in raster configuration"""
         name = _name.lower()
         if not name in self.rasters:
-            raise Exception(f"Raster {name} is not found in {self.rasters}.")
+            raise RasterNameNotFound(f"Raster {name} is not found in {self.rasters}.")
+        return name
+
+    def is_wms(self, _name: str):
+        """return True if the raster is served by Web Map Service, otherwise False"""
+        name = self._check_raster_avail(_name)
+        if "service" in self.rasters[name] and self.rasters[name]["service"] == "WMS":
+            return True
+        else:
+            return False
+
+    def get_raster(self, _name: str):
+        """download the raster by name. Save the raster in self.data_dir"""
+        name = self._check_raster_avail(_name)
 
         download_utils.download_file(
             self.rasters[name],

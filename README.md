@@ -6,9 +6,9 @@
 ![platforms](https://anaconda.org/conda-forge/plate-model-manager/badges/platforms.svg)
 ![downloads](https://anaconda.org/conda-forge/plate-model-manager/badges/downloads.svg)
 
-Originally the plate-model-manager was designed for [GPlately](https://github.com/GPlates/gplately). Later, it was found also useful in other scenarios and contexts. The plate-model-manager downloads and manages the plate reconstruction model files. It is a dataset manager for plate tectonic models, similar to NPM or Conda for software packages.
+Originally the plate-model-manager was designed for [GPlately](https://github.com/GPlates/gplately). Later, it was found also useful in other scenarios and contexts. The plate-model-manager downloads and manages the plate reconstruction model files. It is a dataset manager for plate tectonic reconstruction models, similar to NPM or Conda for software packages.
 
-Have you ever wondered where to get the plate tectonic reconstruction models? If the answer is yes, you probably want to check out this plate-model-manager Python module.
+Have you ever wondered where to get the plate tectonic reconstruction models for your research? Are you tired of downloading files from Internet manually and specify file paths when calling PyGPlates functions? If the answer is yes, you probably want to check out this plate-model-manager Python module.
 
 ### How to install
 
@@ -74,7 +74,7 @@ print(model.get_rotation_model())
 
 This Python module is mostly used in [GPlately](https://github.com/GPlates/gplately), [GPlates Web Service](https://github.com/GPlates/gplates-web-service), [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials) and [GPlates Python Proxy](https://github.com/michaelchin/gplates-python-proxy).
 
-A good example of using PlateModelManager with PyGPlates can be found [here](https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb).
+A good example of using PlateModelManager with PyGPlates can be found at https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb.
 
 The examples of using PlateModelManager with GPlately:
 
