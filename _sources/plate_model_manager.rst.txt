@@ -84,14 +84,6 @@ plate\_model\_manager.unzip\_utils module
    :undoc-members:
    :show-inheritance:
 
-plate\_model\_manager.wms\_client module
-----------------------------------------
-
-.. automodule:: plate_model_manager.wms_client
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

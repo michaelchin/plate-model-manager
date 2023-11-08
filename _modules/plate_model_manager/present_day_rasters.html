@@ -72,10 +72,12 @@
 <span></span><span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha256</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">download_utils</span><span class="p">,</span> <span class="n">misc_utils</span>
+<span class="kn">from</span> <span class="nn">.network_requests</span> <span class="kn">import</span> <span class="n">fetch_file</span>
 
 <span class="n">DEFAULT_PRESENT_DAY_RASTERS_MANIFEST</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;https://repo.gplates.org/webdav/pmm/present_day_rasters.json&quot;</span>
@@ -151,10 +153,17 @@
 
 <div class="viewcode-block" id="PresentDayRasterManager.is_wms">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager.is_wms">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_wms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">is_wms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">check_raster_avail_flag</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return True if the raster is served by Web Map Service, otherwise False&quot;&quot;&quot;</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_raster_avail</span><span class="p">(</span><span class="n">_name</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;service&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;service&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;WMS&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">check_raster_avail_flag</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_raster_avail</span><span class="p">(</span><span class="n">_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="nb">dict</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="s2">&quot;service&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;service&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;WMS&quot;</span>
+        <span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
@@ -162,24 +171,57 @@
 
 <div class="viewcode-block" id="PresentDayRasterManager.get_raster">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_raster</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+        <span class="n">bbox</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">80</span><span class="p">],</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;download the raster by name. Save the raster in self.data_dir&quot;&quot;&quot;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_raster_avail</span><span class="p">(</span><span class="n">_name</span><span class="p">)</span>
+        <span class="n">is_wms_flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_wms</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">check_raster_avail_flag</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="n">download_utils</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/.metadata.json&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span>
-            <span class="n">large_file_hint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/*&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to get raster </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Multiple raster files have been detected.</span><span class="si">{</span><span class="n">files</span><span class="si">}</span><span class="s2">. Return the first one found </span><span class="si">{</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_wms_flag</span><span class="p">:</span>
+            <span class="n">download_utils</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/.metadata.json&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span>
+                <span class="n">large_file_hint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/*&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to get raster </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Multiple raster files have been detected.</span><span class="si">{</span><span class="n">files</span><span class="si">}</span><span class="s2">. Return the first one found </span><span class="si">{</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">return</span> <span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">server_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;server_url&quot;</span><span class="p">]</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
+            <span class="n">layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;layers&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;hillshade_layer&quot;</span><span class="p">]:</span>
+                <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;hillshade_layer&quot;</span><span class="p">])</span>
+            <span class="n">styles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;styles&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;hillshade_style&quot;</span><span class="p">]:</span>
+                <span class="n">styles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rasters</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;hillshade_style&quot;</span><span class="p">])</span>
+            <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;image/geotiff&quot;</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">server_url</span><span class="si">}</span><span class="s2">/wms?service=WMS&amp;version=</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&amp;request=GetMap&amp;layers=</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;&amp;bbox=</span><span class="si">{</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">&amp;width=</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s2">&amp;height=</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s2">&amp;srs=EPSG:4326&quot;</span>
+                <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;&amp;styles=</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">styles</span><span class="p">)</span><span class="si">}</span><span class="s2">&amp;format=</span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sha256</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.tiff&quot;</span><span class="p">):</span>
+                <span class="n">fetch_file</span><span class="p">(</span>
+                    <span class="n">url</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sha256</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.tiff&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.tiff&quot;</span></div>
 </div>
 
 </pre></div>
