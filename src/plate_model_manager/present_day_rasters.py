@@ -1,10 +1,12 @@
 import glob
 import json
 import os
+from hashlib import sha256
 
 import requests
 
 from . import download_utils, misc_utils
+from .network_requests import fetch_file
 
 DEFAULT_PRESENT_DAY_RASTERS_MANIFEST = (
     "https://repo.gplates.org/webdav/pmm/present_day_rasters.json"
@@ -67,29 +69,69 @@ class PresentDayRasterManager:
             raise RasterNameNotFound(f"Raster {name} is not found in {self.rasters}.")
         return name
 
-    def is_wms(self, _name: str):
+    def is_wms(self, _name: str, check_raster_avail_flag=True):
         """return True if the raster is served by Web Map Service, otherwise False"""
-        name = self._check_raster_avail(_name)
-        if "service" in self.rasters[name] and self.rasters[name]["service"] == "WMS":
+        if check_raster_avail_flag:
+            name = self._check_raster_avail(_name)
+        else:
+            name = _name.lower()
+        if (
+            isinstance(self.rasters[name], dict)
+            and "service" in self.rasters[name]
+            and self.rasters[name]["service"] == "WMS"
+        ):
             return True
         else:
             return False
 
-    def get_raster(self, _name: str):
+    def get_raster(
+        self,
+        _name: str,
+        width=1800,
+        height=800,
+        bbox=[-180, -80, 180, 80],
+    ):
         """download the raster by name. Save the raster in self.data_dir"""
         name = self._check_raster_avail(_name)
+        is_wms_flag = self.is_wms(name, check_raster_avail_flag=False)
 
-        download_utils.download_file(
-            self.rasters[name],
-            f"{self.data_dir}/{name}/.metadata.json",
-            f"{self.data_dir}/{name}/",
-            large_file_hint=True,
-        )
-        files = glob.glob(f"{self.data_dir}/{name}/*")
-        if len(files) == 0:
-            raise Exception(f"Failed to get raster {name}")
-        if len(files) > 1:
-            misc_utils.print_warning(
-                f"Multiple raster files have been detected.{files}. Return the first one found {files[0]}."
+        if not is_wms_flag:
+            download_utils.download_file(
+                self.rasters[name],
+                f"{self.data_dir}/{name}/.metadata.json",
+                f"{self.data_dir}/{name}/",
+                large_file_hint=True,
             )
-        return files[0]
+            files = glob.glob(f"{self.data_dir}/{name}/*")
+            if len(files) == 0:
+                raise Exception(f"Failed to get raster {name}")
+            if len(files) > 1:
+                misc_utils.print_warning(
+                    f"Multiple raster files have been detected.{files}. Return the first one found {files[0]}."
+                )
+            return files[0]
+        else:
+            server_url = self.rasters[name]["server_url"]
+            version = self.rasters[name]["version"]
+            layers = self.rasters[name]["layers"]
+            if self.rasters[name]["hillshade_layer"]:
+                layers.append(self.rasters[name]["hillshade_layer"])
+            styles = self.rasters[name]["styles"]
+            if self.rasters[name]["hillshade_style"]:
+                styles.append(self.rasters[name]["hillshade_style"])
+            format = "image/geotiff"
+            url = (
+                f"{server_url}/wms?service=WMS&version={version}&request=GetMap&layers={','.join(layers)}"
+                + f"&bbox={bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]}&width={width}&height={height}&srs=EPSG:4326"
+                + f"&styles={','.join(styles)}&format={format}"
+            )
+            filepath = (
+                f"{self.data_dir}/{name}/{sha256(url.encode('utf-8')).hexdigest()}"
+            )
+            if not os.path.isfile(f"{filepath}/{name}.tiff"):
+                fetch_file(
+                    url,
+                    f"{self.data_dir}/{name}/{sha256(url.encode('utf-8')).hexdigest()}",
+                    filename=f"{name}.tiff",
+                )
+            return f"{filepath}/{name}.tiff"

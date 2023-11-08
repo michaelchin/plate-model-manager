@@ -34,6 +34,12 @@ class RasterTestCase(unittest.TestCase):
         self.assertTrue(self.manager.is_wms("vgg"))
         self.assertFalse(self.manager.is_wms("agegrid"))
         self.assertRaises(RasterNameNotFound, self.manager.is_wms, "no-such-raster")
+        print(self.manager.get_raster("vgg", width=3600, height=1600))
+        print(
+            self.manager.get_raster(
+                "vgg", width=1000, height=1000, bbox=[-10, -10, 10, 10]
+            )
+        )
 
 
 if __name__ == "__main__":
