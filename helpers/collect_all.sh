@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# ./collect_all.sh ./model-repo
+
 python3 collect_domeier2014.py $1
 python3 collect_golonka.py $1
 python3 collect_matthews2016.py $1

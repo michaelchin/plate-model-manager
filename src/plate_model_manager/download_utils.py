@@ -66,7 +66,7 @@ def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint
     file_size = None
     update_meta = False
     new_etag = etag
-    if download_flag or large_file_hint:
+    if (download_flag and etag is not None) or large_file_hint:
         # print(f"Checking the etag {url}...")
         # check the file size and etag for large file
         headers = network_utils.get_headers(url)
