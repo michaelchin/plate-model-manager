@@ -22,3 +22,7 @@ jobs:
           files: Release.txt
           draft: false
           generate_release_notes: true
+      - name: PyPI Publish
+        run: |
+          chmod +x ./scripts/pypi-publish.sh
+          ./scripts/pypi-publish.sh '${{secrets.PYPI_UPLOAD}}'
