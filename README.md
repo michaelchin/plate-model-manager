@@ -88,3 +88,16 @@ The PlateModelManager can also be used with the GPlates desktop. Use the command
 - aiohttp
 - requests
 - nest_asyncio
+
+### Event loop RuntimeError
+
+For Jupyter Notebook, Web Server or GUI application users, you need the following two lines to workaround the event loop RuntimeError.
+If you do not add these two lines, the PlateModelManager still works. But you will see a warning message. You can ignore the warning message safely.
+If the warning message bothers you, add the two lines before calling PlateModelManager.
+
+https://anaconda.org/conda-forge/nest-asyncio/
+
+```python
+import nest_asyncio
+nest_asyncio.apply()
+```
