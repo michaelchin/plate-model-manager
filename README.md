@@ -22,25 +22,25 @@ Have you ever wondered where to get the plate tectonic reconstruction models for
 
   This command will list all available plate tectonic reconstruction models.
 
-  ![pmm ls command screenshot](images/screenshot-pmm-ls-command.png)
+  ![pmm ls command screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-ls-command.png)
 
 - `pmm ls Muller2019`
 
   This command will show the details of model 'Muller2019'.
 
-  ![pmm ls model command screenshot](images/screenshot-pmm-ls-model.png)
+  ![pmm ls model command screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-ls-model.png)
 
 - `pmm download Muller2019 plate-models-data-dir`
 
   This command will download model "Muller2019" into a folder 'plate-models-data-dir'.
 
-  ![pmm download model screenshot](images/screenshot-pmm-download-model.png)
+  ![pmm download model screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-download-model.png)
 
 - `pmm download all`
 
   This command will download all available models into the current working directory.
 
-  ![pmm download all screenshot](images/screenshot-pmm-download-all.png)
+  ![pmm download all screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-download-all.png)
 
 #### Use in Python script
 
@@ -55,7 +55,7 @@ for name in pm_manager.get_available_model_names():
   print(name)
 ```
 
-![python list all models screenshot](images/screenshot-python-list-all-models.png)
+![python list all models screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-list-all-models.png)
 
 👉 The Python code below downloads the "Muller2019" model into folder "plate-models-data-dir".
 The model.get_rotation_model() function returns the rotation file location.
@@ -68,7 +68,7 @@ model = pm_manager.get_model("Muller2019",data_dir="plate-models-data-dir")
 print(model.get_rotation_model())
 ```
 
-![python print rotation screenshot](images/screenshot-python-print-rotation.png)
+![python print rotation screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-print-rotation.png)
 
 ### Examples
 
