@@ -1,5 +1,8 @@
 name: Create a new release
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
@@ -17,3 +20,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: Release.txt
+          draft: false
+          generate_release_notes: true
