@@ -58,7 +58,7 @@ class AiohttpFetcher(FileFetcher):
     ):
         """async "fetch_file" implementation. See the docstring of "fetch_file" """
 
-        if etag:
+        if isinstance(etag, str) or isinstance(etag, bytes):
             headers = {"If-None-Match": etag}
         else:
             headers = {}
@@ -206,7 +206,11 @@ class AiohttpFetcher(FileFetcher):
         new_etags = []
         try:
             new_etags = loop.run_until_complete(f())
-            # print(new_etags)
+        except RuntimeError:
+            import nest_asyncio
+
+            nest_asyncio.apply()
+            new_etags = loop.run_until_complete(f())
         finally:
             loop.close()
             return new_etags

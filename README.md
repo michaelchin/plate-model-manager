@@ -82,3 +82,9 @@ The examples of using PlateModelManager with GPlately:
 - https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working-with-plate-model-manager.py
 
 The PlateModelManager can also be used with the GPlates desktop. Use the command line to download the plate model files and open the files with GPlates desktop. This will save the trouble of downloading files from Internet manually.
+
+### Dependencies
+
+- aiohttp
+- requests
+- nest_asyncio

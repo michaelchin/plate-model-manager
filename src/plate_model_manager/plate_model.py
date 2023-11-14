@@ -301,7 +301,13 @@ class PlateModel:
             # print(tasks)
             await asyncio.wait(tasks)
 
-        self.loop.run_until_complete(f())
+        try:
+            self.loop.run_until_complete(f())
+        except RuntimeError:
+            import nest_asyncio
+
+            nest_asyncio.apply()
+            self.loop.run_until_complete(f())
 
     def get_avail_time_dependent_raster_names(self):
         """return the names of all time dependent rasters which have been configurated in this model."""
@@ -345,7 +351,13 @@ class PlateModel:
                 # print(tasks)
                 await asyncio.wait(tasks)
 
-            self.loop.run_until_complete(f())
+            try:
+                self.loop.run_until_complete(f())
+            except RuntimeError:
+                import nest_asyncio
+
+                nest_asyncio.apply()
+                self.loop.run_until_complete(f())
 
         else:
             raise Exception(

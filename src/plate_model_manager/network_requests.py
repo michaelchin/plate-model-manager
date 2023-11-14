@@ -39,7 +39,7 @@ class RequestsFetcher(FileFetcher):
 
         """
 
-        if etag:
+        if isinstance(etag, str) or isinstance(etag, bytes):
             headers = {"If-None-Match": etag}
         else:
             headers = {}
@@ -194,6 +194,19 @@ class RequestsFetcher(FileFetcher):
         asyncio.set_event_loop(loop)
 
         try:
+            loop.run_until_complete(
+                self._async_fetch_files(
+                    run,
+                    urls,
+                    filepaths,
+                    etags=etags,
+                    auto_unzip=auto_unzip,
+                )
+            )
+        except RuntimeError:
+            import nest_asyncio
+
+            nest_asyncio.apply()
             loop.run_until_complete(
                 self._async_fetch_files(
                     run,
