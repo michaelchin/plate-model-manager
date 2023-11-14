@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "plate-model-manager"
-version = "1.1.1"
+dynamic = ["version"]
 description = "Plate Model Manager"
 readme = "README.md"
 authors = [{ name = "Michael Chin", email = "michael.chin@sydney.edu.au" }]
@@ -21,6 +21,9 @@ dependencies = [
     "nest_asyncio",
 ]
 requires-python = ">=3.8"
+
+[tool.setuptools.dynamic]
+version = {attr = "plate_model_manager.__version__"}
 
 [project.optional-dependencies]
 dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
