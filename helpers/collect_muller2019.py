@@ -7,7 +7,6 @@ import zipfile
 from pathlib import Path
 
 import requests
-
 import utils
 
 model_path = utils.get_model_path(sys.argv, "muller2019")
@@ -57,7 +56,7 @@ with zipfile.ZipFile(
     for f in files:
         f_zip.write(f, f"Topologies/{os.path.basename(f)}")
 
-# save COBs
+# zip COBs
 with zipfile.ZipFile(
     f"{model_path}/COBs.zip",
     mode="w",
@@ -69,7 +68,7 @@ with zipfile.ZipFile(
         "COBs/Global_EarthByte_GeeK07_COBLineSegments_2019_v1.gpmlz",
     )
 
-# save ContinentalPolygons
+# zip ContinentalPolygons
 with zipfile.ZipFile(
     f"{model_path}/ContinentalPolygons.zip",
     mode="w",

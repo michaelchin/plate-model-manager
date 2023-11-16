@@ -70,7 +70,7 @@ with zipfile.ZipFile(
     for f in files:
         f_zip.write(f, f"Topologies/{os.path.basename(f)}")
 
-# save COBs
+# zip COBs
 with zipfile.ZipFile(
     f"{model_path}/COBs.zip",
     mode="w",
