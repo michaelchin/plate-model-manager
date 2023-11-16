@@ -84,6 +84,14 @@ plate\_model\_manager.unzip\_utils module
    :undoc-members:
    :show-inheritance:
 
+plate\_model\_manager.zenodo module
+-----------------------------------
+
+.. automodule:: plate_model_manager.zenodo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
