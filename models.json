@@ -1,4 +1,17 @@
 {
+    "zahirovic2022": {
+        "BigTime": 410,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/zahirovic2022/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/zahirovic2022/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2022/StaticPolygons.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2022/ContinentalPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/zahirovic2022/Topologies.zip"
+        },
+        "TimeDepRasters": {},
+        "description": "zahirovic2022 description"
+    },
     "muller2019": {
         "BigTime": 250,
         "SmallTime": 0,
@@ -65,7 +78,7 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016/Topologies.zip"
         },
-        "description": "https://gwsdoc.gplates.org/models#matthews2016"
+        "description": "This model is an alias of matthews2016_mantle_ref."
     },
     "matthews2016_mantle_ref": {
         "BigTime": 410,
@@ -154,6 +167,18 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/rodinia/StaticPolygons.zip"
         },
         "description": "https://gwsdoc.gplates.org/models#rodinia"
+    },
+    "shephard2013": {
+        "BigTime": 200,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/shephard2013/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/shephard2013/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/shephard2013/StaticPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/shephard2013/Topologies.zip"
+        },
+        "TimeDepRasters": {},
+        "description": "shephard2013 description"
     },
     "seton2012": {
         "BigTime": 200,
