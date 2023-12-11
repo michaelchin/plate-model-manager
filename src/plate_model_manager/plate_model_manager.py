@@ -46,19 +46,26 @@ class PlateModelManager:
                 f"The model_manifest '{self.model_manifest}' should be either a local file path or a http(s) URL."
             )
 
-    def get_model(self, model_name: str, data_dir: str = "."):
+    def get_model(self, model_name: str = "default", data_dir: str = "."):
         """return a PlateModel object by model_name
 
         :param model_name: model name
+        :param data_dir: the default data_dir for the model. This dir can be changed with PlateModel.set_data_dir() later.
 
         :returns: a PlateModel object or none if model name is no good
 
         """
         model_name = model_name.lower()
         if model_name in self.models:
-            return PlateModel(
-                model_name, model_cfg=self.models[model_name], data_dir=data_dir
-            )
+            # model name is an alias
+            if isinstance(self.models[model_name], str):
+                m = self.get_model(self.models[model_name][1:], data_dir=data_dir)
+
+                return PlateModel(model_name, model_cfg=m.get_cfg(), data_dir=data_dir)
+            else:
+                return PlateModel(
+                    model_name, model_cfg=self.models[model_name], data_dir=data_dir
+                )
         else:
             print(f"Model {model_name} is not available.")
             return None

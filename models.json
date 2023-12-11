@@ -1,4 +1,6 @@
 {
+    "default": "@zahirovic2022",
+    "matthews2016": "@matthews2016_mantle_ref",
     "zahirovic2022": {
         "BigTime": 410,
         "SmallTime": 0,
@@ -28,8 +30,8 @@
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc"
         },
-        "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones. For more info, visit https://gwsdoc.gplates.org/models#muller2019",
-        "URL": "",
+        "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones.",
+        "URL": "https://gwsdoc.gplates.org/models#muller2019",
         "Version": "2023-12-06"
     },
     "muller2022": {
@@ -44,8 +46,8 @@
             "COBs": "https://repo.gplates.org/webdav/pmm/muller2022/COBs.zip",
             "Cratons": "https://repo.gplates.org/webdav/pmm/muller2022/Cratons.zip"
         },
-        "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time – hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude. For more info, visit https://gwsdoc.gplates.org/models#muller2022",
-        "URL": "",
+        "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time – hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
+        "URL": "https://gwsdoc.gplates.org/models#muller2022",
         "Version": "2023-12-06"
     },
     "muller2016": {
@@ -61,8 +63,8 @@
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_2016_AREPS_Agegrids/Muller_etal_2016_AREPS_Agegrids_v1.17/Muller_etal_2016_AREPS_v1.17_netCDF/Muller_etal_2016_AREPS_v1.17_AgeGrid-{}.nc"
         },
-        "Description": "This model represents an update of the SETON2012 model, both in terms of relative and absolute plate motions. The absolute reference used is based on the same hotspot model for the last 100 Ma as used in SETON2012, and a true-polar wander corrected paleomagnetic model for 230 to 100 Ma, with an added 10 deg longitudinal correction for the time period from 100-230 Ma in an attempt to minimise geodynamically unreasonable longitudinal plate motions, resulting in a modified mantle reference frame. For more info, visit https://gwsdoc.gplates.org/models#muller2016",
-        "URL": "",
+        "Description": "This model represents an update of the SETON2012 model, both in terms of relative and absolute plate motions. The absolute reference used is based on the same hotspot model for the last 100 Ma as used in SETON2012, and a true-polar wander corrected paleomagnetic model for 230 to 100 Ma, with an added 10 deg longitudinal correction for the time period from 100-230 Ma in an attempt to minimise geodynamically unreasonable longitudinal plate motions, resulting in a modified mantle reference frame.",
+        "URL": "https://gwsdoc.gplates.org/models#muller2016",
         "Version": "2023-12-06"
     },
     "merdith2021": {
@@ -75,21 +77,8 @@
             "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/ContinentalPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip"
         },
-        "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times. For more info, visit https://gwsdoc.gplates.org/models#merdith2021",
-        "URL": "",
-        "Version": "2023-12-06"
-    },
-    "matthews2016": {
-        "BigTime": 410,
-        "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/matthews2016/Rotations.zip",
-        "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016/Topologies.zip"
-        },
-        "Description": "This model is an alias of matthews2016_mantle_ref.",
-        "URL": "",
+        "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
+        "URL": "https://gwsdoc.gplates.org/models#merdith2021",
         "Version": "2023-12-06"
     },
     "matthews2016_mantle_ref": {
@@ -106,8 +95,8 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/coastlines/coastlines-{}-Ma.png",
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/topologies/topologies-{}-Ma.png"
         },
-        "Description": "This model is identical to MATTHEWS2016_pmag_ref in terms of relative plate models but uses a true polar wander corrected paleomagnetic model, viewed as a proxy for a mantle reference frame model. For more info, visit https://gwsdoc.gplates.org/models#matthews2016_mantle_ref",
-        "URL": "",
+        "Description": "This model is identical to MATTHEWS2016_pmag_ref in terms of relative plate models but uses a true polar wander corrected paleomagnetic model, viewed as a proxy for a mantle reference frame model.",
+        "URL": "https://gwsdoc.gplates.org/models#matthews2016_mantle_ref",
         "Version": "2023-12-06"
     },
     "matthews2016_pmag_ref": {
@@ -119,8 +108,8 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/Topologies.zip"
         },
-        "Description": "This plate model represents the first continuous late Paleozoic to present-day global plate model with evolving plate boundaries, building on and extending two previously published models for the late Paleozoic (410–250 Ma) (Domeier and Torsvik, 2014 ) and the MULLER2016 model Mesozoic-Cenozoic (230–0 Ma). The model was designed for continuity during the 250–230 Ma transition period between the two models, used an updated absolute reference frame of the Mesozoic-Cenozoic model and added a new Paleozoic reconstruction for the Baltica-derived Alexander Terrane, now accreted to western North America. For more info, visit https://gwsdoc.gplates.org/models#matthews2016_pmag_ref",
-        "URL": "",
+        "Description": "This plate model represents the first continuous late Paleozoic to present-day global plate model with evolving plate boundaries, building on and extending two previously published models for the late Paleozoic (410–250 Ma) (Domeier and Torsvik, 2014 ) and the MULLER2016 model Mesozoic-Cenozoic (230–0 Ma). The model was designed for continuity during the 250–230 Ma transition period between the two models, used an updated absolute reference frame of the Mesozoic-Cenozoic model and added a new Paleozoic reconstruction for the Baltica-derived Alexander Terrane, now accreted to western North America.",
+        "URL": "https://gwsdoc.gplates.org/models#matthews2016_pmag_ref",
         "Version": "2023-12-06"
     },
     "domeier2014": {
@@ -224,8 +213,8 @@
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Seton_etal_2012_ESR/Seton_etal_2012_ESR_Agegrids/netCDF_0-200Ma/agegrid_{}.nc"
         },
-        "Description": "This model represents the first global plate model with topological plate boundaries. It is based on a hybrid reference frame hybrid absolute reference frame, based on a moving hotspot model for the last 100 Ma, and a true-polar wander corrected paleomagnetic model for 200 to 100 Ma. This combination of absolute reference frames is viewed as a proxy for a mantle reference frame model. For more info, visit https://gwsdoc.gplates.org/models#seton2012",
-        "URL": "",
+        "Description": "This model represents the first global plate model with topological plate boundaries. It is based on a hybrid reference frame hybrid absolute reference frame, based on a moving hotspot model for the last 100 Ma, and a true-polar wander corrected paleomagnetic model for 200 to 100 Ma. This combination of absolute reference frames is viewed as a proxy for a mantle reference frame model.",
+        "URL": "https://gwsdoc.gplates.org/models#seton2012",
         "Version": "2023-12-06"
     }
 }

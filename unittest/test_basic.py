@@ -14,6 +14,10 @@ def main():
     model = pm_manager.get_model("Muller2019", data_dir=TEMP_TEST_DIR)
     print(model.get_rotation_model())
 
+    pm_manager = PlateModelManager(model_manifest="../models.json")
+    model = pm_manager.get_model()
+    print(model.get_rotation_model())
+
 
 if __name__ == "__main__":
     main()

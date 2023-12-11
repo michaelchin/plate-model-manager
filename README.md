@@ -16,6 +16,59 @@ Have you ever wondered where to get the plate tectonic reconstruction models for
 
 ### How to use
 
+#### Use PMM with pyGPlates 🌰
+
+```python
+pm_manager = PlateModelManager()
+model = pm_manager.get_model("Muller2019")
+
+# create a point feature at (0,0)
+point_feature = pygplates.Feature()
+point_feature.set_geometry(pygplates.PointOnSphere(0, 0))
+
+# assign plate ID
+point_feature_with_PID = pygplates.partition_into_plates(
+  model.get_static_polygons(), # 👈👀 LOOK HERE
+  model.get_rotation_model(), # 👈👀 LOOK HERE
+  [point_feature])
+
+# Reconstruct the point features.
+reconstructed_feature_geometries = []
+time=140
+pygplates.reconstruct(
+  point_feature_with_PID,
+  model.get_rotation_model(), # 👈👀 LOOK HERE
+  reconstructed_feature_geometries,
+  time)
+
+print(reconstructed_feature_geometries[0].get_reconstructed_geometry().to_lat_lon())
+```
+
+See the full example at https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb
+
+#### Use PMM with GPlately 🌰
+
+```python
+pm_manager = PlateModelManager()
+model = pm_manager.get_model("Muller2019")
+model.set_data_dir("plate-model-repo")
+
+age = 55
+test_model = PlateReconstruction(
+    model.get_rotation_model(), # 👈👀 LOOK HERE
+    topology_features=model.get_layer("Topologies"), # 👈👀 LOOK HERE
+    static_polygons=model.get_layer("StaticPolygons"), # 👈👀 LOOK HERE
+)
+gplot = PlotTopologies(
+    test_model,
+    coastlines=model.get_layer("Coastlines"), # 👈👀 LOOK HERE
+    COBs=model.get_layer("COBs"), # 👈👀 LOOK HERE
+    time=age,
+)
+```
+
+See the full example at https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working-with-plate-model-manager.py
+
 #### Use the command line
 
 - `pmm ls`
