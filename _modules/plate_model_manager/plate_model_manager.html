@@ -123,19 +123,26 @@
 
 <div class="viewcode-block" id="PlateModelManager.get_model">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return a PlateModel object by model_name</span>
 
 <span class="sd">        :param model_name: model name</span>
+<span class="sd">        :param data_dir: the default data_dir for the model. This dir can be changed with PlateModel.set_data_dir() later.</span>
 
 <span class="sd">        :returns: a PlateModel object or none if model name is no good</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">PlateModel</span><span class="p">(</span>
-                <span class="n">model_name</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">],</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span>
-            <span class="p">)</span>
+            <span class="c1"># model name is an alias</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">PlateModel</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">get_cfg</span><span class="p">(),</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">PlateModel</span><span class="p">(</span>
+                    <span class="n">model_name</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">],</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span>
+                <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is not available.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span></div>
