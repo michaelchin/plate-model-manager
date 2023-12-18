@@ -109,6 +109,21 @@
         "URL": "https://gwsdoc.gplates.org/models#muller2019",
         "Version": "2023-12-06"
     },
+    "young2018": {
+        "BigTime": 410,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/young2018/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/young2018/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/young2018/StaticPolygons.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/young2018/ContinentalPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/young2018/Topologies.zip"
+        },
+        "TimeDepRasters": {},
+        "Description": "Global kinematics of tectonic plates and subduction zones since the late Paleozoic Era",
+        "URL": "https://www.sciencedirect.com/science/article/pii/S1674987118301373",
+        "Version": "2023-12-19"
+    },
     "torsvikcocks2017": {
         "BigTime": 1100,
         "SmallTime": 0,
