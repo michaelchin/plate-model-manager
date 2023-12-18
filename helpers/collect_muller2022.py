@@ -4,15 +4,23 @@ import os
 import shutil
 import sys
 import zipfile
+from datetime import datetime
 
 import requests
 import utils
 
 model_path = utils.get_model_path(sys.argv, "muller2022")
+zip_path = "Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1"
+
+info_fp = open(f"{model_path}/info.txt", "w+")
+info_fp.write(f"{datetime.now()}\n")
+
 
 # download the model zip file
+zip_url = "https://earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2022_SE/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1.zip"
+info_fp.write(f"Download zip file from {zip_url}\n")
 r = requests.get(
-    "https://earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2022_SE/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1.zip",
+    zip_url,
     allow_redirects=True,
 )
 if r.status_code in [200]:
@@ -27,7 +35,9 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    f = f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/optimisation/1000_0_rotfile_Merdith_et_al_optimised.rot"
+    f = f"{model_path}/{zip_path}/optimisation/1000_0_rotfile_Merdith_et_al_optimised.rot"
+    info_fp.write(f"Zip Rotations:\n")
+    info_fp.write(f"\t{f}\n")
     f_zip.write(f, f"Rotations/{os.path.basename(f)}")
 
 # zip StaticPolygons
@@ -37,7 +47,9 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    f = f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/shapes_static_polygons_Merdith_et_al.gpml"
+    f = f"{model_path}/{zip_path}/shapes_static_polygons_Merdith_et_al.gpml"
+    info_fp.write(f"Zip StaticPolygons:\n")
+    info_fp.write(f"\t{f}\n")
     f_zip.write(f, f"StaticPolygons/{os.path.basename(f)}")
 
 # zip Coastlines
@@ -47,11 +59,11 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/shapes_coastlines_Merdith_et_al.gpmlz"
-    )
+    files = glob.glob(f"{model_path}/{zip_path}/shapes_coastlines_Merdith_et_al.gpmlz")
+    info_fp.write(f"Zip Coastlines:\n")
     for f in files:
         f_zip.write(f, f"Coastlines/{os.path.basename(f)}")
+        info_fp.write(f"\t{f}\n")
 
 # zip Topologies
 with zipfile.ZipFile(
@@ -61,16 +73,18 @@ with zipfile.ZipFile(
     compresslevel=9,
 ) as f_zip:
     files = [
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/1000-410-Convergence_Merdith_et_al.gpml",
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/1000-410-Divergence_Merdith_et_al.gpml",
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/1000-410-Topologies_Merdith_et_al.gpml",
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/250-0_plate_boundaries_Merdith_et_al.gpml",
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/410-250_plate_boundaries_Merdith_et_al.gpml",
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/TopologyBuildingBlocks_Merdith_et_al.gpml",
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/1000-410-Transforms_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/1000-410-Convergence_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/1000-410-Divergence_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/1000-410-Topologies_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/250-0_plate_boundaries_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/410-250_plate_boundaries_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/TopologyBuildingBlocks_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/1000-410-Transforms_Merdith_et_al.gpml",
     ]
+    info_fp.write(f"Zip Topologies:\n")
     for f in files:
         f_zip.write(f, f"Topologies/{os.path.basename(f)}")
+        info_fp.write(f"\t{f}\n")
 
 # zip COBs
 with zipfile.ZipFile(
@@ -79,10 +93,13 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
+    f = f"{model_path}/{zip_path}/COB_polygons_and_coastlines_combined_1000_0_Merdith_etal.gpml"
     f_zip.write(
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/COB_polygons_and_coastlines_combined_1000_0_Merdith_etal.gpml",
-        "COBs/COB_polygons_and_coastlines_combined_1000_0_Merdith_etal.gpml",
+        f,
+        f"COBs/{os.path.basename(f)}",
     )
+    info_fp.write(f"Zip COBs:\n")
+    info_fp.write(f"\t{f}\n")
 
 # zip ContinentalPolygons
 with zipfile.ZipFile(
@@ -91,11 +108,11 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/shapes_continents_Merdith_et_al.gpml"
-    )
+    files = glob.glob(f"{model_path}/{zip_path}/shapes_continents_Merdith_et_al.gpml")
+    info_fp.write(f"Zip ContinentalPolygons:\n")
     for f in files:
         f_zip.write(f, f"ContinentalPolygons/{os.path.basename(f)}")
+        info_fp.write(f"\t{f}\n")
 
 # zip Cratons
 with zipfile.ZipFile(
@@ -104,12 +121,14 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(
-        f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1/shapes_cratons_Merdith_et_al.gpml"
-    )
+    files = glob.glob(f"{model_path}/{zip_path}/shapes_cratons_Merdith_et_al.gpml")
+    info_fp.write(f"Zip Cratons:\n")
     for f in files:
         f_zip.write(f, f"Cratons/{os.path.basename(f)}")
+        info_fp.write(f"\t{f}\n")
 
 
-shutil.rmtree(f"{model_path}/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1")
+shutil.rmtree(f"{model_path}/{zip_path}")
 shutil.rmtree(f"{model_path}/__MACOSX")
+
+info_fp.close()
