@@ -1,7 +1,8 @@
 import os
+import shutil
+import tempfile
 import zipfile
 from pathlib import Path
-import tempfile, shutil
 
 import requests
 
@@ -153,7 +154,7 @@ def fetch_file(url, model_path):
         return None
 
 
-def zip_files(files, zip_filepath, zip_folder):
+def zip_files(files, zip_filepath, zip_folder, log_fp=None):
     """zip a bunch of files"""
     if not len(files) > 0:
         raise Exception("You are trying to zip nothing. We don't allow that.")
@@ -163,8 +164,12 @@ def zip_files(files, zip_filepath, zip_folder):
         compression=zipfile.ZIP_DEFLATED,
         compresslevel=9,
     ) as f_zip:
+        if log_fp is not None:
+            log_fp.write(f"Zip {zip_folder}:\n")
         for f in files:
             f_zip.write(f, f"{zip_folder}/{os.path.basename(f)}")
+            if log_fp is not None:
+                log_fp.write(f"\t{f}\n")
 
 
 def fetch_and_zip_files(urls, model_path, zip_name):

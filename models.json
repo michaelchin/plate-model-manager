@@ -1,6 +1,5 @@
 {
     "default": "@zahirovic2022",
-    "matthews2016": "@matthews2016_mantle_ref",
     "zahirovic2022": {
         "BigTime": 410,
         "SmallTime": 0,
@@ -15,6 +14,67 @@
         "Description": "zahirovic2022 description",
         "URL": "",
         "Version": "2023-12-06"
+    },
+    "muller2022": {
+        "BigTime": 1000,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/muller2022/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/muller2022/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2022/StaticPolygons.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/muller2022/ContinentalPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/muller2022/Topologies.zip",
+            "COBs": "https://repo.gplates.org/webdav/pmm/muller2022/COBs.zip",
+            "Cratons": "https://repo.gplates.org/webdav/pmm/muller2022/Cratons.zip"
+        },
+        "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time – hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
+        "URL": "https://gwsdoc.gplates.org/models#muller2022",
+        "Version": "2023-12-06"
+    },
+    "merdith2021": {
+        "BigTime": 1000,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/merdith2021/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/merdith2021/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/ContinentalPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip"
+        },
+        "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
+        "URL": "https://gwsdoc.gplates.org/models#merdith2021",
+        "Version": "2023-12-06"
+    },
+    "clennett2020": "clennett2020_m2019",
+    "clennett2020_m2019": {
+        "BigTime": 170,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/StaticPolygons.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/ContinentalPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Topologies.zip",
+            "COBs": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/COBs.zip"
+        },
+        "Description": "The model was implemented into the Müller et al. (2019) reference frame",
+        "URL": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/",
+        "Version": "2023-12-18"
+    },
+    "clennett2020_s2013": {
+        "BigTime": 170,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/StaticPolygons.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/ContinentalPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/Topologies.zip",
+            "COBs": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/COBs.zip"
+        },
+        "Description": "The model was implemented into the Shephard et al. (2013) global plate model.",
+        "URL": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/",
+        "Version": "2023-12-18"
     },
     "muller2019": {
         "BigTime": 250,
@@ -34,20 +94,16 @@
         "URL": "https://gwsdoc.gplates.org/models#muller2019",
         "Version": "2023-12-06"
     },
-    "muller2022": {
-        "BigTime": 1000,
+    "torsvikcocks2017": {
+        "BigTime": 1100,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/muller2022/Rotations.zip",
+        "Rotations": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/muller2022/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2022/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/muller2022/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/muller2022/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/muller2022/COBs.zip",
-            "Cratons": "https://repo.gplates.org/webdav/pmm/muller2022/Cratons.zip"
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/StaticPolygons.zip"
         },
-        "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time – hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
-        "URL": "https://gwsdoc.gplates.org/models#muller2022",
+        "Description": "https://gwsdoc.gplates.org/models#torsvikcocks2017",
+        "URL": "",
         "Version": "2023-12-06"
     },
     "muller2016": {
@@ -67,20 +123,7 @@
         "URL": "https://gwsdoc.gplates.org/models#muller2016",
         "Version": "2023-12-06"
     },
-    "merdith2021": {
-        "BigTime": 1000,
-        "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/merdith2021/Rotations.zip",
-        "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/merdith2021/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip"
-        },
-        "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
-        "URL": "https://gwsdoc.gplates.org/models#merdith2021",
-        "Version": "2023-12-06"
-    },
+    "matthews2016": "@matthews2016_mantle_ref",
     "matthews2016_mantle_ref": {
         "BigTime": 410,
         "SmallTime": 0,
@@ -112,31 +155,7 @@
         "URL": "https://gwsdoc.gplates.org/models#matthews2016_pmag_ref",
         "Version": "2023-12-06"
     },
-    "domeier2014": {
-        "BigTime": 410,
-        "SmallTime": 250,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/domeier2014/Rotations.zip",
-        "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/domeier2014/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/domeier2014/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/domeier2014/Topologies.zip"
-        },
-        "Description": "https://gwsdoc.gplates.org/models#domeier2014",
-        "URL": "",
-        "Version": "2023-12-06"
-    },
-    "golonka": {
-        "BigTime": 540,
-        "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/golonka/Rotations.zip",
-        "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/golonka/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/golonka/StaticPolygons.zip"
-        },
-        "Description": "https://gwsdoc.gplates.org/models#golonka",
-        "URL": "",
-        "Version": "2023-12-06"
-    },
+    "scotese2016": "paleomap",
     "pehrsson2015": {
         "BigTime": 2100,
         "SmallTime": 1275,
@@ -149,39 +168,16 @@
         "URL": "",
         "Version": "2023-12-06"
     },
-    "paleomap": {
-        "BigTime": 750,
-        "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/paleomap/Rotations.zip",
+    "domeier2014": {
+        "BigTime": 410,
+        "SmallTime": 250,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/domeier2014/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/paleomap/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/paleomap/StaticPolygons.zip"
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/domeier2014/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/domeier2014/StaticPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/domeier2014/Topologies.zip"
         },
-        "Description": "https://gwsdoc.gplates.org/models#paleomap",
-        "URL": "",
-        "Version": "2023-12-06"
-    },
-    "torsvikcocks2017": {
-        "BigTime": 1100,
-        "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Rotations.zip",
-        "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/StaticPolygons.zip"
-        },
-        "Description": "https://gwsdoc.gplates.org/models#torsvikcocks2017",
-        "URL": "",
-        "Version": "2023-12-06"
-    },
-    "rodinia": {
-        "BigTime": 1100,
-        "SmallTime": 530,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/rodinia/Rotations.zip",
-        "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/rodinia/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/rodinia/StaticPolygons.zip"
-        },
-        "Description": "https://gwsdoc.gplates.org/models#rodinia",
+        "Description": "https://gwsdoc.gplates.org/models#domeier2014",
         "URL": "",
         "Version": "2023-12-06"
     },
@@ -215,6 +211,43 @@
         },
         "Description": "This model represents the first global plate model with topological plate boundaries. It is based on a hybrid reference frame hybrid absolute reference frame, based on a moving hotspot model for the last 100 Ma, and a true-polar wander corrected paleomagnetic model for 200 to 100 Ma. This combination of absolute reference frames is viewed as a proxy for a mantle reference frame model.",
         "URL": "https://gwsdoc.gplates.org/models#seton2012",
+        "Version": "2023-12-06"
+    },
+    "li2008": "rodinia",
+    "golonka": {
+        "BigTime": 540,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/golonka/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/golonka/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/golonka/StaticPolygons.zip"
+        },
+        "Description": "https://gwsdoc.gplates.org/models#golonka",
+        "URL": "",
+        "Version": "2023-12-06"
+    },
+    "paleomap": {
+        "BigTime": 750,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/paleomap/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/paleomap/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/paleomap/StaticPolygons.zip"
+        },
+        "Description": "https://gwsdoc.gplates.org/models#paleomap",
+        "URL": "",
+        "Version": "2023-12-06"
+    },
+    "rodinia": {
+        "BigTime": 1100,
+        "SmallTime": 530,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/rodinia/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/rodinia/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/rodinia/StaticPolygons.zip"
+        },
+        "Description": "https://gwsdoc.gplates.org/models#rodinia",
+        "URL": "",
         "Version": "2023-12-06"
     }
 }
