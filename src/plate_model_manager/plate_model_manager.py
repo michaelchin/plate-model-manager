@@ -59,7 +59,11 @@ class PlateModelManager:
         if model_name in self.models:
             # model name is an alias
             if isinstance(self.models[model_name], str):
-                m = self.get_model(self.models[model_name][1:], data_dir=data_dir)
+                m_name = self.models[model_name]
+                if m_name.startswith("@"):
+                    m_name = self.models[model_name][1:]
+
+                m = self.get_model(m_name, data_dir=data_dir)
 
                 return PlateModel(model_name, model_cfg=m.get_cfg(), data_dir=data_dir)
             else:

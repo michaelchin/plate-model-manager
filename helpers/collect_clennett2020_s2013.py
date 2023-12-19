@@ -42,7 +42,7 @@ with zipfile.ZipFile(
     files = glob.glob(f"{model_path}/{zip_path}/*.rot")
     info_fp.write(f"Zip Rotations:\n")
     for f in files:
-        f_zip.write(f, f"Coastlines/{os.path.basename(f)}")
+        f_zip.write(f, f"Rotations/{os.path.basename(f)}")
         info_fp.write(f"\t{f}\n")
 
 

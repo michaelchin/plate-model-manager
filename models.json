@@ -60,7 +60,7 @@
         "URL": "https://gwsdoc.gplates.org/models#merdith2021",
         "Version": "2023-12-06"
     },
-    "clennett2020": "clennett2020_m2019",
+    "clennett2020": "@clennett2020_m2019",
     "clennett2020_m2019": {
         "BigTime": 170,
         "SmallTime": 0,
@@ -185,7 +185,7 @@
         "URL": "https://gwsdoc.gplates.org/models#matthews2016_pmag_ref",
         "Version": "2023-12-06"
     },
-    "scotese2016": "paleomap",
+    "scotese2016": "@paleomap",
     "pehrsson2015": {
         "BigTime": 2100,
         "SmallTime": 1275,
