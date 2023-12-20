@@ -1,6 +1,6 @@
 # import functions into __init__.py
 
-__version__ = "1.2.0rc0"
+__version__ = "1.2.0"
 
 from .plate_model import PlateModel
 from .plate_model_manager import PlateModelManager
