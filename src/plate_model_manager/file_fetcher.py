@@ -4,7 +4,7 @@ import io
 import os
 from pathlib import Path
 
-from . import misc_utils, unzip_utils, network_utils
+from . import misc_utils, network_utils, unzip_utils
 
 
 class FileFetcher(metaclass=abc.ABCMeta):
@@ -122,6 +122,12 @@ class FileFetcher(metaclass=abc.ABCMeta):
         data = [io.BytesIO()]
 
         try:
+            self._run_fetch_large_file(loop, url, file_size, data)
+
+        except RuntimeError:
+            import nest_asyncio
+
+            nest_asyncio.apply()
             self._run_fetch_large_file(loop, url, file_size, data)
         except Exception as e:
             misc_utils.print_error("Failed to fetch large file!")

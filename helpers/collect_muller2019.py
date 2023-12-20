@@ -1,84 +1,122 @@
 import glob
 import io
-import os
 import shutil
 import sys
 import zipfile
-from pathlib import Path
+from datetime import datetime
 
 import requests
 import utils
 
 model_path = utils.get_model_path(sys.argv, "muller2019")
+zip_path = "Muller_etal_2019_PlateMotionModel_v2.0_Tectonics_Updated"
 
-# fetch coastlines
-utils.fetch_coastlines(
-    "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MULLER2019/Global_EarthByte_GPlates_PresentDay_Coastlines.gpmlz",
-    model_path,
-    "Global_EarthByte_GPlates_PresentDay_Coastlines.gpmlz",
-)
+info_fp = open(f"{model_path}/info.txt", "w+")
+info_fp.write(f"{datetime.now()}\n")
 
-
-# fetch static polygons
-utils.fetch_static_polygons(
-    "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MULLER2019/Global_EarthByte_GPlates_PresentDay_StaticPlatePolygons.gpmlz",
-    model_path,
-    "Global_EarthByte_GPlates_PresentDay_StaticPlatePolygons.gpmlz",
-)
-
-
-# fetch rotations
-utils.fetch_rotations(
-    "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MULLER2019/Muller2019-Young2019-Cao2020.rot",
-    model_path,
-    "Muller2019-Young2019-Cao2020.rot",
-)
-
-
-# fetch topologies
-r = requests.get(
-    "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_PlateMotionModel/Muller_etal_2019_PlateMotionModel_v2.0_Tectonics_Updated.zip",
-    allow_redirects=True,
-)
+# download the model zip file
+zip_url = "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_PlateMotionModel/Muller_etal_2019_PlateMotionModel_v2.0_Tectonics_Updated.zip"
+info_fp.write(f"Download zip file from {zip_url}\n")
+r = requests.get(zip_url, allow_redirects=True, verify=True)
 if r.status_code in [200]:
     z = zipfile.ZipFile(io.BytesIO(r.content))
     z.extractall(f"{model_path}/")
 
-with zipfile.ZipFile(
-    f"{model_path}/Topologies.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = glob.glob(
-        f"{model_path}/Muller_etal_2019_PlateMotionModel_v2.0_Tectonics/*.gpml"
-    )
-    for f in files:
-        f_zip.write(f, f"Topologies/{os.path.basename(f)}")
+# zip Rotations
+files = glob.glob(f"{model_path}/{zip_path}/SimplifiedFiles/*.rot")
+utils.zip_files(files, f"{model_path}/Rotations.zip", "Rotations", info_fp)
+
+
+# zip StaticPolygons
+files = glob.glob(
+    f"{model_path}/{zip_path}/SimplifiedFiles/Muller_etal_2019_Global_StaticPlatePolygons.gpmlz"
+)
+utils.zip_files(files, f"{model_path}/StaticPolygons.zip", "StaticPolygons", info_fp)
+
+
+# zip Coastlines
+files = glob.glob(
+    f"{model_path}/{zip_path}/SimplifiedFiles/Muller_etal_2019_Global_Coastlines.gpmlz"
+)
+utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", info_fp)
+
+
+# zip Topologies
+files = glob.glob(
+    f"{model_path}/{zip_path}/SimplifiedFiles/Muller_etal_2019_PlateBoundaries_DeformingNetworks.gpmlz"
+)
+utils.zip_files(files, f"{model_path}/Topologies.zip", "Topologies", info_fp)
+
 
 # zip COBs
-with zipfile.ZipFile(
-    f"{model_path}/COBs.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    f_zip.write(
-        f"{model_path}/Muller_etal_2019_PlateMotionModel_v2.0_Tectonics/StaticGeometries/COBLineSegments/Global_EarthByte_GeeK07_COBLineSegments_2019_v1.gpmlz",
-        "COBs/Global_EarthByte_GeeK07_COBLineSegments_2019_v1.gpmlz",
-    )
+files = glob.glob(
+    f"{model_path}/{zip_path}/StaticGeometries/COBLineSegments/Global_EarthByte_GeeK07_COBLineSegments_2019_v1.gpmlz"
+)
+utils.zip_files(files, f"{model_path}/COBs.zip", "COBs", info_fp)
+
 
 # zip ContinentalPolygons
-with zipfile.ZipFile(
-    f"{model_path}/ContinentalPolygons.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = glob.glob(
-        f"{model_path}/Muller_etal_2019_PlateMotionModel_v2.0_Tectonics/StaticGeometries/ContinentalPolygons/*.*"
-    )
-    for f in files:
-        f_zip.write(f, f"ContinentalPolygons/{os.path.basename(f)}")
+files = glob.glob(f"{model_path}/{zip_path}/StaticGeometries/ContinentalPolygons/*")
+utils.zip_files(
+    files, f"{model_path}/ContinentalPolygons.zip", "ContinentalPolygons", info_fp
+)
 
-shutil.rmtree(f"{model_path}/Muller_etal_2019_PlateMotionModel_v2.0_Tectonics")
+shutil.rmtree(f"{model_path}/{zip_path}")
+
+# download the LIPs zip file
+zip_url = "https://www.earthbyte.org/webdav/ftp/earthbyte/GPlates/GPlates2.3_GeoData/Individual/IgneousProvinces.zip"
+info_fp.write(f"Download the LIPs zip file from {zip_url}\n")
+r = requests.get(zip_url, allow_redirects=True, verify=True)
+if r.status_code in [200]:
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    z.extractall(f"{model_path}/")
+
+# zip Whittaker2015LIPs
+files = glob.glob(
+    f"{model_path}/IgneousProvinces/Whittaker_2015/Whittaker_etal_2015_LIPs.gpmlz"
+)
+utils.zip_files(
+    files, f"{model_path}/Whittaker2015LIPs.zip", "Whittaker2015LIPs", info_fp
+)
+
+# zip Johansson_2018_LIPs
+files = glob.glob(
+    f"{model_path}/IgneousProvinces/Johansson_2018/Johansson_etal_2018_VolcanicProvinces_v2.gpmlz"
+)
+utils.zip_files(
+    files, f"{model_path}/Johansson2018LIPs.zip", "Johansson2018LIPs", info_fp
+)
+
+shutil.rmtree(f"{model_path}/IgneousProvinces")
+
+
+# download the Hotspots zip file
+zip_url = "https://www.earthbyte.org/webdav/ftp/earthbyte/GPlates/GPlates2.3_GeoData/Individual/Hotspots.zip"
+info_fp.write(f"Download the Hotspots zip file from {zip_url}\n")
+r = requests.get(zip_url, allow_redirects=True, verify=True)
+if r.status_code in [200]:
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    z.extractall(f"{model_path}/")
+
+# zip Hotspots
+files = glob.glob(f"{model_path}/Hotspots/Hotspots_Compilation_Whittaker_etal.gpmlz")
+utils.zip_files(files, f"{model_path}/Hotspots.zip", "Hotspots", info_fp)
+
+shutil.rmtree(f"{model_path}/Hotspots")
+
+# download the SeafloorFabric zip file
+zip_url = "https://www.earthbyte.org/webdav/ftp/earthbyte/GPlates/GPlates2.3_GeoData/Individual/SeafloorFabric.zip"
+info_fp.write(f"Download the SeafloorFabric zip file from {zip_url}\n")
+r = requests.get(zip_url, allow_redirects=True, verify=True)
+if r.status_code in [200]:
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    z.extractall(f"{model_path}/")
+
+# zip SeafloorFabric
+files = glob.glob(f"{model_path}/SeafloorFabric/*.gpmlz")
+utils.zip_files(files, f"{model_path}/SeafloorFabric.zip", "SeafloorFabric", info_fp)
+
+shutil.rmtree(f"{model_path}/SeafloorFabric")
+
+
+info_fp.close()

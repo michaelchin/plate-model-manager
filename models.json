@@ -100,7 +100,11 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2019/StaticPolygons.zip",
             "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/muller2019/ContinentalPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/muller2019/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/muller2019/COBs.zip"
+            "COBs": "https://repo.gplates.org/webdav/pmm/muller2019/COBs.zip",
+            "Hotspots": "https://repo.gplates.org/webdav/pmm/muller2019/Hotspots.zip",
+            "SeafloorFabric": "https://repo.gplates.org/webdav/pmm/muller2019/SeafloorFabric.zip",
+            "Whittaker2015LIPs": "https://repo.gplates.org/webdav/pmm/muller2019/Whittaker2015LIPs.zip",
+            "Johansson2018LIPs": "https://repo.gplates.org/webdav/pmm/muller2019/Johansson2018LIPs.zip"
         },
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc"

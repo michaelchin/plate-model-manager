@@ -63,6 +63,22 @@ class PlateModel:
             self.run = functools.partial(self.loop.run_in_executor, self.executor)
             asyncio.set_event_loop(self.loop)
 
+    def __getstate__(self):
+        attributes = self.__dict__.copy()
+        del attributes["executor"]
+        del attributes["loop"]
+        del attributes["run"]
+        return attributes
+
+    def __setstate__(self, state):
+        self.__dict__ = state
+        if not self.readonly:
+            # async and concurrent things
+            self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=15)
+            self.loop = asyncio.new_event_loop()
+            self.run = functools.partial(self.loop.run_in_executor, self.executor)
+            asyncio.set_event_loop(self.loop)
+
     def __del__(self):
         if not self.readonly:
             self.loop.close()
