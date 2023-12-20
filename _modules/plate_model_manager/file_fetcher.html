@@ -77,7 +77,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">misc_utils</span><span class="p">,</span> <span class="n">unzip_utils</span><span class="p">,</span> <span class="n">network_utils</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">misc_utils</span><span class="p">,</span> <span class="n">network_utils</span><span class="p">,</span> <span class="n">unzip_utils</span>
 
 
 <div class="viewcode-block" id="FileFetcher">
@@ -205,6 +205,12 @@
         <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()]</span>
 
         <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_fetch_large_file</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">file_size</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">nest_asyncio</span>
+
+            <span class="n">nest_asyncio</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_run_fetch_large_file</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">file_size</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_error</span><span class="p">(</span><span class="s2">&quot;Failed to fetch large file!&quot;</span><span class="p">)</span>
