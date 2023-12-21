@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 if len(sys.argv) != 2:
-    print("Usage: ./create-tag.py VERSION(such as 1.1.0)")
+    print("Usage: ./create-release.py VERSION(such as 1.1.0)")
     sys.exit(1)
 
 new_version = sys.argv[1]

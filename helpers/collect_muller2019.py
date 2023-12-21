@@ -42,6 +42,7 @@ utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", info_fp)
 
 
 # zip Topologies
+# files = glob.glob(f"{model_path}/{zip_path}/*.gpml")
 files = glob.glob(
     f"{model_path}/{zip_path}/SimplifiedFiles/Muller_etal_2019_PlateBoundaries_DeformingNetworks.gpmlz"
 )
