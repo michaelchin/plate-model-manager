@@ -29,7 +29,7 @@ with open(f"{this_file_path}/../src/plate_model_manager/__init__.py", "w") as of
 subprocess.call(
     ["git", "add", f"{this_file_path}/../src/plate_model_manager/__init__.py"]
 )
-subprocess.call(["git", "commit", '-m"update version"'])
+subprocess.call(["git", "commit", "-m", f"update version to {new_version}"])
 subprocess.call(["git", "push"])
 
 subprocess.call(["git", "tag", "v" + new_version])
