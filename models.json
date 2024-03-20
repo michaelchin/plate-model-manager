@@ -129,16 +129,16 @@
         "Version": "2023-12-19"
     },
     "torsvikcocks2017": {
-        "BigTime": 1100,
+        "BigTime": 540,
         "SmallTime": 0,
         "Rotations": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Rotations.zip",
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/StaticPolygons.zip"
         },
-        "Description": "https://gwsdoc.gplates.org/models#torsvikcocks2017",
-        "URL": "",
-        "Version": "2023-12-06"
+        "Description": "https://gwsdoc.gplates.org/models#torsvikcocks2017. Only locations on land can be reconstructed.",
+        "URL": "https://www.earthdynamics.org/earthhistory/data_info.html",
+        "Version": "2023-12-06_20-09-00"
     },
     "muller2016": {
         "BigTime": 230,
