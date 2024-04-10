@@ -5,8 +5,8 @@ from hashlib import sha256
 
 import requests
 
-from . import download_utils, misc_utils
 from .network_requests import fetch_file
+from .utils import download, misc
 
 DEFAULT_PRESENT_DAY_RASTERS_MANIFEST = (
     "https://repo.gplates.org/webdav/pmm/present_day_rasters.json"
@@ -96,7 +96,7 @@ class PresentDayRasterManager:
         is_wms_flag = self.is_wms(name, check_raster_avail_flag=False)
 
         if not is_wms_flag:
-            download_utils.download_file(
+            download.download_file(
                 self.rasters[name],
                 f"{self.data_dir}/{name}/.metadata.json",
                 f"{self.data_dir}/{name}/",
@@ -106,7 +106,7 @@ class PresentDayRasterManager:
             if len(files) == 0:
                 raise Exception(f"Failed to get raster {name}")
             if len(files) > 1:
-                misc_utils.print_warning(
+                misc.print_warning(
                     f"Multiple raster files have been detected.{files}. Return the first one found {files[0]}."
                 )
             return files[0]

@@ -17,5 +17,8 @@ def get_test_logger(logger_name):
     return logger
 
 
-def is_debug_mode():
-    return "PMM_DEBUG" in os.environ and os.environ["PMM_DEBUG"].lower() == "true"
+def is_test_installed_module():
+    return (
+        "PMM_TEST_INSTALLED_MODULE" in os.environ
+        and os.environ["PMM_TEST_INSTALLED_MODULE"].lower() == "true"
+    )

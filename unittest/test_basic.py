@@ -4,15 +4,15 @@ import os
 import sys
 import unittest
 
-from common import TEMP_TEST_DIR, get_test_logger, is_debug_mode
+from common import TEMP_TEST_DIR, get_test_logger, is_test_installed_module
 
-if is_debug_mode:
+if not is_test_installed_module():
     sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
 
 import plate_model_manager
 from plate_model_manager import PlateModelManager
 
-plate_model_manager.disable_stdout_logging()
+# plate_model_manager.disable_stdout_logging()
 
 if __name__ == "__main__":
     logger_name = "test_basic_main"

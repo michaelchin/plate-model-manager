@@ -7,7 +7,7 @@ import unittest
 sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
 from common import TEMP_TEST_DIR, get_test_logger
 
-from plate_model_manager import download_utils
+from plate_model_manager.utils import download
 
 if __name__ == "__main__":
     logger_name = "test_download_file_main"
@@ -41,7 +41,7 @@ class DownloadFileTestCase(unittest.TestCase):
         }
 
         for file in files:
-            download_utils.download_file(
+            download.download_file(
                 files[file],
                 f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json",
                 f"{TEMP_TEST_DIR}/test-download-file/{file}",
@@ -59,7 +59,7 @@ class DownloadFileTestCase(unittest.TestCase):
         int(os.getenv("TEST_LEVEL", 0)) < 1, "this will download a large volume of data"
     )
     def test_download_large_file(self):
-        download_utils.download_file(
+        download.download_file(
             "https://repo.gplates.org/webdav/pmm/present-day-rasters/agegrid.tiff.gz",
             f"{TEMP_TEST_DIR}/test-download-file/.metadata.json",
             f"{TEMP_TEST_DIR}/test-download-file/",

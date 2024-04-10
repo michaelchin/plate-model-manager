@@ -4,7 +4,7 @@ import io
 import os
 from pathlib import Path
 
-from . import misc_utils, network_utils, unzip_utils
+from .utils import misc, network, unzip
 
 
 class FileFetcher(metaclass=abc.ABCMeta):
@@ -97,9 +97,9 @@ class FileFetcher(metaclass=abc.ABCMeta):
 
         """
         if filesize is None or check_etag:
-            headers = network_utils.get_headers(url)
-            file_size = network_utils.get_content_length(headers)
-            new_etag = network_utils.get_etag(headers)
+            headers = network.get_headers(url)
+            file_size = network.get_content_length(headers)
+            new_etag = network.get_etag(headers)
             # if the etags are the same, do not download again
             if etag and etag == new_etag:
                 return etag
@@ -130,7 +130,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
             nest_asyncio.apply()
             self._run_fetch_large_file(loop, url, file_size, data)
         except Exception as e:
-            misc_utils.print_error("Failed to fetch large file!")
+            misc.print_error("Failed to fetch large file!")
             raise Exception("Failed to fetch large file!") from e
         finally:
             loop.close()
@@ -140,7 +140,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
         # save the file
         if auto_unzip:
             try:
-                unzip_utils.save_compressed_data(url, data[0], filepath)
+                unzip.save_compressed_data(url, data[0], filepath)
             except:
                 print("failed to save zip. try save directly")
                 data[0].seek(0)

@@ -8,8 +8,8 @@ from typing import Union
 
 import requests
 
-from . import unzip_utils
 from .file_fetcher import FileFetcher
+from .utils import unzip
 
 # This file contains the code to download file(s) from url(s) using "requests" + "asyncio"
 # Download files concurrently can improve the performance significantly.
@@ -63,9 +63,7 @@ class RequestsFetcher(FileFetcher):
                 filename = url.split("/")[-1]  # use the filename in the url
             if auto_unzip:
                 try:
-                    unzip_utils.save_compressed_data(
-                        url, io.BytesIO(r.content), filepath
-                    )
+                    unzip.save_compressed_data(url, io.BytesIO(r.content), filepath)
                 except:
                     self._save_file(filepath, filename, r.content)
             else:

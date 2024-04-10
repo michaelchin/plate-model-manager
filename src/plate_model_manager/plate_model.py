@@ -7,7 +7,7 @@ import os
 import shutil
 from pathlib import Path
 
-from . import download_utils
+from .utils import download
 
 METADATA_FILENAME = ".metadata.json"
 
@@ -287,8 +287,10 @@ class PlateModel:
 
         # find layer file url. two parts. one is the rotation, the other is all other geometry layers
         if layer_name in self.model:
+            # for Rotations
             layer_file_url = self.model[layer_name]
         elif "Layers" in self.model and layer_name in self.model["Layers"]:
+            # for other geometry layers
             layer_file_url = self.model["Layers"][layer_name]
         else:
             raise Exception(f"Fatal: No {layer_name} files in configuration file!")
@@ -297,7 +299,9 @@ class PlateModel:
         layer_folder = f"{model_folder}/{layer_name}"
         metadata_file = f"{layer_folder}/{self.meta_filename}"
 
-        download_utils.download_file(layer_file_url, metadata_file, model_folder)
+        # TODO: check if redownload is necessary
+        # if need to redownload, move the old folder into "history" folder
+        download.download_file(layer_file_url, metadata_file, model_folder)
 
         return layer_folder
 
@@ -393,7 +397,7 @@ class PlateModel:
         filename = url.split("/")[-1]
         metadata_folder = f"{dst_path}/.metadata"
         metadata_file = f"{metadata_folder}/{filename}.json"
-        download_utils.download_file(url, metadata_file, dst_path)
+        download.download_file(url, metadata_file, dst_path)
 
     def download_all(self):
         """download everything in this plate model"""

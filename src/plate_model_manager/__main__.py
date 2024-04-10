@@ -1,9 +1,12 @@
 import argparse
 import json
+import logging
 import os
 import sys
 
 from plate_model_manager import PlateModelManager, __version__
+
+logger = logging.getLogger("pmm")
 
 
 class ArgParser(argparse.ArgumentParser):
@@ -31,7 +34,7 @@ def _run_ls_command(args):
 
 
 def _run_download_command(args):
-    print(f"download {args.model}")
+    logger.info(f"Downloading {args.model}")
     if args.repository == None:
         pm_manager = PlateModelManager()
     else:
@@ -39,6 +42,7 @@ def _run_download_command(args):
 
     if args.model.lower() == "all":
         pm_manager.download_all_models(args.path)
+        logger.info(f"All models have been downloaded and saved in {args.path}")
     else:
         model = pm_manager.get_model(args.model)
         model.set_data_dir(args.path)
@@ -47,6 +51,7 @@ def _run_download_command(args):
             model.download_all()
         else:
             model.download_all_layers()
+        logger.info(f"Model({args.model}) has been downloaded and saved in {args.path}")
 
 
 def main():

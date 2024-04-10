@@ -5,8 +5,8 @@ from pathlib import Path
 
 import aiohttp
 
-from . import unzip_utils
 from .file_fetcher import FileFetcher
+from .utils import unzip
 
 # This file contains experimental code to download files concurrently using aiohttp.
 # Later, I realized that "requests"+"ThreadPoolExecutor" works as well.
@@ -83,9 +83,7 @@ class AiohttpFetcher(FileFetcher):
                 filename = url.split("/")[-1]  # use the filename in the url
                 if auto_unzip:
                     try:
-                        unzip_utils.save_compressed_data(
-                            url, io.BytesIO(content), filepath
-                        )
+                        unzip.save_compressed_data(url, io.BytesIO(content), filepath)
                     except Exception as ex:
                         # print(ex)
                         self._save_file(filepath, filename, content)
