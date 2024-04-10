@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -7,6 +8,8 @@ from . import network_requests, network_utils
 
 EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
 
+logger = logging.getLogger("pmm")
+
 
 def check_redownload_need(metadata_file, url):
     """check the metadata file and decide if redownload is necessary
@@ -14,7 +17,7 @@ def check_redownload_need(metadata_file, url):
     :param metadata_file: metadata file path
     :param url: url for the target file
 
-    :returns download_flag, etag: a flag indicates if redownload is neccesarry and old etag in the meta file.
+    :returns download_flag, etag: a flag indicates if redownload is neccesarry and the old etag in the meta file.
     """
     download_flag = False
     meta_etag = None
@@ -60,7 +63,7 @@ def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint
     :param dst_path: the folder path to save the raster file
 
     """
-    print(f"downloading {url}")
+    logger.debug(f"downloading {url}")
     download_flag, etag = check_redownload_need(metadata_file, url)
 
     file_size = None
@@ -91,7 +94,7 @@ def download_file(url, metadata_file, dst_path, expire_hours=12, large_file_hint
             )
 
     else:
-        print(
+        logger.debug(
             "The local file(s) is/are still good. Will not download again at this moment."
         )
 
