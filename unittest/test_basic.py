@@ -29,12 +29,23 @@ class BasicTestCase(unittest.TestCase):
         pass
 
     def test_basic(self):
+        # 1
         pm_manager = PlateModelManager()
         model = pm_manager.get_model("Muller2019", data_dir=TEMP_TEST_DIR)
         logger.info(model.get_rotation_model())
 
-        pm_manager = PlateModelManager(model_manifest="../models.json")
+        # 2
+        pm_manager = PlateModelManager(
+            model_manifest=f"{os.path.dirname(__file__)}/../models.json"
+        )
         model = pm_manager.get_model()
+        logger.info(model.get_rotation_model())
+
+        # 3
+        pm_manager = PlateModelManager(
+            model_manifest=f"{os.path.dirname(__file__)}/models.json"
+        )
+        model = pm_manager.get_model("test-model", data_dir=TEMP_TEST_DIR)
         logger.info(model.get_rotation_model())
 
 
