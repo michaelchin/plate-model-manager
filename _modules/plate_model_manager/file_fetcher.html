@@ -77,7 +77,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">misc_utils</span><span class="p">,</span> <span class="n">network_utils</span><span class="p">,</span> <span class="n">unzip_utils</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">misc</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">unzip</span>
 
 
 <div class="viewcode-block" id="FileFetcher">
@@ -180,9 +180,9 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">filesize</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">check_etag</span><span class="p">:</span>
-            <span class="n">headers</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_headers</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-            <span class="n">file_size</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_content_length</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
-            <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network_utils</span><span class="o">.</span><span class="n">get_etag</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">get_headers</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">get_content_length</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+            <span class="n">new_etag</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">get_etag</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
             <span class="c1"># if the etags are the same, do not download again</span>
             <span class="k">if</span> <span class="n">etag</span> <span class="ow">and</span> <span class="n">etag</span> <span class="o">==</span> <span class="n">new_etag</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">etag</span>
@@ -213,7 +213,7 @@
             <span class="n">nest_asyncio</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_run_fetch_large_file</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">file_size</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">misc_utils</span><span class="o">.</span><span class="n">print_error</span><span class="p">(</span><span class="s2">&quot;Failed to fetch large file!&quot;</span><span class="p">)</span>
+            <span class="n">misc</span><span class="o">.</span><span class="n">print_error</span><span class="p">(</span><span class="s2">&quot;Failed to fetch large file!&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to fetch large file!&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -223,7 +223,7 @@
         <span class="c1"># save the file</span>
         <span class="k">if</span> <span class="n">auto_unzip</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">unzip_utils</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">filepath</span><span class="p">)</span>
+                <span class="n">unzip</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">filepath</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;failed to save zip. try save directly&quot;</span><span class="p">)</span>
                 <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
