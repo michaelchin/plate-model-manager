@@ -13,7 +13,6 @@ from . import network_requests
 from .utils import download, network
 
 METADATA_FILENAME = ".metadata.json"
-EXPIRE_HOURS = 12
 
 FILE_EXT = [
     "gpml",
@@ -51,7 +50,7 @@ class PlateModel:
 
         self.data_dir = data_dir
 
-        self.model_dir = f"{self.data_dir}/{self.model_name}/"
+        self.model_dir = f"{self.data_dir}/{self.model_name}"
 
         if readonly:
             if not PlateModel.is_model_dir(self.model_dir):
@@ -59,7 +58,7 @@ class PlateModel:
                     f"{self.model_dir} must be valid model dir in readonly mode."
                 )
             else:
-                with open(f"{self.model_dir}/.metadata.json", "r") as f:
+                with open(f"{self.model_dir}/{self.meta_filename}", "r") as f:
                     self.model = json.load(f)
 
         if not readonly:
@@ -68,9 +67,6 @@ class PlateModel:
             self.loop = asyncio.new_event_loop()
             self.run = functools.partial(self.loop.run_in_executor, self.executor)
             asyncio.set_event_loop(self.loop)
-
-        # {url:{new-etag:"xxxx", file-size:12345, meta-etag:"uuuuu"}}
-        self.etag_and_file_size_cache = {}
 
     def __getstate__(self):
         attributes = self.__dict__.copy()
@@ -249,7 +245,7 @@ class PlateModel:
 
         Path(model_path).mkdir(parents=True, exist_ok=True)
 
-        metadata_file = f"{model_path}/.metadata.json"
+        metadata_file = f"{model_path}/{self.meta_filename}"
         if not os.path.isfile(metadata_file):
             with open(metadata_file, "w+") as f:
                 json.dump(self.model, f)
@@ -299,49 +295,18 @@ class PlateModel:
         metadata_file = f"{layer_folder}/{self.meta_filename}"
 
         # only re-download when necessary
-        if self._check_if_layer_files_need_update(layer_name):
+        if download.check_if_file_need_update(layer_file_url, metadata_file):
             if os.path.isdir(layer_folder):
                 # move the old layer files into "history" folder
                 timestamp_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
                 history_dir = f"{model_folder}/history/{layer_name}_{timestamp_str}"
                 Path(history_dir).mkdir(parents=True, exist_ok=True)
                 shutil.move(layer_folder, history_dir)
-
-            if layer_file_url in self.etag_and_file_size_cache:
-                file_size = self.etag_and_file_size_cache[layer_file_url]["file-size"]
-                meta_etag = self.etag_and_file_size_cache[layer_file_url]["meta-etag"]
-            else:
-                file_size = None
-                meta_etag = None
-
-            if file_size and file_size > 20 * 1000 * 1000:
-                new_etag = network_requests.fetch_large_file(
-                    layer_file_url,
-                    model_folder,
-                    filesize=file_size,
-                    auto_unzip=True,
-                    check_etag=False,
-                )
-            else:
-                new_etag = network_requests.fetch_file(
-                    layer_file_url,
-                    model_folder,
-                    etag=meta_etag,
-                    auto_unzip=True,
-                )
-            # update metadata file
-            metadata = {
-                "url": layer_file_url,
-                "expiry": (datetime.now() + timedelta(hours=EXPIRE_HOURS)).strftime(
-                    download.EXPIRY_TIME_FORMAT
-                ),
-                "etag": new_etag,
-            }
-            Path("/".join(metadata_file.split("/")[:-1])).mkdir(
-                parents=True, exist_ok=True
+            download.download_file_and_update_metadata(
+                layer_file_url,
+                model_folder,
+                metadata_file,
             )
-            with open(metadata_file, "w+") as f:
-                json.dump(metadata, f)
         else:
             logger.debug(
                 "The local file(s) is/are still good. Will not download again at this moment."
@@ -451,102 +416,6 @@ class PlateModel:
         if "TimeDepRasters" in self.model:
             for raster in self.model["TimeDepRasters"]:
                 self.download_time_dependent_rasters(raster)
-
-    def _check_if_layer_files_need_update(self, layer_name: str):
-        """check if the layer files need an update(re-download the files)
-        return true if "need update", otherwise false
-
-        1. check if the metadata file exists
-        2. check if the layer urls match
-        3. check expire date
-        4. check etag
-        """
-
-        layer_folder = f"{self.model_dir}/{layer_name}"
-        metadata_file = f"{layer_folder}/{self.meta_filename}"
-
-        #
-        # first check if the metadata file exists
-        # since metadata file is inside the layer folder, this check will also confirm the existence of the layer folder
-        #
-        if not os.path.isfile(metadata_file):
-            logger.debug(f"the metadata file does not exist, re-download the layer")
-            return True
-
-        with open(metadata_file, "r") as f:
-            meta = json.load(f)
-            layer_file_url = self._get_layer_file_url(layer_name)
-            #
-            # check if the "url" in the metafile matches the "layer file url"
-            #
-            if "url" in meta:
-                meta_url = meta["url"]
-                if meta_url != layer_file_url:
-                    logger.debug("the layer url has changed, re-download the layer")
-                    return True
-            else:
-                logger.debug(
-                    "no url found in the metafile. to be on the safe side, re-download the layer"
-                )
-                return True
-            #
-            # now check the layer file's expiry date
-            #
-            need_check_etag = False
-            if "expiry" in meta:
-                try:
-                    meta_expiry = meta["expiry"]
-                    expiry_date = datetime.strptime(
-                        meta_expiry, download.EXPIRY_TIME_FORMAT
-                    )
-                    now = datetime.now()
-                    if now > expiry_date:
-                        logger.debug("The file expired. Check etag.")
-                        need_check_etag = True  # expired, need to check etag to decide
-                    else:
-                        # layer file has not expired yet, no need to check update
-                        return False
-                except ValueError:
-                    need_check_etag = (
-                        True  # invalid expiry date, need to check etag to decide
-                    )
-            else:
-                need_check_etag = (
-                    True  # no expiry date in metafile, need to check etag to make sure
-                )
-
-            if need_check_etag:
-                if "etag" in meta:
-                    meta_etag = meta["etag"]
-                    headers = network.get_headers(layer_file_url)
-                    file_size = network.get_content_length(headers)
-                    new_etag = network.get_etag(headers)
-
-                    # cache the etag and file size. they might be needed later.
-                    # primarily performance consideration. avoid network operation as much as possible
-                    self.etag_and_file_size_cache = {
-                        layer_file_url: {
-                            "new-etag": new_etag,
-                            "file-size": file_size,
-                            "meta-etag": meta_etag,
-                        }
-                    }
-
-                    if meta_etag == new_etag:
-                        logger.debug(f"{meta_etag} -- {new_etag}")
-                        return False
-                    else:
-                        logger.debug("etag has been changed. re-download the layer")
-                        return True
-
-                else:
-                    logger.debug(
-                        "no etag found in the metadata file, to be safe, re-download the layer file"
-                    )
-                    return True
-
-            logger.debug("This line and below should not be reached!!!!")
-            return True
 
     def _get_layer_file_url(self, layer_name: str):
         # find the layer file url. two parts. one is the rotation, the other is all other geometry layers
