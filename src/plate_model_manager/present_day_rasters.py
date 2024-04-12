@@ -1,5 +1,6 @@
 import glob
 import json
+import logging
 import os
 from hashlib import sha256
 
@@ -11,6 +12,7 @@ from .utils import download, misc
 DEFAULT_PRESENT_DAY_RASTERS_MANIFEST = (
     "https://repo.gplates.org/webdav/pmm/present_day_rasters.json"
 )
+logger = logging.getLogger("pmm")
 
 
 class RasterNameNotFound(Exception):
@@ -90,18 +92,31 @@ class PresentDayRasterManager:
         width=1800,
         height=800,
         bbox=[-180, -80, 180, 80],
+        large_file_hint=True,
     ):
         """download the raster by name. Save the raster in self.data_dir"""
         name = self._check_raster_avail(_name)
         is_wms_flag = self.is_wms(name, check_raster_avail_flag=False)
 
         if not is_wms_flag:
-            download.download_file(
+            downloader = download.FileDownloader(
                 self.rasters[name],
                 f"{self.data_dir}/{name}/.metadata.json",
                 f"{self.data_dir}/{name}/",
-                large_file_hint=True,
+                large_file_hint=large_file_hint,
             )
+            # only re-download when necessary
+            if downloader.check_if_file_need_update():
+                downloader.download_file_and_update_metadata()
+            else:
+                if downloader.check_if_expire_date_need_update():
+                    # update the expiry date
+                    downloader.update_metadata()
+
+                logger.debug(
+                    f"The local raster file {self.data_dir}/{name} is still good. Will not download again at this moment."
+                )
+
             files = glob.glob(f"{self.data_dir}/{name}/*")
             if len(files) == 0:
                 raise Exception(f"Failed to get raster {name}")

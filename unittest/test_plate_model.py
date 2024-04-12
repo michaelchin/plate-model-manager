@@ -4,11 +4,15 @@ import os
 import sys
 import unittest
 
+from common import TEMP_TEST_DIR, get_test_logger, is_test_installed_module
 
-sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
-from common import TEMP_TEST_DIR, get_test_logger
+if not is_test_installed_module():
+    sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
 
+import plate_model_manager
 from plate_model_manager import PlateModelManager
+
+plate_model_manager.disable_stdout_logging()
 
 if __name__ == "__main__":
     logger_name = "test_plate_model_main"
@@ -16,6 +20,7 @@ else:
     logger_name = __name__
 
 logger = get_test_logger(logger_name)
+logger.info(plate_model_manager.__file__)
 
 
 class PlateModelTestCase(unittest.TestCase):
@@ -85,7 +90,8 @@ class PlateModelTestCase(unittest.TestCase):
         self.model.download_time_dependent_rasters("AgeGrids", times=[1, 2])
 
     @unittest.skipIf(
-        int(os.getenv("TEST_LEVEL", 0)) < 1, "this will download a large volume of data"
+        int(os.getenv("PMM_TEST_LEVEL", 0)) < 1,
+        "this will download a large volume of data",
     )
     def test_download_all(self):
         self.model.download_all()

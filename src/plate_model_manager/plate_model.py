@@ -371,7 +371,7 @@ class PlateModel:
 
                 dst_path = f"{self.get_model_dir()}/Rasters/{raster_name}"
                 if not times:
-                    times = range(self.model["SmallTime"], self.model["BigTime"])
+                    times = range(self.model["SmallTime"], self.model["BigTime"] + 1)
                 for time in times:
                     tasks.append(
                         self.run(
@@ -410,7 +410,19 @@ class PlateModel:
         filename = url.split("/")[-1]
         metadata_folder = f"{dst_path}/.metadata"
         metadata_file = f"{metadata_folder}/{filename}.json"
-        download.download_file(url, metadata_file, dst_path)
+
+        downloader = download.FileDownloader(url, metadata_file, dst_path)
+        # only re-download when necessary
+        if downloader.check_if_file_need_update():
+            downloader.download_file_and_update_metadata()
+        else:
+            if downloader.check_if_expire_date_need_update():
+                # update the expiry date
+                downloader.update_metadata()
+
+            logger.debug(
+                f"The local raster file {dst_path}/{filename} is still good. Will not download again at this moment."
+            )
 
     def download_all(self):
         """download everything in this plate model"""

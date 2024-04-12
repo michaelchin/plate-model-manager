@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 
 import os
+import shutil
 import sys
 import unittest
 
+from common import TEMP_TEST_DIR, get_test_logger, is_test_installed_module
 
-sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
-from common import TEMP_TEST_DIR, get_test_logger
+if not is_test_installed_module():
+    sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
 
+import plate_model_manager
 from plate_model_manager import PlateModelManager
+
+# plate_model_manager.disable_stdout_logging()
 
 if __name__ == "__main__":
     logger_name = "test_time_dep_rasters_main"
@@ -16,11 +21,12 @@ else:
     logger_name = __name__
 
 logger = get_test_logger(logger_name)
+logger.info(plate_model_manager.__file__)
 
 
 class TimeDepRastersTestCase(unittest.TestCase):
     def setUp(self):
-        model_manager = PlateModelManager(f"{os.path.dirname(__file__)}/../models.json")
+        model_manager = PlateModelManager(f"{os.path.dirname(__file__)}/models.json")
 
         # test remote models.json with URL
         # model_manager = plate_model.PlateModelManager(
@@ -29,6 +35,8 @@ class TimeDepRastersTestCase(unittest.TestCase):
         self.model_name = "matthews2016_mantle_ref"
         self.model = model_manager.get_model(self.model_name)
         self.model.set_data_dir(TEMP_TEST_DIR)
+        if os.path.isdir(f"{TEMP_TEST_DIR}/matthews2016_mantle_ref/Rasters"):
+            shutil.rmtree(f"{TEMP_TEST_DIR}/matthews2016_mantle_ref/Rasters")
 
     def test(self):
         logger.info("test ...")
