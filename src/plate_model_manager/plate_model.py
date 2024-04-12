@@ -294,22 +294,26 @@ class PlateModel:
         layer_folder = f"{model_folder}/{layer_name}"
         metadata_file = f"{layer_folder}/{self.meta_filename}"
 
+        downloader = download.FileDownloader(
+            layer_file_url, metadata_file, model_folder
+        )
         # only re-download when necessary
-        if download.check_if_file_need_update(layer_file_url, metadata_file):
+        if downloader.check_if_file_need_update():
             if os.path.isdir(layer_folder):
                 # move the old layer files into "history" folder
                 timestamp_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
                 history_dir = f"{model_folder}/history/{layer_name}_{timestamp_str}"
                 Path(history_dir).mkdir(parents=True, exist_ok=True)
                 shutil.move(layer_folder, history_dir)
-            download.download_file_and_update_metadata(
-                layer_file_url,
-                model_folder,
-                metadata_file,
-            )
+
+            downloader.download_file_and_update_metadata()
         else:
+            if downloader.check_if_expire_date_need_update():
+                # update the expiry date
+                downloader.update_metadata()
+
             logger.debug(
-                "The local file(s) is/are still good. Will not download again at this moment."
+                f"The local files in {layer_folder} are still good. Will not download again at this moment."
             )
 
         return layer_folder
