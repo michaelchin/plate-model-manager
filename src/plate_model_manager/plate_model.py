@@ -6,11 +6,10 @@ import json
 import logging
 import os
 import shutil
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
-from . import network_requests
-from .utils import download, network
+from .utils import download
 
 METADATA_FILENAME = ".metadata.json"
 
@@ -34,7 +33,14 @@ logger = logging.getLogger("pmm")
 class PlateModel:
     """Class to manage a plate model"""
 
-    def __init__(self, model_name: str, model_cfg=None, data_dir=".", readonly=False):
+    def __init__(
+        self,
+        model_name: str,
+        model_cfg=None,
+        data_dir=".",
+        readonly=False,
+        timeout=(None, None),
+    ):
         """Constructor
 
         :param model_name: model name
@@ -47,6 +53,7 @@ class PlateModel:
         self.meta_filename = METADATA_FILENAME
         self.model = model_cfg
         self.readonly = readonly
+        self.timeout = timeout
 
         self.data_dir = data_dir
 
@@ -295,7 +302,7 @@ class PlateModel:
         metadata_file = f"{layer_folder}/{self.meta_filename}"
 
         downloader = download.FileDownloader(
-            layer_file_url, metadata_file, model_folder
+            layer_file_url, metadata_file, model_folder, timeout=self.timeout
         )
         # only re-download when necessary
         if downloader.check_if_file_need_update():
@@ -411,7 +418,9 @@ class PlateModel:
         metadata_folder = f"{dst_path}/.metadata"
         metadata_file = f"{metadata_folder}/{filename}.json"
 
-        downloader = download.FileDownloader(url, metadata_file, dst_path)
+        downloader = download.FileDownloader(
+            url, metadata_file, dst_path, timeout=self.timeout
+        )
         # only re-download when necessary
         if downloader.check_if_file_need_update():
             downloader.download_file_and_update_metadata()

@@ -107,7 +107,8 @@
             "Johansson2018LIPs": "https://repo.gplates.org/webdav/pmm/muller2019/Johansson2018LIPs.zip"
         },
         "TimeDepRasters": {
-            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc"
+            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc",
+            "SedimentThickness": "https://repo.gplates.org/webdav/pmm/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{}.nc"
         },
         "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones.",
         "URL": "https://gwsdoc.gplates.org/models#muller2019",

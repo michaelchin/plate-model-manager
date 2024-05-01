@@ -76,6 +76,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
         etag: str = None,
         auto_unzip: bool = True,
         check_etag: bool = True,
+        timeout=(None, None),
     ):
         """use multi-thread to fetch a large file.
             LOOK HERE!!!
@@ -97,7 +98,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
 
         """
         if filesize is None or check_etag:
-            headers = network.get_headers(url)
+            headers = network.get_headers(url, timeout=timeout)
             file_size = network.get_content_length(headers)
             new_etag = network.get_etag(headers)
             # if the etags are the same, do not download again

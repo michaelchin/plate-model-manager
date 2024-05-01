@@ -3,9 +3,9 @@ import requests
 from . import misc
 
 
-def get_headers(url):
+def get_headers(url, timeout=(None, None)):
     headers = {"Accept-Encoding": "identity"}
-    r = requests.head(url, headers=headers)
+    r = requests.head(url, headers=headers, timeout=timeout)
     return r.headers
 
 

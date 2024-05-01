@@ -27,6 +27,7 @@ class RequestsFetcher(FileFetcher):
         filename: str = None,
         etag: str = None,
         auto_unzip: bool = True,
+        timeout=(None, None),
     ):
         """download a file from "url" and save to "filepath"
             You can give a new "filename" for the file.
@@ -50,7 +51,7 @@ class RequestsFetcher(FileFetcher):
             )
         Path(filepath).mkdir(parents=True, exist_ok=True)
 
-        r = requests.get(url, allow_redirects=True, headers=headers)
+        r = requests.get(url, allow_redirects=True, headers=headers, timeout=timeout)
         # print(r.headers)
 
         if r.status_code == 304:
@@ -77,7 +78,9 @@ class RequestsFetcher(FileFetcher):
 
         return new_etag
 
-    def _fetch_range(self, url, index: int, chunk_size: int, data: list):
+    def _fetch_range(
+        self, url, index: int, chunk_size: int, data: list, timeout=(None, None)
+    ):
         """get patial content of a file from the server
         Be careful, some server does not support this function.
         And some firewall sequences these requests to shape network traffic and defeat the purpose
@@ -91,7 +94,7 @@ class RequestsFetcher(FileFetcher):
             "Accept-Encoding": "identity",
         }
 
-        r = requests.get(url, headers=headers)
+        r = requests.get(url, headers=headers, timeout=timeout)
         if r.status_code == 206:
             data[index].write(r.content)
         else:
@@ -99,27 +102,29 @@ class RequestsFetcher(FileFetcher):
         # et = time.time()
         # print(f"{index} -- time: {et - st}")
 
-    def _run_fetch_large_file(self, loop, url, filesize, data):
+    def _run_fetch_large_file(self, loop, url, filesize, data, timeout=(None, None)):
         """run async function"""
         executor = concurrent.futures.ThreadPoolExecutor(max_workers=15)
         run = functools.partial(loop.run_in_executor, executor)
-        loop.run_until_complete(self._fetch_large_file(run, url, filesize, data))
+        loop.run_until_complete(
+            self._fetch_large_file(run, url, filesize, data, timeout=timeout)
+        )
 
     async def _fetch_large_file(
-        self, run, url, file_size: int, data: list, chunk_size=10 * 1000 * 1000
+        self,
+        run,
+        url,
+        file_size: int,
+        data: list,
+        chunk_size=10 * 1000 * 1000,
+        timeout=(None, None),
     ):
         """async implementation of fetch_large_file"""
 
         num_chunks = file_size // chunk_size + 1
         data_array = [io.BytesIO() for i in range(num_chunks)]
         tasks = [
-            run(
-                self._fetch_range,
-                url,
-                i,
-                chunk_size,
-                data_array,
-            )
+            run(self._fetch_range, url, i, chunk_size, data_array, timeout=timeout)
             for i in range(num_chunks)
         ]
 
@@ -136,6 +141,7 @@ class RequestsFetcher(FileFetcher):
         filepaths: Union[list, str],
         etags=[],
         auto_unzip: bool = True,
+        timeout=(None, None),
     ):
         """async implementation of fetch_files function"""
         tasks = []
@@ -157,13 +163,7 @@ class RequestsFetcher(FileFetcher):
                 etag = None
 
             tasks.append(
-                run(
-                    self.fetch_file,
-                    url,
-                    filepath,
-                    etag,
-                    auto_unzip,
-                )
+                run(self.fetch_file, url, filepath, etag, auto_unzip, timeout=timeout)
             )
         # print(tasks)
         await asyncio.wait(tasks)
@@ -174,6 +174,7 @@ class RequestsFetcher(FileFetcher):
         filepaths: Union[list, str],
         etags=[],
         auto_unzip: bool = True,
+        timeout=(None, None),
     ):
         """fetch multiple files concurrently
 
@@ -199,6 +200,7 @@ class RequestsFetcher(FileFetcher):
                     filepaths,
                     etags=etags,
                     auto_unzip=auto_unzip,
+                    timeout=timeout,
                 )
             )
         except RuntimeError:
@@ -212,6 +214,7 @@ class RequestsFetcher(FileFetcher):
                     filepaths,
                     etags=etags,
                     auto_unzip=auto_unzip,
+                    timeout=timeout,
                 )
             )
         finally:
@@ -224,10 +227,16 @@ def fetch_file(
     filename: str = None,
     etag: str = None,
     auto_unzip: bool = True,
+    timeout=(None, None),
 ):
     fetcher = RequestsFetcher()
     return fetcher.fetch_file(
-        url, filepath, filename=filename, etag=etag, auto_unzip=auto_unzip
+        url,
+        filepath,
+        filename=filename,
+        etag=etag,
+        auto_unzip=auto_unzip,
+        timeout=timeout,
     )
 
 
@@ -236,9 +245,12 @@ def fetch_files(
     filepaths: Union[list, str],
     etags=[],
     auto_unzip: bool = True,
+    timeout=(None, None),
 ):
     fetcher = RequestsFetcher()
-    return fetcher.fetch_files(urls, filepaths, etags=etags, auto_unzip=auto_unzip)
+    return fetcher.fetch_files(
+        urls, filepaths, etags=etags, auto_unzip=auto_unzip, timeout=timeout
+    )
 
 
 def fetch_large_file(
@@ -248,6 +260,7 @@ def fetch_large_file(
     etag: str = None,
     auto_unzip: bool = True,
     check_etag: bool = True,
+    timeout=(None, None),
 ):
     fetcher = RequestsFetcher()
     return fetcher.fetch_large_file(
@@ -257,4 +270,5 @@ def fetch_large_file(
         etag=etag,
         auto_unzip=auto_unzip,
         check_etag=check_etag,
+        timeout=timeout,
     )

@@ -11,6 +11,7 @@ if not is_test_installed_module():
 
 import plate_model_manager
 from plate_model_manager import PlateModelManager
+from plate_model_manager.exceptions import InvalidConfigFile
 
 # plate_model_manager.disable_stdout_logging()
 
@@ -29,8 +30,13 @@ class BasicTestCase(unittest.TestCase):
         pass
 
     def test_basic(self):
+        with self.assertRaises(InvalidConfigFile):
+            pm_manager = PlateModelManager(123, timeout=(5, 5))
+        with self.assertRaises(InvalidConfigFile):
+            pm_manager = PlateModelManager("123", timeout=(5, 5))
+
         # 1
-        pm_manager = PlateModelManager()
+        pm_manager = PlateModelManager(timeout=(5, 5))
         model = pm_manager.get_model("Muller2019", data_dir=TEMP_TEST_DIR)
         logger.info(model.get_rotation_model())
 

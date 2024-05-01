@@ -27,6 +27,7 @@ class FileDownloader:
         expire_hours=EXPIRE_HOURS,
         expiry_time_format=EXPIRY_TIME_FORMAT,
         large_file_hint=False,
+        timeout=(None, None),
     ) -> None:
         """FileDownloader constructor
 
@@ -43,6 +44,7 @@ class FileDownloader:
         self.new_etag = None
         self.file_size = None
         self.large_file_hint = large_file_hint
+        self.timeout = timeout
 
     def check_if_file_need_update(self):
         """check if the file need an update(download/re-download the files)

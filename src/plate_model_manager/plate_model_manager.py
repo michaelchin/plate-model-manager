@@ -3,6 +3,7 @@ import os
 
 import requests
 
+from .exceptions import InvalidConfigFile, ServerUnavailable
 from .plate_model import PlateModel
 
 
@@ -12,7 +13,7 @@ class PlateModelManager:
 
     """
 
-    def __init__(self, model_manifest=None):
+    def __init__(self, model_manifest: str = None, timeout=(None, None)):
         """constructor
 
         :param model_manifest: the path to a models.json file
@@ -23,6 +24,12 @@ class PlateModelManager:
         else:
             self.model_manifest = model_manifest
         self.models = None
+        self.timeout = timeout
+
+        if not isinstance(self.model_manifest, str):
+            raise InvalidConfigFile(
+                f"The model_manifest '{type(self.model_manifest)}' must be a string. It is either a local file path or a http(s) URL."
+            )
 
         # check if the model manifest file is a local file
         if os.path.isfile(self.model_manifest):
@@ -33,17 +40,20 @@ class PlateModelManager:
         ) or self.model_manifest.startswith("https://"):
             # try the http(s) url
             try:
-                r = requests.get(self.model_manifest)
+                r = requests.get(self.model_manifest, timeout=timeout)
                 self.models = r.json()
 
-            except requests.exceptions.ConnectionError:
-                raise Exception(
-                    f"Unable to fetch {self.model_manifest}. "
-                    + "No network connection or invalid URL!"
+            except (
+                requests.exceptions.ConnectionError,
+                requests.exceptions.ConnectTimeout,
+                requests.exceptions.ReadTimeout,
+            ):
+                raise ServerUnavailable(
+                    f"Unable to fetch {self.model_manifest}. No network connection, server unavailable or invalid URL!"
                 )
         else:
-            raise Exception(
-                f"The model_manifest '{self.model_manifest}' should be either a local file path or a http(s) URL."
+            raise InvalidConfigFile(
+                f"The model_manifest '{self.model_manifest}' must be either a local file path or a http(s) URL."
             )
 
     def get_model(self, model_name: str = "default", data_dir: str = "."):
