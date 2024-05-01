@@ -4,6 +4,14 @@ plate\_model\_manager package
 Submodules
 ----------
 
+plate\_model\_manager.exceptions module
+---------------------------------------
+
+.. automodule:: plate_model_manager.exceptions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 plate\_model\_manager.file\_fetcher module
 ------------------------------------------
 

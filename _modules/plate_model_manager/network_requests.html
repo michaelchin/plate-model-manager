@@ -15,7 +15,7 @@
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -104,6 +104,7 @@
         <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;download a file from &quot;url&quot; and save to &quot;filepath&quot;</span>
 <span class="sd">            You can give a new &quot;filename&quot; for the file.</span>
@@ -127,7 +128,7 @@
             <span class="p">)</span>
         <span class="n">Path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
         <span class="c1"># print(r.headers)</span>
 
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">304</span><span class="p">:</span>
@@ -155,7 +156,9 @@
         <span class="k">return</span> <span class="n">new_etag</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;get patial content of a file from the server</span>
 <span class="sd">        Be careful, some server does not support this function.</span>
 <span class="sd">        And some firewall sequences these requests to shape network traffic and defeat the purpose</span>
@@ -169,7 +172,7 @@
             <span class="s2">&quot;Accept-Encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;identity&quot;</span><span class="p">,</span>
         <span class="p">}</span>
 
-        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">206</span><span class="p">:</span>
             <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -177,27 +180,29 @@
         <span class="c1"># et = time.time()</span>
         <span class="c1"># print(f&quot;{index} -- time: {et - st}&quot;)</span>
 
-    <span class="k">def</span> <span class="nf">_run_fetch_large_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_run_fetch_large_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;run async function&quot;&quot;&quot;</span>
         <span class="n">executor</span> <span class="o">=</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
         <span class="n">run</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">,</span> <span class="n">executor</span><span class="p">)</span>
-        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_large_file</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">run</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">,</span>
+        <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;async implementation of fetch_large_file&quot;&quot;&quot;</span>
 
         <span class="n">num_chunks</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">//</span> <span class="n">chunk_size</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">data_array</span> <span class="o">=</span> <span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">)]</span>
         <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">run</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_range</span><span class="p">,</span>
-                <span class="n">url</span><span class="p">,</span>
-                <span class="n">i</span><span class="p">,</span>
-                <span class="n">chunk_size</span><span class="p">,</span>
-                <span class="n">data_array</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fetch_range</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">data_array</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">)</span>
         <span class="p">]</span>
 
@@ -214,6 +219,7 @@
         <span class="n">filepaths</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
         <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;async implementation of fetch_files function&quot;&quot;&quot;</span>
         <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
@@ -235,13 +241,7 @@
                 <span class="n">etag</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">run</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">,</span>
-                    <span class="n">url</span><span class="p">,</span>
-                    <span class="n">filepath</span><span class="p">,</span>
-                    <span class="n">etag</span><span class="p">,</span>
-                    <span class="n">auto_unzip</span><span class="p">,</span>
-                <span class="p">)</span>
+                <span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">etag</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="c1"># print(tasks)</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
@@ -254,6 +254,7 @@
         <span class="n">filepaths</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
         <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;fetch multiple files concurrently</span>
 
@@ -279,6 +280,7 @@
                     <span class="n">filepaths</span><span class="p">,</span>
                     <span class="n">etags</span><span class="o">=</span><span class="n">etags</span><span class="p">,</span>
                     <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
+                    <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
@@ -292,6 +294,7 @@
                     <span class="n">filepaths</span><span class="p">,</span>
                     <span class="n">etags</span><span class="o">=</span><span class="n">etags</span><span class="p">,</span>
                     <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
+                    <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
@@ -308,10 +311,16 @@
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
 <span class="p">):</span>
     <span class="n">fetcher</span> <span class="o">=</span> <span class="n">RequestsFetcher</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_file</span><span class="p">(</span>
-        <span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span>
+        <span class="n">url</span><span class="p">,</span>
+        <span class="n">filepath</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+        <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
+        <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -323,9 +332,12 @@
     <span class="n">filepaths</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
 <span class="p">):</span>
     <span class="n">fetcher</span> <span class="o">=</span> <span class="n">RequestsFetcher</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_files</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">,</span> <span class="n">etags</span><span class="o">=</span><span class="n">etags</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_files</span><span class="p">(</span>
+        <span class="n">urls</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">,</span> <span class="n">etags</span><span class="o">=</span><span class="n">etags</span><span class="p">,</span> <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span>
+    <span class="p">)</span></div>
 
 
 
@@ -338,6 +350,7 @@
     <span class="n">etag</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">auto_unzip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_etag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
 <span class="p">):</span>
     <span class="n">fetcher</span> <span class="o">=</span> <span class="n">RequestsFetcher</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch_large_file</span><span class="p">(</span>
@@ -347,6 +360,7 @@
         <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
         <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
         <span class="n">check_etag</span><span class="o">=</span><span class="n">check_etag</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 </pre></div>

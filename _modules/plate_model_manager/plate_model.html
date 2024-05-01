@@ -15,7 +15,7 @@
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -79,11 +79,10 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">network_requests</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">download</span><span class="p">,</span> <span class="n">network</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">download</span>
 
 <span class="n">METADATA_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;.metadata.json&quot;</span>
 
@@ -109,7 +108,14 @@
 <span class="k">class</span> <span class="nc">PlateModel</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to manage a plate model&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_cfg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">model_cfg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor</span>
 
 <span class="sd">        :param model_name: model name</span>
@@ -122,6 +128,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_filename</span> <span class="o">=</span> <span class="n">METADATA_FILENAME</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_cfg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span> <span class="o">=</span> <span class="n">readonly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
 
@@ -435,7 +442,7 @@
         <span class="n">metadata_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">layer_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_filename</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">downloader</span> <span class="o">=</span> <span class="n">download</span><span class="o">.</span><span class="n">FileDownloader</span><span class="p">(</span>
-            <span class="n">layer_file_url</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">model_folder</span>
+            <span class="n">layer_file_url</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">model_folder</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
         <span class="p">)</span>
         <span class="c1"># only re-download when necessary</span>
         <span class="k">if</span> <span class="n">downloader</span><span class="o">.</span><span class="n">check_if_file_need_update</span><span class="p">():</span>
@@ -563,7 +570,9 @@
         <span class="n">metadata_folder</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dst_path</span><span class="si">}</span><span class="s2">/.metadata&quot;</span>
         <span class="n">metadata_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metadata_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.json&quot;</span>
 
-        <span class="n">downloader</span> <span class="o">=</span> <span class="n">download</span><span class="o">.</span><span class="n">FileDownloader</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">)</span>
+        <span class="n">downloader</span> <span class="o">=</span> <span class="n">download</span><span class="o">.</span><span class="n">FileDownloader</span><span class="p">(</span>
+            <span class="n">url</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">dst_path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+        <span class="p">)</span>
         <span class="c1"># only re-download when necessary</span>
         <span class="k">if</span> <span class="n">downloader</span><span class="o">.</span><span class="n">check_if_file_need_update</span><span class="p">():</span>
             <span class="n">downloader</span><span class="o">.</span><span class="n">download_file_and_update_metadata</span><span class="p">()</span>
