@@ -10,14 +10,14 @@ import requests
 import utils
 
 model_path = utils.get_model_path(sys.argv, "muller2022")
-zip_path = "Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1"
+zip_path = "Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.2"
 
 info_fp = open(f"{model_path}/info.txt", "w+")
 info_fp.write(f"{datetime.now()}\n")
 
 
 # download the model zip file
-zip_url = "https://earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2022_SE/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.1.zip"
+zip_url = "https://earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2022_SE/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.2.zip"
 info_fp.write(f"Download zip file from {zip_url}\n")
 r = requests.get(
     zip_url,
@@ -73,13 +73,13 @@ with zipfile.ZipFile(
     compresslevel=9,
 ) as f_zip:
     files = [
-        f"{model_path}/{zip_path}/1000-410-Convergence_Merdith_et_al.gpml",
-        f"{model_path}/{zip_path}/1000-410-Divergence_Merdith_et_al.gpml",
-        f"{model_path}/{zip_path}/1000-410-Topologies_Merdith_et_al.gpml",
-        f"{model_path}/{zip_path}/250-0_plate_boundaries_Merdith_et_al.gpml",
-        f"{model_path}/{zip_path}/410-250_plate_boundaries_Merdith_et_al.gpml",
-        f"{model_path}/{zip_path}/TopologyBuildingBlocks_Merdith_et_al.gpml",
-        f"{model_path}/{zip_path}/1000-410-Transforms_Merdith_et_al.gpml",
+        f"{model_path}/{zip_path}/1000-410-Convergence.gpml",
+        f"{model_path}/{zip_path}/1000-410-Divergence.gpml",
+        f"{model_path}/{zip_path}/1000-410-Topologies.gpml",
+        f"{model_path}/{zip_path}/250-0_plate_boundaries.gpml",
+        f"{model_path}/{zip_path}/410-250_plate_boundaries.gpml",
+        f"{model_path}/{zip_path}/TopologyBuildingBlocks.gpml",
+        f"{model_path}/{zip_path}/1000-410-Transforms.gpml",
     ]
     info_fp.write(f"Zip Topologies:\n")
     for f in files:
@@ -108,7 +108,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(f"{model_path}/{zip_path}/shapes_continents_Merdith_et_al.gpml")
+    files = glob.glob(f"{model_path}/{zip_path}/shapes_continents.gpml")
     info_fp.write(f"Zip ContinentalPolygons:\n")
     for f in files:
         f_zip.write(f, f"ContinentalPolygons/{os.path.basename(f)}")

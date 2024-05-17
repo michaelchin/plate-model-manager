@@ -54,7 +54,8 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/merdith2021/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip",
             "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip"
+            "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip",
+            "Cratons": "https://repo.gplates.org/webdav/pmm/merdith2021/Cratons.zip"
         },
         "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
         "URL": "https://gwsdoc.gplates.org/models#merdith2021",
