@@ -27,7 +27,7 @@ class RasterTestCase(unittest.TestCase):
         rasters = self.manager.list_present_day_rasters()
         self.assertTrue(len(rasters) > 0)
         logger.info(rasters)
-        raster_file = self.manager.get_raster("TOPOGRAPHY")
+        raster_file = self.manager.get_raster("topography")
         self.assertTrue(os.path.isfile(raster_file))
 
     def test_wms(self):

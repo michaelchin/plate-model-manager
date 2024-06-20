@@ -1,5 +1,22 @@
 {
     "default": "@zahirovic2022",
+    "alfonso2024": {
+        "BigTime": 250,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/alfonso2024/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/alfonso2024/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/alfonso2024/StaticPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/alfonso2024/Topologies.zip",
+            "Isochrons": "https://repo.gplates.org/webdav/pmm/alfonso2024/Isochrons.zip",
+            "Terranes": "https://repo.gplates.org/webdav/pmm/alfonso2024/Terranes.zip",
+            "DeformingMeshes": "https://repo.gplates.org/webdav/pmm/alfonso2024/DeformingMeshes.zip"
+        },
+        "TimeDepRasters": {},
+        "Description": "alfonso2024",
+        "URL": "https://zenodo.org/records/11392269",
+        "Version": "2024-06-20"
+    },
     "cao2023": {
         "BigTime": 18000,
         "SmallTime": 0,

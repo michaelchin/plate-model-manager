@@ -124,7 +124,7 @@ class RequestsFetcher(FileFetcher):
         num_chunks = file_size // chunk_size + 1
         data_array = [io.BytesIO() for i in range(num_chunks)]
         tasks = [
-            run(self._fetch_range, url, i, chunk_size, data_array, timeout=timeout)
+            run(self._fetch_range, url, i, chunk_size, data_array, timeout)
             for i in range(num_chunks)
         ]
 
@@ -162,9 +162,7 @@ class RequestsFetcher(FileFetcher):
             else:
                 etag = None
 
-            tasks.append(
-                run(self.fetch_file, url, filepath, etag, auto_unzip, timeout=timeout)
-            )
+            tasks.append(run(self.fetch_file, url, filepath, etag, auto_unzip, timeout))
         # print(tasks)
         await asyncio.wait(tasks)
 

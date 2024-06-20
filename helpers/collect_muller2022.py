@@ -10,14 +10,14 @@ import requests
 import utils
 
 model_path = utils.get_model_path(sys.argv, "muller2022")
-zip_path = "Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.2"
+zip_path = "Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.2.2"
 
 info_fp = open(f"{model_path}/info.txt", "w+")
 info_fp.write(f"{datetime.now()}\n")
 
 
 # download the model zip file
-zip_url = "https://earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2022_SE/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.2.zip"
+zip_url = "https://earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2022_SE/Muller_etal_2022_SE_1Ga_Opt_PlateMotionModel_v1.2.2"
 info_fp.write(f"Download zip file from {zip_url}\n")
 r = requests.get(
     zip_url,

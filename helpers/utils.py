@@ -1,3 +1,4 @@
+import glob
 import os
 import shutil
 import tempfile
@@ -168,6 +169,27 @@ def zip_files(files, zip_filepath, zip_folder, log_fp=None):
             log_fp.write(f"Zip {zip_folder}:\n")
         for f in files:
             f_zip.write(f, f"{zip_folder}/{os.path.basename(f)}")
+            if log_fp is not None:
+                log_fp.write(f"\t{f}\n")
+
+
+def zip_folder(folder, zip_filepath, zip_folder, log_fp=None):
+    """zip all files and folders in a given folder"""
+    assert os.path.isdir(folder)
+    with zipfile.ZipFile(
+        zip_filepath,
+        mode="w",
+        compression=zipfile.ZIP_DEFLATED,
+        compresslevel=9,
+    ) as f_zip:
+        if log_fp is not None:
+            log_fp.write(f"Zip {zip_folder}:\n")
+        files = [
+            f for f in glob.glob(f"{folder}/**/*", recursive=True) if os.path.isfile(f)
+        ]
+        rel_paths = [os.path.relpath(f, folder) for f in files]
+        for f, rf in zip(files, rel_paths):
+            f_zip.write(f, f"{zip_folder}/{rf}")
             if log_fp is not None:
                 log_fp.write(f"\t{f}\n")
 

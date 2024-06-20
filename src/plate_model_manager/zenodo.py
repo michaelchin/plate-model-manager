@@ -35,23 +35,3 @@ class ZenodoRecord:
     def get_filenames(self, id):
         record = self.get_version(id)
         return [file["key"] for file in record["files"]]
-
-
-record = ZenodoRecord(3854459)
-
-print(record.get_all_version_ids())
-
-latest_id = record.get_latest_version_id()
-print(latest_id)
-
-filenames = record.get_filenames(latest_id)
-print(filenames)
-
-file_links = record.get_file_links(latest_id)
-print(file_links)
-
-filenames = record.get_filenames(3854460)
-print(filenames)
-
-file_links = record.get_file_links(3854460)
-print(file_links)

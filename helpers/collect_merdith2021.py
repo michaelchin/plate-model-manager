@@ -14,7 +14,7 @@ model_path = utils.get_model_path(sys.argv, "merdith2021")
 info_fp = open(f"{model_path}/info.txt", "w+")
 info_fp.write(f"{datetime.now()}\n")
 
-zip_url = "https://earthbyte.org/webdav/ftp/Data_Collections/Merdith_etal_2021_ESR/SM2-Merdith_et_al_1_Ga_reconstruction_v1.2.zip"
+zip_url = "https://earthbyte.org/webdav/ftp/Data_Collections/Merdith_etal_2021_ESR/SM2-Merdith_et_al_1_Ga_reconstruction_v1.2.2"
 r = requests.get(
     zip_url,
     allow_redirects=True,
