@@ -41,6 +41,10 @@ class PlateModelManager:
             # try the http(s) url
             try:
                 r = requests.get(self.model_manifest, timeout=timeout)
+                if r.status_code != 200:
+                    raise InvalidConfigFile(
+                        f"Unable to get valid JSON data from '{self.model_manifest}'. Http request return code: {r.status_code}"
+                    )
                 self.models = r.json()
 
             except (
@@ -50,6 +54,10 @@ class PlateModelManager:
             ):
                 raise ServerUnavailable(
                     f"Unable to fetch {self.model_manifest}. No network connection, server unavailable or invalid URL!"
+                )
+            except requests.exceptions.JSONDecodeError:
+                raise InvalidConfigFile(
+                    f"Unable to get valid JSON data from '{self.model_manifest}'."
                 )
         else:
             raise InvalidConfigFile(

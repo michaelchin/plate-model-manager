@@ -25,7 +25,7 @@ auto_unzip = True
 
 
 @unittest.skipIf(
-    int(os.getenv("TEST_LEVEL", 0)) < 1, "this will download a large volume of data"
+    int(os.getenv("PMM_TEST_LEVEL", 0)) < 1, "this will download a large volume of data"
 )
 class DownloadLargeFileTestCase(unittest.TestCase):
     def setUp(self):

@@ -7,6 +7,7 @@ sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
 from common import TEMP_TEST_DIR, get_test_logger
 
 from plate_model_manager import PlateModel, PlateModelManager
+from plate_model_manager.exceptions import InvalidConfigFile, ServerUnavailable
 
 if __name__ == "__main__":
     logger_name = "test_plate_model_manager_main"
@@ -44,6 +45,17 @@ class PlateModelManagerestCase(unittest.TestCase):
         self.assertIsInstance(model, PlateModel)
         no_good = model_manager.get_model("no-good-model")
         self.assertIsNone(no_good)
+
+    def test_plate_model_manager_timeout(self):
+        with self.assertRaises(InvalidConfigFile):
+            PlateModelManager(
+                "https://repo.gplates.org/webdav/pmm/xxx.json", timeout=(5, 5)
+            )
+
+        with self.assertRaises(ServerUnavailable):
+            PlateModelManager(
+                "https://100.11.12.10/webdav/pmm/model.json", timeout=(5, 5)
+            )
 
 
 if __name__ == "__main__":
