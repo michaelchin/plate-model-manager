@@ -116,6 +116,10 @@
             <span class="c1"># try the http(s) url</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">InvalidConfigFile</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unable to get valid JSON data from &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="si">}</span><span class="s2">&#39;. Http request return code: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
             <span class="k">except</span> <span class="p">(</span>
@@ -125,6 +129,10 @@
             <span class="p">):</span>
                 <span class="k">raise</span> <span class="n">ServerUnavailable</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Unable to fetch </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="si">}</span><span class="s2">. No network connection, server unavailable or invalid URL!&quot;</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidConfigFile</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Unable to get valid JSON data from &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
                 <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">InvalidConfigFile</span><span class="p">(</span>
