@@ -266,7 +266,7 @@
         "URL": "https://gwsdoc.gplates.org/models#seton2012",
         "Version": "2023-12-06"
     },
-    "li2008": "rodinia",
+    "li2008": "@rodinia",
     "golonka": {
         "BigTime": 540,
         "SmallTime": 0,
