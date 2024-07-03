@@ -50,6 +50,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-plate_model_manager.exceptions">plate_model_manager.exceptions module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.exceptions.InvalidConfigFile"><code class="docutils literal notranslate"><span class="pre">InvalidConfigFile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.exceptions.LayerNotFoundInModel"><code class="docutils literal notranslate"><span class="pre">LayerNotFoundInModel</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.exceptions.ServerUnavailable"><code class="docutils literal notranslate"><span class="pre">ServerUnavailable</span></code></a></li>
 </ul>
 </li>
@@ -130,6 +131,12 @@
 <dl class="py exception">
 <dt class="sig sig-object py" id="plate_model_manager.exceptions.InvalidConfigFile">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidConfigFile</span></span><a class="reference internal" href="_modules/plate_model_manager/exceptions.html#InvalidConfigFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.exceptions.InvalidConfigFile" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="plate_model_manager.exceptions.LayerNotFoundInModel">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.exceptions.</span></span><span class="sig-name descname"><span class="pre">LayerNotFoundInModel</span></span><a class="reference internal" href="_modules/plate_model_manager/exceptions.html#LayerNotFoundInModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.exceptions.LayerNotFoundInModel" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
@@ -453,14 +460,21 @@ a metadata file will also be created for the raster file in folder f”{dst_path
 
 <dl class="py method">
 <dt class="sig sig-object py" id="plate_model_manager.plate_model.PlateModel.get_layer">
-<span class="sig-name descname"><span class="pre">get_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model.PlateModel.get_layer" title="Link to this definition"></a></dt>
-<dd><p>get layer files by name</p>
+<span class="sig-name descname"><span class="pre">get_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_none_if_not_exist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.plate_model.PlateModel.get_layer" title="Link to this definition"></a></dt>
+<dd><p>get layer files by layer name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>layer_name</strong> – layer name</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer_name</strong> – layer name</p></li>
+<li><p><strong>return_none_if_not_exist</strong> – if True, return None when the layer does not exist in the model</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a list of file names</p>
+<dd class="field-even"><p>a list of file names or None if return_none_if_not_exist is True</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#plate_model_manager.exceptions.LayerNotFoundInModel" title="plate_model_manager.exceptions.LayerNotFoundInModel"><strong>LayerNotFoundInModel</strong></a> – if the layer name does not
+exist in this model</p>
 </dd>
 </dl>
 </dd></dl>

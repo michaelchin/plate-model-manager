@@ -82,6 +82,7 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">LayerNotFoundInModel</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">download</span>
 
 <span class="n">METADATA_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;.metadata.json&quot;</span>
@@ -274,23 +275,33 @@
 
 <div class="viewcode-block" id="PlateModel.get_layer">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_layer">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;get layer files by name</span>
+    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;get layer files by layer name</span>
 
 <span class="sd">        :param layer_name: layer name</span>
+<span class="sd">        :param return_none_if_not_exist: if True, return None when the layer does not exist in the model</span>
 
-<span class="sd">        :returns: a list of file names</span>
+<span class="sd">        :returns: a list of file names or None if return_none_if_not_exist is True</span>
+
+<span class="sd">        :raises LayerNotFoundInModel: if the layer name does not</span>
+<span class="sd">            exist in this model</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
-            <span class="n">layer_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_layer_files</span><span class="p">(</span><span class="n">layer_name</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">layer_folder</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">FILE_EXT</span><span class="p">:</span>
-            <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">layer_folder</span><span class="si">}</span><span class="s2">/*.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
+                <span class="n">layer_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_layer_files</span><span class="p">(</span><span class="n">layer_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">layer_folder</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">FILE_EXT</span><span class="p">:</span>
+                <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">layer_folder</span><span class="si">}</span><span class="s2">/*.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
 
-        <span class="k">return</span> <span class="n">files</span></div>
+            <span class="k">return</span> <span class="n">files</span>
+        <span class="k">except</span> <span class="n">LayerNotFoundInModel</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span></div>
 
 
 <div class="viewcode-block" id="PlateModel.get_raster">
@@ -607,8 +618,8 @@
             <span class="c1"># for other geometry layers</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Layers&quot;</span><span class="p">][</span><span class="n">layer_name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;The layer (</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">) is not found in the configuration file.&quot;</span>
+            <span class="k">raise</span> <span class="n">LayerNotFoundInModel</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The layer (</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">) is not found in the configuration file of model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span></div>
 
 </pre></div>
