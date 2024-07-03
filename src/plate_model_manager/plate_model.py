@@ -9,6 +9,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
+from .exceptions import LayerNotFoundInModel
 from .utils import download
 
 METADATA_FILENAME = ".metadata.json"
@@ -158,23 +159,33 @@ class PlateModel:
         """return COBs feature collection"""
         return self.get_layer("COBs")
 
-    def get_layer(self, layer_name):
-        """get layer files by name
+    def get_layer(self, layer_name, return_none_if_not_exist=False):
+        """get layer files by layer name
 
         :param layer_name: layer name
+        :param return_none_if_not_exist: if True, return None when the layer does not exist in the model
 
-        :returns: a list of file names
+        :returns: a list of file names or None if return_none_if_not_exist is True
+
+        :raises LayerNotFoundInModel: if the layer name does not
+            exist in this model
 
         """
-        if not self.readonly:
-            layer_folder = self.download_layer_files(layer_name)
-        else:
-            layer_folder = f"{self.model_dir}/{layer_name}"
-        files = []
-        for ext in FILE_EXT:
-            files.extend(glob.glob(f"{layer_folder}/*.{ext}"))
+        try:
+            if not self.readonly:
+                layer_folder = self.download_layer_files(layer_name)
+            else:
+                layer_folder = f"{self.model_dir}/{layer_name}"
+            files = []
+            for ext in FILE_EXT:
+                files.extend(glob.glob(f"{layer_folder}/*.{ext}"))
 
-        return files
+            return files
+        except LayerNotFoundInModel as e:
+            if return_none_if_not_exist:
+                return None
+            else:
+                raise e
 
     def get_raster(self, raster_name, time):
         """return a local path for the raster
@@ -451,6 +462,6 @@ class PlateModel:
             # for other geometry layers
             return self.model["Layers"][layer_name]
         else:
-            raise Exception(
-                f"The layer ({layer_name}) is not found in the configuration file."
+            raise LayerNotFoundInModel(
+                f"The layer ({layer_name}) is not found in the configuration file of model {self.model_name}."
             )

@@ -4,3 +4,7 @@ class ServerUnavailable(Exception):
 
 class InvalidConfigFile(Exception):
     pass
+
+
+class LayerNotFoundInModel(Exception):
+    pass
