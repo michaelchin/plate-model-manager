@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "plate-model-manager"
-copyright = "2023, Michael Chin"
+copyright = "2023-2024, Michael Chin"
 author = "Michael Chin"
-release = "0.0.1"
+release = "1.2.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
