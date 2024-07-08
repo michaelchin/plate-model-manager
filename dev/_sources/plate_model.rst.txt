@@ -1,7 +1,0 @@
-plate\_model module
-===================
-
-.. automodule:: plate_model
-   :members:
-   :undoc-members:
-   :show-inheritance:
