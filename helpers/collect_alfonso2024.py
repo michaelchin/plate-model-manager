@@ -9,6 +9,22 @@ from pathlib import Path
 import requests
 import utils
 
+from plate_model_manager.zenodo import ZenodoRecord
+
+# https://zenodo.org/doi/10.5281/zenodo.11392268
+record = ZenodoRecord(11392268)
+latest_id = record.get_latest_version_id()
+print(f"The latest version ID is: {latest_id}.")
+filenames = record.get_filenames(latest_id)
+print(f"The file names in the latest version: {filenames}")
+idx = 0
+for i in range(len(filenames)):
+    if filenames[i].startswith("Alfonso_etal_2024_modClennettMuller"):
+        idx = i
+        break
+file_links = record.get_file_links(latest_id)
+print(f"The file links in the latest version: {file_links}")
+
 model_path = utils.get_model_path(sys.argv, "alfonso2024")
 
 info_fp = open(f"{model_path}/info.txt", "w+")
@@ -16,7 +32,7 @@ info_fp.write(f"{datetime.now()}\n")
 
 local_data_path = f"{model_path}/download-data"
 
-zip_url = "https://zenodo.org/api/records/11392269/files/Alfonso_etal_2024_modClennettMuller.zip/content"
+zip_url = file_links[idx]
 r = requests.get(
     zip_url,
     allow_redirects=True,
