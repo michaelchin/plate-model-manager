@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 import requests
 
@@ -63,6 +64,25 @@ class PlateModelManager:
             raise InvalidConfigFile(
                 f"The model_manifest '{self.model_manifest}' must be either a local file path or a http(s) URL."
             )
+
+        if "vars" in self.models:
+            self._replace_vars_with_values(self.models["vars"], self.models)
+
+    def _replace_vars_with_values(self, var_dict, json_obj):
+        """replace the variables in `json_obj` with the real values. the variables are defined in `var_dict`"""
+        for key, value in json_obj.items():
+            if key == "vars":
+                continue
+            if isinstance(value, dict):
+                self._replace_vars_with_values(var_dict, value)
+            elif isinstance(value, str):
+                matches = re.findall("@<<(.*)>>@", value)
+                for m in matches:
+                    if m in var_dict:
+                        value = value.replace(f"@<<{m}>>@", var_dict[m])
+                json_obj[key] = value
+            else:
+                continue
 
     def get_model(self, model_name: str = "default", data_dir: str = "."):
         """return a PlateModel object by model_name
