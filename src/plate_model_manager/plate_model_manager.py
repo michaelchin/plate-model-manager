@@ -24,6 +24,7 @@ class PlateModelManager:
             self.model_manifest = PlateModelManager.get_default_repo_url()
         else:
             self.model_manifest = model_manifest
+
         self.models = None
         self.timeout = timeout
 
@@ -128,7 +129,21 @@ class PlateModelManager:
 
     @staticmethod
     def get_default_repo_url():
-        return "https://repo.gplates.org/webdav/pmm/models.json"
+        default_repo_url_list = [
+            "https://repo.gplates.org/webdav/pmm/models.json",
+            "https://www.earthbyte.org/webdav/pmm/models_v2.json",
+            "https://portal.gplates.org/static/pmm/models_v2.json",
+        ]
+        for url in default_repo_url_list:
+            try:
+                response = requests.head(url, timeout=(5, 5))
+                if response.status_code == 200:
+                    return url
+                else:
+                    continue
+            except:
+                continue
+        raise ServerUnavailable()
 
     def download_all_models(self, data_dir="./"):
         """download all available models into data_dir"""
