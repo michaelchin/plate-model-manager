@@ -99,6 +99,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span> <span class="o">=</span> <span class="n">PlateModelManager</span><span class="o">.</span><span class="n">get_default_repo_url</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model_manifest</span> <span class="o">=</span> <span class="n">model_manifest</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
 
@@ -214,7 +215,21 @@
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_default_repo_url">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_default_repo_url</span><span class="p">():</span>
-        <span class="k">return</span> <span class="s2">&quot;https://repo.gplates.org/webdav/pmm/models.json&quot;</span></div>
+        <span class="n">default_repo_url_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;https://repo.gplates.org/webdav/pmm/models.json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://www.earthbyte.org/webdav/pmm/models_v2.json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://portal.gplates.org/static/pmm/models_v2.json&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">default_repo_url_list</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">url</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">continue</span>
+        <span class="k">raise</span> <span class="n">ServerUnavailable</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="PlateModelManager.download_all_models">
