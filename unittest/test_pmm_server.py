@@ -38,7 +38,7 @@ def get_real_model_name(name, model_config):
 
 class PMMServerTestCase(unittest.TestCase):
     def setUp(self):
-        with open(f"{os.path.dirname(__file__)}/../models.json", "r") as f:
+        with open(f"{os.path.dirname(__file__)}/../config/models.json", "r") as f:
             self.model_cfg = json.load(f)
 
     def test_server(self):

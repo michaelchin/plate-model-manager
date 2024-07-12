@@ -22,7 +22,9 @@ class PlateModelManagerestCase(unittest.TestCase):
         pass
 
     def test_plate_model_manager(self):
-        model_manager = PlateModelManager(f"{os.path.dirname(__file__)}/../models.json")
+        model_manager = PlateModelManager(
+            f"{os.path.dirname(__file__)}/../config/models.json"
+        )
         model_names = model_manager.get_available_model_names()
         self.assertTrue(len(model_names) > 0)
         logger.info(model_names)

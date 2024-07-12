@@ -26,7 +26,9 @@ logger.info(plate_model_manager.__file__)
 
 class TimeDepRastersTestCase(unittest.TestCase):
     def setUp(self):
-        model_manager = PlateModelManager(f"{os.path.dirname(__file__)}/models.json")
+        model_manager = PlateModelManager(
+            f"{os.path.dirname(__file__)}/models_test.json"
+        )
 
         # test remote models.json with URL
         # model_manager = plate_model.PlateModelManager(

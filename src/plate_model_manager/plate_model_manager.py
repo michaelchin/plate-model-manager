@@ -130,9 +130,9 @@ class PlateModelManager:
     @staticmethod
     def get_default_repo_url():
         default_repo_url_list = [
-            "https://repo.gplates.org/webdav/pmm/models.json",
-            "https://www.earthbyte.org/webdav/pmm/models_v2.json",
-            "https://portal.gplates.org/static/pmm/models_v2.json",
+            "https://repo.gplates.org/webdav/pmm/models_v2.json",
+            "https://www.earthbyte.org/webdav/pmm/models_v2_eb.json",
+            "https://portal.gplates.org/static/pmm/models_v2_gp.json",
         ]
         for url in default_repo_url_list:
             try:

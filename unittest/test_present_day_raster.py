@@ -19,7 +19,7 @@ logger = get_test_logger(logger_name)
 
 class RasterTestCase(unittest.TestCase):
     def setUp(self):
-        self.manager = PresentDayRasterManager("../present_day_rasters.json")
+        self.manager = PresentDayRasterManager("../config/present_day_rasters.json")
         # self.manager = PresentDayRasterManager("")
         self.manager.set_data_dir(TEMP_TEST_DIR)
 

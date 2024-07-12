@@ -42,14 +42,14 @@ class BasicTestCase(unittest.TestCase):
 
         # 2
         pm_manager = PlateModelManager(
-            model_manifest=f"{os.path.dirname(__file__)}/../models.json"
+            model_manifest=f"{os.path.dirname(__file__)}/../config/models.json"
         )
         model = pm_manager.get_model()
         logger.info(model.get_rotation_model())
 
         # 3
         pm_manager = PlateModelManager(
-            model_manifest=f"{os.path.dirname(__file__)}/models.json"
+            model_manifest=f"{os.path.dirname(__file__)}/models_test.json"
         )
         model = pm_manager.get_model("test-model", data_dir=TEMP_TEST_DIR)
         logger.info(model.get_rotation_model())

@@ -3,11 +3,10 @@ import os
 import sys
 import unittest
 
-
 sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
 from common import TEMP_TEST_DIR, get_test_logger
 
-from plate_model_manager import PlateModelManager, PlateModel
+from plate_model_manager import PlateModel, PlateModelManager
 
 if __name__ == "__main__":
     logger_name = "test_plate_model_readonly_main"
@@ -19,7 +18,9 @@ logger = get_test_logger(logger_name)
 
 class PlateModelReadonlyTestCase(unittest.TestCase):
     def setUp(self):
-        model_manager = PlateModelManager(f"{os.path.dirname(__file__)}/../models.json")
+        model_manager = PlateModelManager(
+            f"{os.path.dirname(__file__)}/../config/models.json"
+        )
         self.model_name = "Muller2019"
         self.data_dir = TEMP_TEST_DIR
         model = model_manager.get_model(self.model_name)
