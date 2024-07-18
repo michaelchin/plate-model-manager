@@ -141,8 +141,8 @@
         },
         "TimeDepRasters": {},
         "Description": "Global kinematics of tectonic plates and subduction zones since the late Paleozoic Era",
-        "URL": "https://www.sciencedirect.com/science/article/pii/S1674987118301373",
-        "Version": "2023-12-19"
+        "URL": "https://zenodo.org/records/10525370",
+        "Version": "2024-07-18"
     },
     "torsvikcocks2017": {
         "BigTime": 540,
@@ -181,7 +181,8 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Topologies.zip"
+            "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Topologies.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/ContinentalPolygons.zip"
         },
         "TimeDepRasters": {
             "AgeGrids": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/agegrids/agegrid-{}-Ma.png",
@@ -189,8 +190,8 @@
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/topologies/topologies-{}-Ma.png"
         },
         "Description": "This model is identical to MATTHEWS2016_pmag_ref in terms of relative plate models but uses a true polar wander corrected paleomagnetic model, viewed as a proxy for a mantle reference frame model.",
-        "URL": "https://gwsdoc.gplates.org/models#matthews2016_mantle_ref",
-        "Version": "2023-12-06"
+        "URL": "https://zenodo.org/records/10526157",
+        "Version": "2024-07-18"
     },
     "matthews2016_pmag_ref": {
         "BigTime": 410,
