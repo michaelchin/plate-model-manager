@@ -9,29 +9,36 @@ from datetime import datetime
 import requests
 import utils
 
+from plate_model_manager.zenodo import ZenodoRecord
+
+# hhttps://zenodo.org/doi/10.5281/zenodo.10348270
+record = ZenodoRecord(10348270)
+latest_id = record.get_latest_version_id()
+print(f"The latest version ID is: {latest_id}.")
+filenames = record.get_filenames(latest_id)
+print(f"The file names in the latest version: {filenames}")
+idx = 0
+for i in range(len(filenames)):
+    if filenames[i].startswith("Clennett_etal_2020_M2019"):
+        idx = i
+        break
+file_links = record.get_file_links(latest_id)
+print(f"The file links in the latest version: {file_links}")
+
+
 model_path = utils.get_model_path(sys.argv, "clennett2020_m2019")
 zip_path = "Clennett_etal_2020_M2019"
-zip_static_geom_path = "Global_Model_WD_Internal_Release_2019_v2_Clennett_NE_Pacific"
 
 info_fp = open(f"{model_path}/info.txt", "w+")
 info_fp.write(f"{datetime.now()}\n")
 
 # download the model zip file
-zip_url = "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennett_etal_2020_M2019.zip"
+zip_url = file_links[idx]
 info_fp.write(f"Download zip file from {zip_url}\n")
 r = requests.get(zip_url, allow_redirects=True, verify=True)
 if r.status_code in [200]:
     z = zipfile.ZipFile(io.BytesIO(r.content))
-    z.extractall(f"{model_path}/")
-
-# download the model static geometries zip file
-zip_url = "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Global_Model_WD_Internal_Release_2019_v2_Clennett_NE_Pacific.zip"
-info_fp.write(f"Download zip file from {zip_url}\n")
-r = requests.get(zip_url, allow_redirects=True, verify=True)
-if r.status_code in [200]:
-    z = zipfile.ZipFile(io.BytesIO(r.content))
-    z.extractall(f"{model_path}/")
-
+    z.extractall(f"{model_path}/{zip_path}")
 
 # zip Rotations
 with zipfile.ZipFile(
@@ -40,7 +47,8 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(f"{model_path}/{zip_path}/*.rot")
+    files = glob.glob(f"{model_path}/{zip_path}/Rotations/*.rot")
+    files += glob.glob(f"{model_path}/{zip_path}/DeformingMeshes/*.rot")
     info_fp.write(f"Zip Rotations:\n")
     for f in files:
         f_zip.write(f, f"Rotations/{os.path.basename(f)}")
@@ -54,7 +62,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    f = f"{model_path}/{zip_static_geom_path}/StaticGeometries/StaticPolygons/Clennett_2020_StaticPolygons.gpml"
+    f = f"{model_path}/{zip_path}/StaticPolygons/Clennett_2020_StaticPolygons.gpml"
     info_fp.write(f"Zip StaticPolygons:\n")
     info_fp.write(f"\t{f}\n")
     f_zip.write(f, f"StaticPolygons/{os.path.basename(f)}")
@@ -67,7 +75,9 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(f"{model_path}/{zip_path}/Clennett_etal_2020_Coastlines.gpml")
+    files = glob.glob(
+        f"{model_path}/{zip_path}/Coastlines/Clennett_etal_2020_Coastlines.gpml"
+    )
     info_fp.write(f"Zip Coastlines:\n")
     for f in files:
         f_zip.write(f, f"Coastlines/{os.path.basename(f)}")
@@ -81,50 +91,21 @@ with zipfile.ZipFile(
     compresslevel=9,
 ) as f_zip:
     files = glob.glob(f"{model_path}/{zip_path}/DeformingMeshes/*.gpml")
-    files += [
-        f"{model_path}/{zip_path}/Clennett__etal_2020_NAm_boundaries.gpml",
-        f"{model_path}/{zip_path}/Clennett_etal_2020_Plates.gpml",
-    ]
+    files += glob.glob(f"{model_path}/{zip_path}/PlateBoundaries/*.gpml")
     info_fp.write(f"Zip Topologies:\n")
     for f in files:
         f_zip.write(f, f"Topologies/{os.path.basename(f)}")
         info_fp.write(f"\t{f}\n")
 
-# zip COBs
-with zipfile.ZipFile(
-    f"{model_path}/COBs.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    f = f"{model_path}/{zip_static_geom_path}/StaticGeometries/COBLineSegments/Global_EarthByte_GeeK07_COBLineSegments_2019_v1.gpmlz"
-    f_zip.write(
-        f,
-        f"COBs/{os.path.basename(f)}",
-    )
-    info_fp.write(f"Zip COBs:\n")
-    info_fp.write(f"\t{f}\n")
-
-
-# zip ContinentalPolygons
-with zipfile.ZipFile(
-    f"{model_path}/ContinentalPolygons.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = glob.glob(
-        f"{model_path}/{zip_static_geom_path}/StaticGeometries/ContinentalPolygons/*"
-    )
-    info_fp.write(f"Zip ContinentalPolygons:\n")
-    for f in files:
-        f_zip.write(f, f"ContinentalPolygons/{os.path.basename(f)}")
-        info_fp.write(f"\t{f}\n")
-
+# zip Terranes
+utils.zip_folder(
+    f"{model_path}/{zip_path}/Terranes",
+    f"{model_path}/Terranes.zip",
+    "Terranes",
+    log_fp=info_fp,
+)
 
 shutil.rmtree(f"{model_path}/{zip_path}")
-shutil.rmtree(f"{model_path}/{zip_static_geom_path}")
-shutil.rmtree(f"{model_path}/__MACOSX")
-os.remove(f"{model_path}/License.txt")
+
 
 info_fp.close()

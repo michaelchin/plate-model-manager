@@ -46,6 +46,7 @@ if r.status_code in [200]:
 
 # zip rotations
 files = glob.glob(f"{local_data_path}/Rotations/*.rot", recursive=True)
+files += glob.glob(f"{local_data_path}/DeformingMeshes/*.rot")
 utils.zip_files(files, f"{model_path}/Rotations.zip", "Rotations", log_fp=info_fp)
 
 # zip static polygons
@@ -58,7 +59,8 @@ utils.zip_files(
 )
 
 # zip topologies
-files = glob.glob(f"{local_data_path}/PlateBoundaries/*.*", recursive=True)
+files = glob.glob(f"{local_data_path}/DeformingMeshes/*.gpml", recursive=True)
+files += glob.glob(f"{local_data_path}/PlateBoundaries/*.gpml")
 utils.zip_files(files, f"{model_path}/Topologies.zip", "Topologies", log_fp=info_fp)
 
 # zip coastlines
@@ -78,10 +80,5 @@ utils.zip_folder(
     log_fp=info_fp,
 )
 
-# zip DeformingMeshes
-files = glob.glob(f"{local_data_path}/DeformingMeshes/*.*", recursive=True)
-utils.zip_files(
-    files, f"{model_path}/DeformingMeshes.zip", "DeformingMeshes", log_fp=info_fp
-)
 
 shutil.rmtree(f"{model_path}/download-data")

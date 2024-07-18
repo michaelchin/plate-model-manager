@@ -9,8 +9,7 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/alfonso2024/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/alfonso2024/Topologies.zip",
             "Isochrons": "https://repo.gplates.org/webdav/pmm/alfonso2024/Isochrons.zip",
-            "Terranes": "https://repo.gplates.org/webdav/pmm/alfonso2024/Terranes.zip",
-            "DeformingMeshes": "https://repo.gplates.org/webdav/pmm/alfonso2024/DeformingMeshes.zip"
+            "Terranes": "https://repo.gplates.org/webdav/pmm/alfonso2024/Terranes.zip"
         },
         "TimeDepRasters": {},
         "Description": "alfonso2024",
@@ -75,8 +74,8 @@
             "Cratons": "https://repo.gplates.org/webdav/pmm/merdith2021/Cratons.zip"
         },
         "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
-        "URL": "https://gwsdoc.gplates.org/models#merdith2021",
-        "Version": "2023-12-06"
+        "URL": "https://zenodo.org/records/12525525",
+        "Version": "2024-07-18"
     },
     "clennett2020": "@clennett2020_m2019",
     "clennett2020_m2019": {
@@ -86,13 +85,12 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/ContinentalPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/COBs.zip"
+            "Terranes": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Terranes.zip"
         },
         "Description": "The model was implemented into the Müller et al. (2019) reference frame",
-        "URL": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/",
-        "Version": "2023-12-18"
+        "URL": "https://zenodo.org/records/10348271",
+        "Version": "2024-07-18"
     },
     "clennett2020_s2013": {
         "BigTime": 170,
@@ -101,13 +99,12 @@
         "Layers": {
             "Coastlines": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/ContinentalPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/COBs.zip"
+            "Terranes": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/Terranes.zip"
         },
         "Description": "The model was implemented into the Shephard et al. (2013) global plate model.",
-        "URL": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/",
-        "Version": "2023-12-18"
+        "URL": "https://zenodo.org/records/10348271",
+        "Version": "2024-07-18"
     },
     "muller2019": {
         "BigTime": 250,
