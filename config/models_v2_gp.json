@@ -63,8 +63,8 @@
             "Cratons": "@<<SvrBaseURL>>@/muller2022/Cratons.zip"
         },
         "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time – hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
-        "URL": "https://gwsdoc.gplates.org/models#muller2022",
-        "Version": "2023-12-06"
+        "URL": "https://zenodo.org/records/10910449",
+        "Version": "2024-07-18"
     },
     "merdith2021": {
         "BigTime": 1000,
@@ -132,7 +132,7 @@
             "SedimentThickness": "@<<SvrBaseURL>>@/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{}.nc"
         },
         "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones.",
-        "URL": "https://zenodo.org/doi/10.5281/zenodo.10525286",
+        "URL": "https://zenodo.org/records/11601026",
         "Version": "2024-07-09"
     },
     "young2018": {
