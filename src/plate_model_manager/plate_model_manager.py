@@ -68,6 +68,7 @@ class PlateModelManager:
 
         if "vars" in self.models:
             self._replace_vars_with_values(self.models["vars"], self.models)
+            del self.models["vars"]
 
     def _replace_vars_with_values(self, var_dict, json_obj):
         """replace the variables in `json_obj` with the real values. the variables are defined in `var_dict`"""
@@ -130,9 +131,9 @@ class PlateModelManager:
     @staticmethod
     def get_default_repo_url():
         default_repo_url_list = [
-            "https://repo.gplates.org/webdav/pmm/models_v2.json",
-            "https://www.earthbyte.org/webdav/pmm/models_v2_eb.json",
-            "https://portal.gplates.org/static/pmm/models_v2_gp.json",
+            "https://repo.gplates.org/webdav/pmm/config/models_v2.json",
+            "https://www.earthbyte.org/webdav/pmm/config/models_v2_eb.json",
+            "https://portal.gplates.org/static/pmm/config/models_v2_gp.json",
         ]
         for url in default_repo_url_list:
             try:

@@ -52,6 +52,7 @@ class PMMServerTestCase(unittest.TestCase):
         self.assertEqual(len(names), len(model_names))
         self.assertEqual(set(model_names), set(names))
         for name in model_names:
+            print(f"testing {name}")
             model = pm_manager.get_model(name, data_dir=TEMP_TEST_DIR)
             layer_names = [
                 n

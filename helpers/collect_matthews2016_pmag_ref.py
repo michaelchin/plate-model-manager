@@ -14,20 +14,19 @@ utils.fetch_and_zip_files(
     "Rotations",
 )
 
-# fetch Topologies
+# fetch ContinentalPolygons
 utils.fetch_and_zip_files(
     [
-        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MATTHEWS2016_pmag_ref/Matthews_etal_GPC_2016_MesozoicCenozoic_PlateTopologies_PMAG.gpmlz",
-        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MATTHEWS2016_pmag_ref/Matthews_etal_GPC_2016_Paleozoic_PlateTopologies_PMAG.gpmlz",
+        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MATTHEWS2016_pmag_ref/Matthews_etal_2016_ContinentalPolygons.gpmlz",
     ],
     model_path,
-    "Topologies",
+    "ContinentalPolygons",
 )
 
 # fetch Coastlines
 utils.fetch_and_zip_files(
     [
-        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MATTHEWS2016_pmag_ref/Matthews_etal_GPC_2016_Coastlines.gpmlz",
+        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MATTHEWS2016_pmag_ref/Matthews_etal_2016_CoastlineBlocks.gpmlz",
     ],
     model_path,
     "Coastlines",
@@ -36,7 +35,7 @@ utils.fetch_and_zip_files(
 # fetch StaticPolygons
 utils.fetch_and_zip_files(
     [
-        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MATTHEWS2016_pmag_ref/Muller_etal_AREPS_2016_StaticPolygons.gpmlz"
+        "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MATTHEWS2016_pmag_ref/Matthews_etal_2016_StaticPolygons.gpmlz"
     ],
     model_path,
     "StaticPolygons",
