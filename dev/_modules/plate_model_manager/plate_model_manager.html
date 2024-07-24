@@ -143,6 +143,7 @@
 
         <span class="k">if</span> <span class="s2">&quot;vars&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_replace_vars_with_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;vars&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s2">&quot;vars&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_replace_vars_with_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_dict</span><span class="p">,</span> <span class="n">json_obj</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;replace the variables in `json_obj` with the real values. the variables are defined in `var_dict`&quot;&quot;&quot;</span>
@@ -216,9 +217,9 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_default_repo_url</span><span class="p">():</span>
         <span class="n">default_repo_url_list</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;https://repo.gplates.org/webdav/pmm/models_v2.json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;https://www.earthbyte.org/webdav/pmm/models_v2_eb.json&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;https://portal.gplates.org/static/pmm/models_v2_gp.json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://repo.gplates.org/webdav/pmm/config/models_v2.json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://www.earthbyte.org/webdav/pmm/config/models_v2_eb.json&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://portal.gplates.org/static/pmm/config/models_v2_gp.json&quot;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">default_repo_url_list</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
