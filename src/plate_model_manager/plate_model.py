@@ -94,7 +94,10 @@ class PlateModel:
 
     def __del__(self):
         if not self.readonly:
-            self.loop.close()
+            try:
+                self.loop.close()
+            except:
+                pass  # ignore the exception when closing the loop if any
 
     def get_cfg(self):
         return self.model

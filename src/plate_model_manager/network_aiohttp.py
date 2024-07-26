@@ -237,8 +237,9 @@ def fetch_files(
 def fetch_large_file(
     url: str,
     filepath: str,
-    filesize: int = None,
-    etag: str = None,
+    filename: str | None,
+    filesize: int | None = None,
+    etag: str | None = None,
     auto_unzip: bool = True,
     check_etag: bool = True,
 ):
@@ -246,6 +247,7 @@ def fetch_large_file(
     return fetcher.fetch_large_file(
         url,
         filepath,
+        filename=filename,
         filesize=filesize,
         etag=etag,
         auto_unzip=auto_unzip,

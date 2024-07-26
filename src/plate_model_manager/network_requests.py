@@ -25,7 +25,7 @@ class RequestsFetcher(FileFetcher):
         url: str,
         filepath: str,
         filename: str = None,
-        etag: str = None,
+        etag: str | None = None,
         auto_unzip: bool = True,
         timeout=(None, None),
     ):
@@ -254,6 +254,7 @@ def fetch_files(
 def fetch_large_file(
     url: str,
     filepath: str,
+    filename: str | None,
     filesize: int = None,
     etag: str = None,
     auto_unzip: bool = True,
@@ -264,6 +265,7 @@ def fetch_large_file(
     return fetcher.fetch_large_file(
         url,
         filepath,
+        filename=filename,
         filesize=filesize,
         etag=etag,
         auto_unzip=auto_unzip,

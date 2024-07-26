@@ -72,8 +72,9 @@ class FileFetcher(metaclass=abc.ABCMeta):
         self,
         url: str,
         filepath: str,
+        filename: str | None,
         filesize: int = None,
-        etag: str = None,
+        etag: str | None = None,
         auto_unzip: bool = True,
         check_etag: bool = True,
         timeout=(None, None),
@@ -90,6 +91,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
 
         :param url: the file url
         :param filepath: location to keep the file
+        :param filename: the output filename specified by caller. ignored if auto unzip compressed data.
         :param filesize: the size of file (in bytes)
         :param etag: old etag. if the old etag is the same with the one on server, do not download again.
         :param auto_unzip: bool flag to indicate if unzip .zip file automatically
@@ -137,7 +139,10 @@ class FileFetcher(metaclass=abc.ABCMeta):
             loop.close()
 
         data[0].seek(0)
-        filename = url.split("/")[-1]  # use the filename in the url
+        print(filename)
+        print(auto_unzip)
+        if not filename:
+            filename = url.split("/")[-1]  # use the filename in the url
         # save the file
         if auto_unzip:
             try:

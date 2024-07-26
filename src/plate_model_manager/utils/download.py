@@ -24,6 +24,8 @@ class FileDownloader:
         file_url: str,
         meta_filepath: str,
         dst_dir: str,
+        filename: str | None = None,
+        auto_unzip: bool = True,
         expire_hours=EXPIRE_HOURS,
         expiry_time_format=EXPIRY_TIME_FORMAT,
         large_file_hint=False,
@@ -38,6 +40,7 @@ class FileDownloader:
         self.file_url = file_url
         self.meta_filepath = meta_filepath
         self.dst_dir = dst_dir
+        self.filename = filename
         self.expire_hours = expire_hours
         self.expiry_time_format = expiry_time_format
         self.meta_etag = None
@@ -45,6 +48,7 @@ class FileDownloader:
         self.file_size = None
         self.large_file_hint = large_file_hint
         self.timeout = timeout
+        self.auto_unzip = auto_unzip
 
     def check_if_file_need_update(self):
         """check if the file need an update(download/re-download the files)
@@ -150,16 +154,18 @@ class FileDownloader:
             self.new_etag = network_requests.fetch_large_file(
                 self.file_url,
                 self.dst_dir,
+                filename=self.filename,
                 filesize=self.file_size,
-                auto_unzip=True,
+                auto_unzip=self.auto_unzip,
                 check_etag=False,
             )
         else:
             self.new_etag = network_requests.fetch_file(
                 self.file_url,
                 self.dst_dir,
+                filename=self.filename,
                 etag=self.meta_etag,
-                auto_unzip=True,
+                auto_unzip=self.auto_unzip,
             )
 
         # update metadata file
