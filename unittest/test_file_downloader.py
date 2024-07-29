@@ -3,6 +3,7 @@ import glob
 import os
 import shutil
 import sys
+import time
 import unittest
 
 from common import TEMP_TEST_DIR, get_test_logger, is_test_installed_module
@@ -98,6 +99,8 @@ class DownloadFileTestCase(unittest.TestCase):
                         f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/.metadata.json"
                     )
                 )
+
+                time.sleep(2.5)
                 os.system(
                     f"ls -rtlha {TEMP_TEST_DIR}/test-download-file/{client}/{file}/{local_files[file]}"
                 )
