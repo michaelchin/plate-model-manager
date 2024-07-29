@@ -125,6 +125,9 @@
                     <span class="n">etag</span><span class="o">=</span><span class="n">etag</span><span class="p">,</span>
                     <span class="n">auto_unzip</span><span class="o">=</span><span class="n">auto_unzip</span><span class="p">,</span>
                 <span class="p">)</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span>
+                <span class="mf">0.250</span>
+            <span class="p">)</span>  <span class="c1"># https://docs.aiohttp.org/en/stable/client_advanced.html#graceful-shutdown</span>
 
         <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">f</span><span class="p">())</span></div>
 
@@ -168,7 +171,7 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">unzip</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-                        <span class="c1"># print(ex)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
