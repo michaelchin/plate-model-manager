@@ -3,6 +3,7 @@ import asyncio
 import io
 import os
 from pathlib import Path
+from typing import Union
 
 from .utils import misc, network, unzip
 
@@ -25,8 +26,8 @@ class FileFetcher(metaclass=abc.ABCMeta):
         self,
         url: str,
         filepath: str,
-        filename: str = None,
-        etag: str = None,
+        filename: Union[str, None] = None,
+        etag: Union[str, None] = None,
         auto_unzip: bool = True,
     ):
         """download a file from "url" and save to "filepath"
@@ -72,9 +73,9 @@ class FileFetcher(metaclass=abc.ABCMeta):
         self,
         url: str,
         filepath: str,
-        filename: str | None,
-        filesize: int = None,
-        etag: str | None = None,
+        filename: Union[str, None],
+        filesize: Union[int, None] = None,
+        etag: Union[str, None] = None,
         auto_unzip: bool = True,
         check_etag: bool = True,
         timeout=(None, None),

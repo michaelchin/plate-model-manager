@@ -3,8 +3,9 @@ import logging
 import os
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Union
 
-from .. import network_requests, network_aiohttp
+from .. import network_aiohttp, network_requests
 from . import network
 
 EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
@@ -31,7 +32,7 @@ class FileDownloader:
         file_url: str,
         meta_filepath: str,
         dst_dir: str,
-        filename: str | None = None,
+        filename: Union[str, None] = None,
         auto_unzip: bool = True,
         expire_hours=EXPIRE_HOURS,
         expiry_time_format=EXPIRY_TIME_FORMAT,

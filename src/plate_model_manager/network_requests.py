@@ -4,7 +4,7 @@ import functools
 import io
 import os
 from pathlib import Path
-from typing import Union
+from typing import List, Union
 
 import requests
 
@@ -24,8 +24,8 @@ class RequestsFetcher(FileFetcher):
         self,
         url: str,
         filepath: str,
-        filename: str | None = None,
-        etag: str | None = None,
+        filename: Union[str, None] = None,
+        etag: Union[str, None] = None,
         auto_unzip: bool = True,
         timeout=(None, None),
     ):
@@ -39,12 +39,12 @@ class RequestsFetcher(FileFetcher):
         :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
         """
-        print(f"url: {url}")
-        print(f"filepath: {filepath}")
-        print(f"filename: {filename}")
-        print(f"etag: {etag}")
-        print(f"auto_unzip: {auto_unzip}")
-        print(f"timeout: {timeout}")
+        # print(f"url: {url}")
+        # print(f"filepath: {filepath}")
+        # print(f"filename: {filename}")
+        # print(f"etag: {etag}")
+        # print(f"auto_unzip: {auto_unzip}")
+        # print(f"timeout: {timeout}")
 
         if isinstance(etag, str) or isinstance(etag, bytes):
             headers = {"If-None-Match": etag}
@@ -85,7 +85,7 @@ class RequestsFetcher(FileFetcher):
         return new_etag
 
     def _fetch_range(
-        self, url, index: int, chunk_size: int, data: list, timeout=(None, None)
+        self, url, index: int, chunk_size: int, data: List, timeout=(None, None)
     ):
         """get patial content of a file from the server
         Be careful, some server does not support this function.
@@ -121,7 +121,7 @@ class RequestsFetcher(FileFetcher):
         run,
         url,
         file_size: int,
-        data: list,
+        data: List,
         chunk_size=10 * 1000 * 1000,
         timeout=(None, None),
     ):
@@ -231,7 +231,7 @@ class RequestsFetcher(FileFetcher):
 def fetch_file(
     url: str,
     filepath: str,
-    filename: str = None,
+    filename: Union[str, None] = None,
     etag: str = None,
     auto_unzip: bool = True,
     timeout=(None, None),
@@ -263,9 +263,9 @@ def fetch_files(
 def fetch_large_file(
     url: str,
     filepath: str,
-    filename: str | None = None,
-    filesize: int = None,
-    etag: str = None,
+    filename: Union[str, None] = None,
+    filesize: Union[int, None] = None,
+    etag: Union[str, None] = None,
     auto_unzip: bool = True,
     check_etag: bool = True,
     timeout=(None, None),

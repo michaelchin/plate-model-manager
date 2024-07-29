@@ -1,5 +1,5 @@
-name: Build Test and Doc
-on: 
+name: Build doc and update gh pages
+on:
   workflow_dispatch:
 
   push:
@@ -25,20 +25,19 @@ jobs:
           ref: gh-pages
           token: ${{ secrets.GH_PAGE_COMMIT_TOKEN }}
           path: gh-pages
-       
+
       - name: Build doc
-        run: | 
+        run: |
           chmod +x ./main/scripts/build-workflow.sh
           cd main
           ./scripts/build-workflow.sh
           cd ..
         env:
-          GITHUB_TOKEN: '${{secrets.GH_PAGE_COMMIT_TOKEN}}'
+          GITHUB_TOKEN: "${{secrets.GH_PAGE_COMMIT_TOKEN}}"
 
       - name: Update github pages
-        run: | 
+        run: |
           chmod +x ./main/scripts/update-gh-pages.sh
           ./main/scripts/update-gh-pages.sh
         env:
-          GITHUB_TOKEN: '${{secrets.GH_PAGE_COMMIT_TOKEN}}'
-
+          GITHUB_TOKEN: "${{secrets.GH_PAGE_COMMIT_TOKEN}}"

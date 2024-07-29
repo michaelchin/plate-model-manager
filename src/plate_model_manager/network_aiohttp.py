@@ -2,6 +2,7 @@ import asyncio
 import io
 import os
 from pathlib import Path
+from typing import List, Union
 
 import aiohttp
 
@@ -22,7 +23,7 @@ class AiohttpFetcher(FileFetcher):
         self,
         url: str,
         filepath: str,
-        filename: str | None = None,
+        filename: Union[str, None] = None,
         etag: str = None,
         auto_unzip: bool = True,
     ):
@@ -43,6 +44,7 @@ class AiohttpFetcher(FileFetcher):
                     session,
                     url,
                     filepath,
+                    filename=filename,
                     etag=etag,
                     auto_unzip=auto_unzip,
                 )
@@ -54,7 +56,8 @@ class AiohttpFetcher(FileFetcher):
         session,
         url: str,
         filepath: str,
-        etag: str | None = None,
+        filename: Union[str, None] = None,
+        etag: Union[str, None] = None,
         auto_unzip: bool = True,
     ):
         """async "fetch_file" implementation. See the docstring of "fetch_file" """
@@ -81,7 +84,8 @@ class AiohttpFetcher(FileFetcher):
                     "The file has not been changed since it was downloaded last time. Do nothing and return."
                 )
             elif r.status == 200:
-                filename = url.split("/")[-1]  # use the filename in the url
+                if not filename:
+                    filename = url.split("/")[-1]  # use the filename in the url
                 if auto_unzip:
                     try:
                         unzip.save_compressed_data(url, io.BytesIO(content), filepath)
@@ -100,7 +104,7 @@ class AiohttpFetcher(FileFetcher):
             return new_etag
 
     async def _fetch_range(
-        self, session, url: str, index: int, chunk_size: int, data: list
+        self, session, url: str, index: int, chunk_size: int, data: List
     ):
         """async funtion to get patial content of a file from the server
         Be careful, some server does not support this function.
@@ -126,7 +130,7 @@ class AiohttpFetcher(FileFetcher):
         # print(f"{index} -- time: {et - st}")
 
     async def _fetch_large_file(
-        self, url: str, file_size: int, data: list, chunk_size=10 * 1000 * 1000
+        self, url: str, file_size: int, data: List, chunk_size=10 * 1000 * 1000
     ):
         """async implementation of fetch_large_file"""
         async with aiohttp.ClientSession() as session:
@@ -191,6 +195,7 @@ class AiohttpFetcher(FileFetcher):
                                 session,
                                 url,
                                 filepath,
+                                None,
                                 etag=etag,
                                 auto_unzip=auto_unzip,
                             )
@@ -218,7 +223,7 @@ class AiohttpFetcher(FileFetcher):
 def fetch_file(
     url: str,
     filepath: str,
-    filename: str | None = None,
+    filename: Union[str, None] = None,
     etag: str = None,
     auto_unzip: bool = True,
 ):
@@ -241,9 +246,9 @@ def fetch_files(
 def fetch_large_file(
     url: str,
     filepath: str,
-    filename: str | None = None,
-    filesize: int | None = None,
-    etag: str | None = None,
+    filename: Union[str, None] = None,
+    filesize: Union[int, None] = None,
+    etag: Union[str, None] = None,
     auto_unzip: bool = True,
     check_etag: bool = True,
 ):
