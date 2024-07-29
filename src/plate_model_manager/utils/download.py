@@ -4,7 +4,7 @@ import os
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from .. import network_requests
+from .. import network_requests, network_aiohttp
 from . import network
 
 EXPIRY_TIME_FORMAT = "%Y/%m/%d, %H:%M:%S"
@@ -15,9 +15,16 @@ logger = logging.getLogger("pmm")
 # {url:{new-etag:"xxxx", file-size:12345, meta-etag:"uuuuu"}}
 etag_and_file_size_cache = {}
 
+from enum import Enum
+
+
+class HttpClient(Enum):
+    REQUESTS = 1
+    AIOHTTP = 2
+
 
 class FileDownloader:
-    """class for managing file download"""
+    """class for managing single file download"""
 
     def __init__(
         self,
@@ -30,6 +37,7 @@ class FileDownloader:
         expiry_time_format=EXPIRY_TIME_FORMAT,
         large_file_hint=False,
         timeout=(None, None),
+        http_client: HttpClient = HttpClient.REQUESTS,
     ) -> None:
         """FileDownloader constructor
 
@@ -49,6 +57,7 @@ class FileDownloader:
         self.large_file_hint = large_file_hint
         self.timeout = timeout
         self.auto_unzip = auto_unzip
+        self.http_client = http_client
 
     def check_if_file_need_update(self):
         """check if the file need an update(download/re-download the files)
@@ -150,8 +159,13 @@ class FileDownloader:
             headers = network.get_headers(self.file_url)
             self.file_size = network.get_content_length(headers)
 
+        if self.http_client == HttpClient.REQUESTS:
+            client = network_requests
+        else:
+            client = network_aiohttp
+
         if self.file_size and self.file_size > 20 * 1000 * 1000:
-            self.new_etag = network_requests.fetch_large_file(
+            self.new_etag = client.fetch_large_file(
                 self.file_url,
                 self.dst_dir,
                 filename=self.filename,
@@ -160,7 +174,7 @@ class FileDownloader:
                 check_etag=False,
             )
         else:
-            self.new_etag = network_requests.fetch_file(
+            self.new_etag = client.fetch_file(
                 self.file_url,
                 self.dst_dir,
                 filename=self.filename,

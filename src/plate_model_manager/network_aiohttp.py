@@ -22,6 +22,7 @@ class AiohttpFetcher(FileFetcher):
         self,
         url: str,
         filepath: str,
+        filename: str | None = None,
         etag: str = None,
         auto_unzip: bool = True,
     ):
@@ -217,11 +218,14 @@ class AiohttpFetcher(FileFetcher):
 def fetch_file(
     url: str,
     filepath: str,
+    filename: str | None = None,
     etag: str = None,
     auto_unzip: bool = True,
 ):
     fetcher = AiohttpFetcher()
-    return fetcher.fetch_file(url, filepath, etag=etag, auto_unzip=auto_unzip)
+    return fetcher.fetch_file(
+        url, filepath, filename=filename, etag=etag, auto_unzip=auto_unzip
+    )
 
 
 def fetch_files(

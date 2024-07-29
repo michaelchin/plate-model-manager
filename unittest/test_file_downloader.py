@@ -30,6 +30,7 @@ class DownloadFileTestCase(unittest.TestCase):
         pass
 
     def test_download_file(self):
+        """test download files and auto unzip"""
         files = {
             "test_bz2": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/models.json.bz2",
             "test_lzma": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/models.json.lzma",
@@ -49,170 +50,188 @@ class DownloadFileTestCase(unittest.TestCase):
         }
 
         for file in files:
-            if os.path.isdir(f"{TEMP_TEST_DIR}/test-download-file/{file}"):
-                shutil.rmtree(f"{TEMP_TEST_DIR}/test-download-file/{file}")
+            for client in [download.HttpClient.AIOHTTP, download.HttpClient.REQUESTS]:
+                downloader = download.FileDownloader(
+                    files[file],
+                    f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json",
+                    f"{TEMP_TEST_DIR}/test-download-file/{file}",
+                    http_client=client,
+                )
+
+                if os.path.isdir(f"{TEMP_TEST_DIR}/test-download-file/{file}"):
+                    shutil.rmtree(f"{TEMP_TEST_DIR}/test-download-file/{file}")
+
+                # only re-download when necessary
+                if downloader.check_if_file_need_update():
+                    downloader.download_file_and_update_metadata()
+                else:
+                    logger.info(
+                        f"The local file is still good. No need to download {files[file]} again!"
+                    )
+
+                file_list = glob.glob(f"{TEMP_TEST_DIR}/test-download-file/{file}/*")
+
+                self.assertTrue(len(file_list) > 0)
+                self.assertTrue(
+                    os.path.isfile(
+                        f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json"
+                    )
+                )
+                self.assertFalse(downloader.check_if_file_need_update())
+
+    def test_download_file_rename_1(self):
+        """download a file and save the file with a caller-specified file name"""
+        for client in [download.HttpClient.AIOHTTP, download.HttpClient.REQUESTS]:
+            output_filename = f"{TEMP_TEST_DIR}/test-download-file/xxxx.json"
+            metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
+            if os.path.isfile(output_filename):
+                os.remove(output_filename)
+            if os.path.isfile(metafile):
+                os.remove(metafile)
+            file_url = "https://repo.gplates.org/webdav/pmm/models.json"
             downloader = download.FileDownloader(
-                files[file],
-                f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json",
-                f"{TEMP_TEST_DIR}/test-download-file/{file}",
+                file_url,
+                metafile,
+                f"{TEMP_TEST_DIR}/test-download-file/",
+                filename="xxxx.json",
+                http_client=client,
             )
-            # only re-download when necessary
             if downloader.check_if_file_need_update():
                 downloader.download_file_and_update_metadata()
             else:
                 logger.info(
-                    f"The local file is still good. No need to download {files[file]} again!"
+                    f"The local file is still good. No need to download {file_url} again!"
                 )
 
-            file_list = glob.glob(f"{TEMP_TEST_DIR}/test-download-file/{file}/*")
-
-            self.assertTrue(len(file_list) > 0)
-            self.assertTrue(
-                os.path.isfile(
-                    f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json"
-                )
-            )
             self.assertFalse(downloader.check_if_file_need_update())
-
-    def test_download_file_rename_1(self):
-        output_filename = f"{TEMP_TEST_DIR}/test-download-file/xxxx.json"
-        metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
-        if os.path.isfile(output_filename):
-            os.remove(output_filename)
-        if os.path.isfile(metafile):
-            os.remove(metafile)
-        file_url = "https://repo.gplates.org/webdav/pmm/models.json"
-        downloader = download.FileDownloader(
-            file_url,
-            metafile,
-            f"{TEMP_TEST_DIR}/test-download-file/",
-            filename="xxxx.json",
-        )
-        if downloader.check_if_file_need_update():
-            downloader.download_file_and_update_metadata()
-        else:
-            logger.info(
-                f"The local file is still good. No need to download {file_url} again!"
-            )
-
-        self.assertFalse(downloader.check_if_file_need_update())
-        self.assertTrue(os.path.isfile(output_filename))
-        self.assertTrue(os.path.isfile(metafile))
+            self.assertTrue(os.path.isfile(output_filename))
+            self.assertTrue(os.path.isfile(metafile))
 
     def test_download_file_rename_2(self):
-        output_filename = f"{TEMP_TEST_DIR}/test-download-file/qqqq.json.bz2"
-        metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
-        if os.path.isfile(output_filename):
-            os.remove(output_filename)
-        if os.path.isfile(metafile):
-            os.remove(metafile)
-        file_url = "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/models.json.bz2"
-        downloader = download.FileDownloader(
-            file_url,
-            metafile,
-            f"{TEMP_TEST_DIR}/test-download-file/",
-            filename="qqqq.json.bz2",
-            auto_unzip=False,
-        )
-        if downloader.check_if_file_need_update():
-            downloader.download_file_and_update_metadata()
-        else:
-            logger.info(
-                f"The local file is still good. No need to download {file_url} again!"
+        """download a file, turn off auto unzip and save the file with a caller-specified file name"""
+        for client in [download.HttpClient.AIOHTTP, download.HttpClient.REQUESTS]:
+            output_filename = f"{TEMP_TEST_DIR}/test-download-file/qqqq.json.bz2"
+            metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
+            if os.path.isfile(output_filename):
+                os.remove(output_filename)
+            if os.path.isfile(metafile):
+                os.remove(metafile)
+            file_url = "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/models.json.bz2"
+            downloader = download.FileDownloader(
+                file_url,
+                metafile,
+                f"{TEMP_TEST_DIR}/test-download-file/",
+                filename="qqqq.json.bz2",
+                auto_unzip=False,
+                http_client=client,
             )
+            if downloader.check_if_file_need_update():
+                downloader.download_file_and_update_metadata()
+            else:
+                logger.info(
+                    f"The local file is still good. No need to download {file_url} again!"
+                )
 
-        self.assertFalse(downloader.check_if_file_need_update())
-        self.assertTrue(os.path.isfile(output_filename))
-        self.assertTrue(os.path.isfile(metafile))
+            self.assertFalse(downloader.check_if_file_need_update())
+            self.assertTrue(os.path.isfile(output_filename))
+            self.assertTrue(os.path.isfile(metafile))
 
     def test_download_file_rename_3(self):
-        output_filename = f"{TEMP_TEST_DIR}/test-download-file/models.json"
-        metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
-        if os.path.isfile(output_filename):
-            os.remove(output_filename)
-        if os.path.isfile(metafile):
-            os.remove(metafile)
-        file_url = "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/models.json.bz2"
-        downloader = download.FileDownloader(
-            file_url,
-            metafile,
-            f"{TEMP_TEST_DIR}/test-download-file/",
-            filename="qqqq.json",  # auto_unzip, this filename will be ignored.
-        )
-        if downloader.check_if_file_need_update():
-            downloader.download_file_and_update_metadata()
-        else:
-            logger.info(
-                f"The local file is still good. No need to download {file_url} again!"
+        """download a file with a user specified file name, but since the auto unzip is on,
+        the user-specified file name will be ignored."""
+        for client in [download.HttpClient.AIOHTTP, download.HttpClient.REQUESTS]:
+            output_filename = f"{TEMP_TEST_DIR}/test-download-file/models.json"
+            metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
+            if os.path.isfile(output_filename):
+                os.remove(output_filename)
+            if os.path.isfile(metafile):
+                os.remove(metafile)
+            file_url = "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/models.json.bz2"
+            downloader = download.FileDownloader(
+                file_url,
+                metafile,
+                f"{TEMP_TEST_DIR}/test-download-file/",
+                filename="qqqq.json",  # auto_unzip, this filename will be ignored.
+                http_client=client,
             )
+            if downloader.check_if_file_need_update():
+                downloader.download_file_and_update_metadata()
+            else:
+                logger.info(
+                    f"The local file is still good. No need to download {file_url} again!"
+                )
 
-        self.assertFalse(downloader.check_if_file_need_update())
-        self.assertTrue(os.path.isfile(output_filename))
-        self.assertTrue(os.path.isfile(metafile))
+            self.assertFalse(downloader.check_if_file_need_update())
+            self.assertTrue(os.path.isfile(output_filename))
+            self.assertTrue(os.path.isfile(metafile))
 
     @unittest.skipIf(
         int(os.getenv("PMM_TEST_LEVEL", 0)) < 1,
         "this will download a large volume of data",
     )
     def test_download_large_file(self):
-        output_filename = f"{TEMP_TEST_DIR}/test-download-file/agegrid.tiff"
-        metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
-        if os.path.isfile(output_filename):
-            os.remove(output_filename)
-        if os.path.isfile(metafile):
-            os.remove(metafile)
-        file_url = (
-            "https://repo.gplates.org/webdav/pmm/present-day-rasters/agegrid.tiff.gz"
-        )
-        downloader = download.FileDownloader(
-            file_url,
-            metafile,
-            f"{TEMP_TEST_DIR}/test-download-file/",
-            large_file_hint=True,
-        )
-        if downloader.check_if_file_need_update():
-            downloader.download_file_and_update_metadata()
-        else:
-            logger.info(
-                f"The local file is still good. No need to download {file_url} again!"
+        """download a large file, use the file name in the url and unzip automatically"""
+        for client in [download.HttpClient.AIOHTTP, download.HttpClient.REQUESTS]:
+            output_filename = f"{TEMP_TEST_DIR}/test-download-file/agegrid.tiff"
+            metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
+            if os.path.isfile(output_filename):
+                os.remove(output_filename)
+            if os.path.isfile(metafile):
+                os.remove(metafile)
+            file_url = "https://repo.gplates.org/webdav/pmm/present-day-rasters/agegrid.tiff.gz"
+            downloader = download.FileDownloader(
+                file_url,
+                metafile,
+                f"{TEMP_TEST_DIR}/test-download-file/",
+                large_file_hint=True,
+                http_client=client,
             )
+            if downloader.check_if_file_need_update():
+                downloader.download_file_and_update_metadata()
+            else:
+                logger.info(
+                    f"The local file is still good. No need to download {file_url} again!"
+                )
 
-        self.assertFalse(downloader.check_if_file_need_update())
-        self.assertTrue(os.path.isfile(output_filename))
-        self.assertTrue(os.path.isfile(metafile))
+            self.assertFalse(downloader.check_if_file_need_update())
+            self.assertTrue(os.path.isfile(output_filename))
+            self.assertTrue(os.path.isfile(metafile))
 
     @unittest.skipIf(
         int(os.getenv("PMM_TEST_LEVEL", 0)) < 1,
         "this will download a large volume of data",
     )
     def test_download_large_file_rename(self):
-        output_filename = f"{TEMP_TEST_DIR}/test-download-file/renamed-agegrid.tiff.gz"
-        metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
-        if os.path.isfile(output_filename):
-            os.remove(output_filename)
-        if os.path.isfile(metafile):
-            os.remove(metafile)
-        file_url = (
-            "https://repo.gplates.org/webdav/pmm/present-day-rasters/agegrid.tiff.gz"
-        )
-        downloader = download.FileDownloader(
-            file_url,
-            metafile,
-            f"{TEMP_TEST_DIR}/test-download-file/",
-            filename="renamed-agegrid.tiff.gz",
-            large_file_hint=True,
-            auto_unzip=False,
-        )
-        if downloader.check_if_file_need_update():
-            downloader.download_file_and_update_metadata()
-        else:
-            logger.info(
-                f"The local file is still good. No need to download {file_url} again!"
+        """download a large file and save with a caller specified file name"""
+        for client in [download.HttpClient.AIOHTTP, download.HttpClient.REQUESTS]:
+            output_filename = (
+                f"{TEMP_TEST_DIR}/test-download-file/renamed-agegrid.tiff.gz"
             )
+            metafile = f"{TEMP_TEST_DIR}/test-download-file/.metadata.json"
+            if os.path.isfile(output_filename):
+                os.remove(output_filename)
+            if os.path.isfile(metafile):
+                os.remove(metafile)
+            file_url = "https://repo.gplates.org/webdav/pmm/present-day-rasters/agegrid.tiff.gz"
+            downloader = download.FileDownloader(
+                file_url,
+                metafile,
+                f"{TEMP_TEST_DIR}/test-download-file/",
+                filename="renamed-agegrid.tiff.gz",
+                large_file_hint=True,
+                auto_unzip=False,
+                http_client=client,
+            )
+            if downloader.check_if_file_need_update():
+                downloader.download_file_and_update_metadata()
+            else:
+                logger.info(
+                    f"The local file is still good. No need to download {file_url} again!"
+                )
 
-        self.assertFalse(downloader.check_if_file_need_update())
-        self.assertTrue(os.path.isfile(output_filename))
-        self.assertTrue(os.path.isfile(metafile))
+            self.assertFalse(downloader.check_if_file_need_update())
+            self.assertTrue(os.path.isfile(output_filename))
+            self.assertTrue(os.path.isfile(metafile))
 
 
 if __name__ == "__main__":
