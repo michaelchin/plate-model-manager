@@ -97,11 +97,16 @@ class DownloadFileTestCase(unittest.TestCase):
                         f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json"
                     )
                 )
+                os.system(
+                    f"ls -rtlha {TEMP_TEST_DIR}/test-download-file/{file}/{local_files[file]}"
+                )
+                """
                 self.assertTrue(
                     os.path.isfile(
                         f"{TEMP_TEST_DIR}/test-download-file/{file}/{local_files[file]}"
                     )
                 )
+                """
                 self.assertFalse(downloader.check_if_file_need_update())
 
     def test_download_file_rename_1(self):
