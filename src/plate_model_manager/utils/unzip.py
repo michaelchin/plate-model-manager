@@ -37,6 +37,7 @@ def save_compressed_data(url, data, dst_path):
             )
             raise Exception("Bad compressed data!")
         else:
+            data.seek(0)
             with tarfile.open(fileobj=data, mode="r:gz") as tar:
                 tar.extractall(path=dst_path)
                 tar.close()
@@ -62,6 +63,7 @@ def save_compressed_data(url, data, dst_path):
             )
             raise Exception("Bad compressed data!")
         else:
+            data.seek(0)
             with tarfile.open(fileobj=data, mode="r:bz2") as tar:
                 tar.extractall(path=dst_path)
                 tar.close()
@@ -100,6 +102,7 @@ def save_compressed_data(url, data, dst_path):
             )
             raise Exception("Bad compressed data!")
         else:
+            data.seek(0)
             with tarfile.open(fileobj=data, mode="r:xz") as tar:
                 tar.extractall(path=dst_path)
                 tar.close()

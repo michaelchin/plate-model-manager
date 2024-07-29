@@ -100,9 +100,9 @@ class DownloadFileTestCase(unittest.TestCase):
                     )
                 )
 
-                os.system(
-                    f"ls -rtlha {TEMP_TEST_DIR}/test-download-file/{client}/{file}"
-                )
+                #os.system(
+                #    f"ls -rtlha {TEMP_TEST_DIR}/test-download-file/{client}/{file}"
+                #)
 
                 self.assertTrue(
                     os.path.isfile(
