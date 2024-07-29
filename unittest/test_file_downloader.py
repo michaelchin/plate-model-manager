@@ -48,9 +48,29 @@ class DownloadFileTestCase(unittest.TestCase):
             "test_bad_xz": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test-bad.xz",
             "test_bad_bz2": "https://repo.gplates.org/webdav/pmm/present-day-rasters/test/test-bad.bz2",
         }
+        local_files = {
+            "test_bz2": "models.json",
+            "test_lzma": "models.json",
+            "test_xz": "models.json",
+            "test_gz": "models.json",
+            "test_tar_gz": "models.json.bak",
+            "test_tgz": "models.json.bak",
+            "test_tar_bz2": "models.json.bak",
+            "test_tar_xz": "models.json.bak",
+            "test_tbz2": "models.json.bak",
+            "test_txz": "models.json.bak",
+            "test_zip": "models.json",
+            "test_bad_zip": "test-bad.zip",
+            "test_bad_tar_gz": "test-bad.tar.gz",
+            "test_bad_xz": "test-bad.xz",
+            "test_bad_bz2": "test-bad.bz2",
+        }
 
         for file in files:
-            for client in [download.HttpClient.AIOHTTP, download.HttpClient.REQUESTS]:
+            for client in [
+                download.HttpClient.AIOHTTP,
+                download.HttpClient.REQUESTS,
+            ]:  # download.HttpClient.AIOHTTP,
                 downloader = download.FileDownloader(
                     files[file],
                     f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json",
@@ -75,6 +95,11 @@ class DownloadFileTestCase(unittest.TestCase):
                 self.assertTrue(
                     os.path.isfile(
                         f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json"
+                    )
+                )
+                self.assertTrue(
+                    os.path.isfile(
+                        f"{TEMP_TEST_DIR}/test-download-file/{file}/{local_files[file]}"
                     )
                 )
                 self.assertFalse(downloader.check_if_file_need_update())

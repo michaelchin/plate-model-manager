@@ -2,6 +2,7 @@ import bz2
 import gzip
 import lzma
 import shutil
+import sys
 import tarfile
 import zipfile
 
@@ -29,7 +30,7 @@ def save_compressed_data(url, data, dst_path):
                 z.close()
     # .tar.gz or .tgz
     elif url.endswith(".tar.gz") or url.endswith(".tgz"):
-        if not tarfile.is_tarfile(data):
+        if sys.version_info[1] > 8 and (not tarfile.is_tarfile(data)):
             misc.print_warning(
                 f"The {url} seems a tar gzip file. But it is in fact not. Will not decompress the file."
             )
@@ -54,7 +55,7 @@ def save_compressed_data(url, data, dst_path):
             raise Exception("Bad compressed data!")
     # .tar.bz2 or .tbz2
     elif url.endswith(".tar.bz2") or url.endswith(".tbz2"):
-        if not tarfile.is_tarfile(data):
+        if sys.version_info[1] > 8 and (not tarfile.is_tarfile(data)):
             misc.print_warning(
                 f"The {url} seems a tar bz2 file. But it is in fact not. Will not decompress the file."
             )
@@ -91,7 +92,7 @@ def save_compressed_data(url, data, dst_path):
             raise Exception("Bad compressed data!")
     # .tar.xz or .txz
     elif url.endswith(".tar.xz") or url.endswith(".txz"):
-        if not tarfile.is_tarfile(data):
+        if sys.version_info[1] > 8 and (not tarfile.is_tarfile(data)):
             misc.print_warning(
                 f"The {url} seems a tar xz file. But it is in fact not. Will not decompress the file."
             )

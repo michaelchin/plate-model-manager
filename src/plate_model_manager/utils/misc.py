@@ -41,7 +41,7 @@ warnings.formatwarning = my_warningformat
 
 def print_warning(msg):
     # warnings.warn(msg)
-    pmm_logger.warn(msg)
+    pmm_logger.warning(msg)
 
 
 def print_error(msg):

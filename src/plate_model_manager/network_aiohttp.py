@@ -48,6 +48,9 @@ class AiohttpFetcher(FileFetcher):
                     etag=etag,
                     auto_unzip=auto_unzip,
                 )
+            await asyncio.sleep(
+                0.250
+            )  # https://docs.aiohttp.org/en/stable/client_advanced.html#graceful-shutdown
 
         asyncio.run(f())
 
@@ -90,7 +93,7 @@ class AiohttpFetcher(FileFetcher):
                     try:
                         unzip.save_compressed_data(url, io.BytesIO(content), filepath)
                     except Exception as ex:
-                        # print(ex)
+                        print(ex)
                         self._save_file(filepath, filename, content)
                 else:
                     self._save_file(filepath, filename, content)
