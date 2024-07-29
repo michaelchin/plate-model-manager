@@ -36,5 +36,5 @@ jobs:
 
       - name: Run tests
         run: |
-          cd ./unittest
-          python3 -m unittest -vv --buffer
+          source pmm_venv/bin/activate
+          ./unittest/run_testcases.sh
