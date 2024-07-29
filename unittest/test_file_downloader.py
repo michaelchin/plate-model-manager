@@ -93,7 +93,7 @@ class DownloadFileTestCase(unittest.TestCase):
                     f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/*"
                 )
 
-                self.assertTrue(len(file_list) > 0)
+                self.assertTrue(len(file_list) == 1)
                 self.assertTrue(
                     os.path.isfile(
                         f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/.metadata.json"
@@ -103,13 +103,13 @@ class DownloadFileTestCase(unittest.TestCase):
                 os.system(
                     f"ls -rtlha {TEMP_TEST_DIR}/test-download-file/{client}/{file}"
                 )
-                """
+
                 self.assertTrue(
                     os.path.isfile(
                         f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/{local_files[file]}"
                     )
                 )
-                """
+
                 self.assertFalse(downloader.check_if_file_need_update())
 
     def test_download_file_rename_1(self):

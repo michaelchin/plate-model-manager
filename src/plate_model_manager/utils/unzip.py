@@ -1,6 +1,7 @@
 import bz2
 import gzip
 import lzma
+import os
 import shutil
 import sys
 import tarfile
@@ -73,6 +74,7 @@ def save_compressed_data(url, data, dst_path):
                 f_out.write(data)
                 f_out.close()
         except:
+            os.remove(f"{dst_path}/{fn}")
             misc.print_warning(
                 f"The {url} seems a bz2 file. But it is in fact not. Will not decompress the file."
             )
@@ -110,6 +112,7 @@ def save_compressed_data(url, data, dst_path):
                 f_out.write(data)
                 f_out.close()
         except:
+            os.remove(f"{dst_path}/{fn}")
             misc.print_warning(
                 f"The {url} seems a xz file. But it is in fact not. Will not decompress the file."
             )

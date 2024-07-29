@@ -147,7 +147,8 @@ class FileFetcher(metaclass=abc.ABCMeta):
         if auto_unzip:
             try:
                 unzip.save_compressed_data(url, data[0], filepath)
-            except:
+            except Exception as ex:
+                print(ex)
                 print("failed to save zip. try save directly")
                 data[0].seek(0)
                 self._save_file(filepath, filename, data[0].read())
