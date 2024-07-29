@@ -24,7 +24,7 @@ class RequestsFetcher(FileFetcher):
         self,
         url: str,
         filepath: str,
-        filename: str = None,
+        filename: str | None = None,
         etag: str | None = None,
         auto_unzip: bool = True,
         timeout=(None, None),
@@ -39,6 +39,12 @@ class RequestsFetcher(FileFetcher):
         :param auto_unzip: bool flag to indicate if unzip .zip file automatically
 
         """
+        print(f"url: {url}")
+        print(f"filepath: {filepath}")
+        print(f"filename: {filename}")
+        print(f"etag: {etag}")
+        print(f"auto_unzip: {auto_unzip}")
+        print(f"timeout: {timeout}")
 
         if isinstance(etag, str) or isinstance(etag, bytes):
             headers = {"If-None-Match": etag}
@@ -162,7 +168,10 @@ class RequestsFetcher(FileFetcher):
             else:
                 etag = None
 
-            tasks.append(run(self.fetch_file, url, filepath, etag, auto_unzip, timeout))
+            filename = None
+            tasks.append(
+                run(self.fetch_file, url, filepath, filename, etag, auto_unzip, timeout)
+            )
         # print(tasks)
         await asyncio.wait(tasks)
 
@@ -254,7 +263,7 @@ def fetch_files(
 def fetch_large_file(
     url: str,
     filepath: str,
-    filename: str | None,
+    filename: str | None = None,
     filesize: int = None,
     etag: str = None,
     auto_unzip: bool = True,

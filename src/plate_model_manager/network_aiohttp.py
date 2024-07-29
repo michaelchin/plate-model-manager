@@ -53,7 +53,7 @@ class AiohttpFetcher(FileFetcher):
         session,
         url: str,
         filepath: str,
-        etag: str = None,
+        etag: str | None = None,
         auto_unzip: bool = True,
     ):
         """async "fetch_file" implementation. See the docstring of "fetch_file" """
@@ -237,7 +237,7 @@ def fetch_files(
 def fetch_large_file(
     url: str,
     filepath: str,
-    filename: str | None,
+    filename: str | None = None,
     filesize: int | None = None,
     etag: str | None = None,
     auto_unzip: bool = True,

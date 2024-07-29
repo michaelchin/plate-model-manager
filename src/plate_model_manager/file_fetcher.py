@@ -139,8 +139,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
             loop.close()
 
         data[0].seek(0)
-        print(filename)
-        print(auto_unzip)
+
         if not filename:
             filename = url.split("/")[-1]  # use the filename in the url
         # save the file
