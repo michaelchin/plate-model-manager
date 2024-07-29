@@ -1,6 +1,8 @@
 # plate-model-manager
 
-![build workflow](https://github.com/michaelchin/plate-model-manager/actions/workflows/build.yml/badge.svg)
+![unittest](https://github.com/michaelchin/plate-model-manager/actions/workflows/unittest.yml/badge.svg)
+![unittest-win](https://github.com/michaelchin/plate-model-manager/actions/workflows/unittest-win.yml/badge.svg)
+![build-doc](https://github.com/michaelchin/plate-model-manager/actions/workflows/build-doc-update-gh-pages.yml/badge.svg)
 [![PyPI version](https://badge.fury.io/py/plate-model-manager.svg)](https://badge.fury.io/py/plate-model-manager)
 ![anaconda_badge](https://anaconda.org/conda-forge/plate-model-manager/badges/version.svg)
 ![platforms](https://anaconda.org/conda-forge/plate-model-manager/badges/platforms.svg)

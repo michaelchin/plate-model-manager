@@ -23,7 +23,7 @@ jobs:
         shell: bash -el {0}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install PMM and dependencies
         run: |
           python3 -m pip install requests
