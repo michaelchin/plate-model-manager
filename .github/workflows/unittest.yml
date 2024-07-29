@@ -36,4 +36,5 @@ jobs:
 
       - name: Run tests
         run: |
-          ./unittest/run_testcases.sh
+          cd ./unittest
+          python3 -m unittest -vv --buffer
