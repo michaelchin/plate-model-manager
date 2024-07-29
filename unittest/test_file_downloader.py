@@ -65,21 +65,20 @@ class DownloadFileTestCase(unittest.TestCase):
             "test_bad_xz": "test-bad.xz",
             "test_bad_bz2": "test-bad.bz2",
         }
+        for client in [
+            download.HttpClient.AIOHTTP,
+            download.HttpClient.REQUESTS,
+        ]:
+            for file in files:
+                if os.path.isdir(f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}"):
+                    shutil.rmtree(f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}")
 
-        for file in files:
-            for client in [
-                download.HttpClient.AIOHTTP,
-                download.HttpClient.REQUESTS,
-            ]:  # download.HttpClient.AIOHTTP,
                 downloader = download.FileDownloader(
                     files[file],
-                    f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json",
-                    f"{TEMP_TEST_DIR}/test-download-file/{file}",
+                    f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/.metadata.json",
+                    f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}",
                     http_client=client,
                 )
-
-                if os.path.isdir(f"{TEMP_TEST_DIR}/test-download-file/{file}"):
-                    shutil.rmtree(f"{TEMP_TEST_DIR}/test-download-file/{file}")
 
                 # only re-download when necessary
                 if downloader.check_if_file_need_update():
@@ -89,24 +88,26 @@ class DownloadFileTestCase(unittest.TestCase):
                         f"The local file is still good. No need to download {files[file]} again!"
                     )
 
-                file_list = glob.glob(f"{TEMP_TEST_DIR}/test-download-file/{file}/*")
+                file_list = glob.glob(
+                    f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/*"
+                )
 
                 self.assertTrue(len(file_list) > 0)
                 self.assertTrue(
                     os.path.isfile(
-                        f"{TEMP_TEST_DIR}/test-download-file/{file}/.metadata.json"
+                        f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/.metadata.json"
                     )
                 )
                 os.system(
-                    f"ls -rtlha {TEMP_TEST_DIR}/test-download-file/{file}/{local_files[file]}"
+                    f"ls -rtlha {TEMP_TEST_DIR}/test-download-file/{client}/{file}/{local_files[file]}"
                 )
-                """
+
                 self.assertTrue(
                     os.path.isfile(
-                        f"{TEMP_TEST_DIR}/test-download-file/{file}/{local_files[file]}"
+                        f"{TEMP_TEST_DIR}/test-download-file/{client}/{file}/{local_files[file]}"
                     )
                 )
-                """
+
                 self.assertFalse(downloader.check_if_file_need_update())
 
     def test_download_file_rename_1(self):

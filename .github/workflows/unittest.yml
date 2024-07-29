@@ -26,9 +26,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install PMM and dependencies
         run: |
-          pip3 install requests
-          pip3 install aiohttp
-          pip3 install nest_asyncio
+          python3 -m venv pmm_venv
+          source pmm_venv/bin/activate
+          python3 -m pip install requests
+          python3 -m pip install requests
+          python3 -m pip install aiohttp
+          python3 -m pip install nest_asyncio
           pip3 install .
 
       - name: Run tests

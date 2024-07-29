@@ -47,7 +47,8 @@ class PlateModelManager:
                     raise InvalidConfigFile(
                         f"Unable to get valid JSON data from '{self.model_manifest}'. Http request return code: {r.status_code}"
                     )
-                self.models = r.json()
+                else:
+                    self.models = r.json()
 
             except (
                 requests.exceptions.ConnectionError,
