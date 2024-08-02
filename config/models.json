@@ -170,8 +170,8 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_2016_AREPS_Agegrids/Muller_etal_2016_AREPS_Agegrids_v1.17/Muller_etal_2016_AREPS_v1.17_netCDF/Muller_etal_2016_AREPS_v1.17_AgeGrid-{}.nc"
         },
         "Description": "This model represents an update of the SETON2012 model, both in terms of relative and absolute plate motions. The absolute reference used is based on the same hotspot model for the last 100 Ma as used in SETON2012, and a true-polar wander corrected paleomagnetic model for 230 to 100 Ma, with an added 10 deg longitudinal correction for the time period from 100-230 Ma in an attempt to minimise geodynamically unreasonable longitudinal plate motions, resulting in a modified mantle reference frame.",
-        "URL": "https://gwsdoc.gplates.org/models#muller2016",
-        "Version": "2023-12-06"
+        "URL": "https://zenodo.org/doi/10.5281/zenodo.10565444",
+        "Version": "2024-08-02"
     },
     "matthews2016": "@matthews2016_mantle_ref",
     "matthews2016_mantle_ref": {
@@ -285,9 +285,9 @@
             "Coastlines": "https://repo.gplates.org/webdav/pmm/paleomap/Coastlines.zip",
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/paleomap/StaticPolygons.zip"
         },
-        "Description": "https://gwsdoc.gplates.org/models#paleomap",
-        "URL": "",
-        "Version": "2023-12-06"
+        "Description": "also known as Scotese2016",
+        "URL": "https://zenodo.org/doi/10.5281/zenodo.10596609",
+        "Version": "2024-08-02"
     },
     "rodinia": {
         "BigTime": 1100,
@@ -300,5 +300,20 @@
         "Description": "https://gwsdoc.gplates.org/models#rodinia",
         "URL": "",
         "Version": "2023-12-06"
+    },
+    "zahirovic2016": {
+        "BigTime": 230,
+        "SmallTime": 0,
+        "Rotations": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Rotations.zip",
+        "Layers": {
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Coastlines.zip",
+            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2016/StaticPolygons.zip",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Topologies.zip",
+            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2016/ContinentalPolygons.zip",
+            "Isochrons": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Isochrons.zip"
+        },
+        "Description": "",
+        "URL": "https://zenodo.org/doi/10.5281/zenodo.10531296",
+        "Version": "2024-08-02"
     }
 }
