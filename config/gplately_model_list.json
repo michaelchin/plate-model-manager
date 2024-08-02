@@ -25,5 +25,11 @@
     },
     "matthews2016_pmag_ref": {
         "url": ""
+    },
+    "muller2016": {
+        "url": "https://zenodo.org/doi/10.5281/zenodo.10565444"
+    },
+    "scotese2016": {
+        "url": "https://zenodo.org/doi/10.5281/zenodo.10596609"
     }
 }

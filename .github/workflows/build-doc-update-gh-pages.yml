@@ -5,11 +5,16 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - master
+
 jobs:
   build-test-doc:
     name: build test doc
     runs-on: ubuntu-latest
 
+    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4

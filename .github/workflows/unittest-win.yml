@@ -1,4 +1,4 @@
-name: Unittest
+name: Unittest Windows
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  unittest:
     name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -22,6 +22,7 @@ jobs:
       run:
         shell: bash -el {0}
 
+    if: github.event.pull_request.draft == false
     steps:
       - uses: actions/checkout@v4
       - name: Install PMM and dependencies
