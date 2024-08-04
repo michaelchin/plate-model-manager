@@ -4,6 +4,7 @@ import sys
 import warnings
 
 pmm_logger = logging.getLogger("pmm")
+pmm_logger.propagate = False
 fh = logging.FileHandler(f"pmm.log")
 fh.setLevel(logging.INFO)
 formatter = logging.Formatter(

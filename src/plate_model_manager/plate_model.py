@@ -170,8 +170,7 @@ class PlateModel:
 
         :returns: a list of file names or None if return_none_if_not_exist is True
 
-        :raises LayerNotFoundInModel: if the layer name does not
-            exist in this model
+        :raises LayerNotFoundInModel: if the layer name does not exist in this model
 
         """
         try:
@@ -185,7 +184,11 @@ class PlateModel:
 
             return files
         except LayerNotFoundInModel as e:
+            logger.warning(e)
             if return_none_if_not_exist:
+                logger.warning(
+                    f"The layer({layer_name}) does not exist in model({self.model_name})."
+                )
                 return None
             else:
                 raise e
