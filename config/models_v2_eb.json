@@ -245,9 +245,9 @@
             "Topologies": "@<<SvrBaseURL>>@/shephard2013/Topologies.zip"
         },
         "TimeDepRasters": {},
-        "Description": "shephard2013 description",
-        "URL": "",
-        "Version": "2023-12-06"
+        "Description": "the tectonic evolution of the Arctic since Pangea breakup",
+        "URL": "https://zenodo.org/doi/10.5281/zenodo.10595888",
+        "Version": "2024-08-06"
     },
     "seton2012": {
         "BigTime": 200,
@@ -264,8 +264,8 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Seton_etal_2012_ESR/Seton_etal_2012_ESR_Agegrids/netCDF_0-200Ma/agegrid_{}.nc"
         },
         "Description": "This model represents the first global plate model with topological plate boundaries. It is based on a hybrid reference frame hybrid absolute reference frame, based on a moving hotspot model for the last 100 Ma, and a true-polar wander corrected paleomagnetic model for 200 to 100 Ma. This combination of absolute reference frames is viewed as a proxy for a mantle reference frame model.",
-        "URL": "https://gwsdoc.gplates.org/models#seton2012",
-        "Version": "2023-12-06"
+        "URL": "https://zenodo.org/doi/10.5281/zenodo.10596049",
+        "Version": "2024-08-06"
     },
     "li2008": "@rodinia",
     "golonka": {
@@ -318,5 +318,18 @@
         "Description": "",
         "URL": "https://zenodo.org/doi/10.5281/zenodo.10531296",
         "Version": "2024-08-02"
+    },
+    "gurnis2012": {
+        "BigTime": 140,
+        "SmallTime": 0,
+        "Rotations": "@<<SvrBaseURL>>@/gurnis2012/Rotations.zip",
+        "Layers": {
+            "Coastlines": "@<<SvrBaseURL>>@/gurnis2012/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/gurnis2012/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/gurnis2012/Topologies.zip"
+        },
+        "Description": "Plate tectonic reconstructions with continuously closing plates",
+        "URL": "https://zenodo.org/doi/10.5281/zenodo.10596349",
+        "Version": "2024-08-06"
     }
 }
