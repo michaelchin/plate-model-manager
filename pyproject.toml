@@ -1,6 +1,9 @@
 [build-system]
-requires      = ["setuptools>=61.0.0", "wheel"]
+requires      = ["setuptools>=61.0.0", "wheel", "setuptools-git-versioning"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools-git-versioning]
+enabled = true
 
 [project]
 name = "plate-model-manager"
@@ -22,8 +25,8 @@ dependencies = [
 ]
 requires-python = ">=3.8"
 
-[tool.setuptools.dynamic]
-version = {attr = "plate_model_manager.__version__"}
+#[tool.setuptools.dynamic]
+#version = {attr = "plate_model_manager.__version__"}
 
 [project.optional-dependencies]
 dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]

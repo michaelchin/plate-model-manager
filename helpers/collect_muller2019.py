@@ -137,6 +137,4 @@ files = glob.glob(f"{model_path}/SeafloorFabric/*.gpmlz")
 utils.zip_files(files, f"{model_path}/SeafloorFabric.zip", "SeafloorFabric", info_fp)
 
 shutil.rmtree(f"{model_path}/SeafloorFabric")
-
-
 info_fp.close()
