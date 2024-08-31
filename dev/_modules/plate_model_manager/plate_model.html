@@ -286,8 +286,7 @@
 
 <span class="sd">        :returns: a list of file names or None if return_none_if_not_exist is True</span>
 
-<span class="sd">        :raises LayerNotFoundInModel: if the layer name does not</span>
-<span class="sd">            exist in this model</span>
+<span class="sd">        :raises LayerNotFoundInModel: if the layer name does not exist in this model</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -301,7 +300,11 @@
 
             <span class="k">return</span> <span class="n">files</span>
         <span class="k">except</span> <span class="n">LayerNotFoundInModel</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The layer(</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">) does not exist in model(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">).&quot;</span>
+                <span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">e</span></div>
