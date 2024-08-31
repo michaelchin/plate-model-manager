@@ -173,8 +173,8 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_2016_AREPS_Agegrids/Muller_etal_2016_AREPS_Agegrids_v1.17/Muller_etal_2016_AREPS_v1.17_netCDF/Muller_etal_2016_AREPS_v1.17_AgeGrid-{}.nc"
         },
         "Description": "This model represents an update of the SETON2012 model, both in terms of relative and absolute plate motions. The absolute reference used is based on the same hotspot model for the last 100 Ma as used in SETON2012, and a true-polar wander corrected paleomagnetic model for 230 to 100 Ma, with an added 10 deg longitudinal correction for the time period from 100-230 Ma in an attempt to minimise geodynamically unreasonable longitudinal plate motions, resulting in a modified mantle reference frame.",
-        "URL": "https://gwsdoc.gplates.org/models#muller2016",
-        "Version": "2023-12-06"
+        "URL": "https://zenodo.org/records/11607841",
+        "Version": "2024-08-02"
     },
     "matthews2016": "@matthews2016_mantle_ref",
     "matthews2016_mantle_ref": {
@@ -210,18 +210,6 @@
         "Version": "2024-07-23"
     },
     "scotese2016": "@paleomap",
-    "pehrsson2015": {
-        "BigTime": 2100,
-        "SmallTime": 1275,
-        "Rotations": "@<<SvrBaseURL>>@/pehrsson2015/Rotations.zip",
-        "Layers": {
-            "Coastlines": "@<<SvrBaseURL>>@/pehrsson2015/Coastlines.zip",
-            "StaticPolygons": "@<<SvrBaseURL>>@/pehrsson2015/StaticPolygons.zip"
-        },
-        "Description": "https://gwsdoc.gplates.org/models#pehrsson2015",
-        "URL": "",
-        "Version": "2023-12-06"
-    },
     "domeier2014": {
         "BigTime": 410,
         "SmallTime": 250,
@@ -245,9 +233,9 @@
             "Topologies": "@<<SvrBaseURL>>@/shephard2013/Topologies.zip"
         },
         "TimeDepRasters": {},
-        "Description": "shephard2013 description",
-        "URL": "",
-        "Version": "2023-12-06"
+        "Description": "the tectonic evolution of the Arctic since Pangea breakup",
+        "URL": "https://zenodo.org/records/10595889",
+        "Version": "2024-08-06"
     },
     "seton2012": {
         "BigTime": 200,
@@ -264,8 +252,8 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Seton_etal_2012_ESR/Seton_etal_2012_ESR_Agegrids/netCDF_0-200Ma/agegrid_{}.nc"
         },
         "Description": "This model represents the first global plate model with topological plate boundaries. It is based on a hybrid reference frame hybrid absolute reference frame, based on a moving hotspot model for the last 100 Ma, and a true-polar wander corrected paleomagnetic model for 200 to 100 Ma. This combination of absolute reference frames is viewed as a proxy for a mantle reference frame model.",
-        "URL": "https://gwsdoc.gplates.org/models#seton2012",
-        "Version": "2023-12-06"
+        "URL": "https://zenodo.org/records/10596050",
+        "Version": "2024-08-06"
     },
     "li2008": "@rodinia",
     "golonka": {
@@ -288,9 +276,9 @@
             "Coastlines": "@<<SvrBaseURL>>@/paleomap/Coastlines.zip",
             "StaticPolygons": "@<<SvrBaseURL>>@/paleomap/StaticPolygons.zip"
         },
-        "Description": "https://gwsdoc.gplates.org/models#paleomap",
-        "URL": "",
-        "Version": "2023-12-06"
+        "Description": "also known as Scotese2016",
+        "URL": "https://zenodo.org/records/10596610",
+        "Version": "2024-08-02"
     },
     "rodinia": {
         "BigTime": 1100,
@@ -303,5 +291,33 @@
         "Description": "https://gwsdoc.gplates.org/models#rodinia",
         "URL": "",
         "Version": "2023-12-06"
+    },
+    "zahirovic2016": {
+        "BigTime": 230,
+        "SmallTime": 0,
+        "Rotations": "@<<SvrBaseURL>>@/zahirovic2016/Rotations.zip",
+        "Layers": {
+            "Coastlines": "@<<SvrBaseURL>>@/zahirovic2016/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/zahirovic2016/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/zahirovic2016/Topologies.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/zahirovic2016/ContinentalPolygons.zip",
+            "Isochrons": "@<<SvrBaseURL>>@/zahirovic2016/Isochrons.zip"
+        },
+        "Description": "",
+        "URL": "https://zenodo.org/records/10531297",
+        "Version": "2024-08-02"
+    },
+    "gurnis2012": {
+        "BigTime": 140,
+        "SmallTime": 0,
+        "Rotations": "@<<SvrBaseURL>>@/gurnis2012/Rotations.zip",
+        "Layers": {
+            "Coastlines": "@<<SvrBaseURL>>@/gurnis2012/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/gurnis2012/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/gurnis2012/Topologies.zip"
+        },
+        "Description": "Plate tectonic reconstructions with continuously closing plates",
+        "URL": "https://zenodo.org/records/10596350",
+        "Version": "2024-08-06"
     }
 }

@@ -25,5 +25,26 @@
     },
     "matthews2016_pmag_ref": {
         "url": ""
+    },
+    "muller2016": {
+        "url": "https://zenodo.org/records/11607841"
+    },
+    "scotese2016": {
+        "url": "https://zenodo.org/records/10596610"
+    },
+    "zahirovic2016": {
+        "url": "https://zenodo.org/records/10531297"
+    },
+    "gurnis2012": {
+        "url": "https://zenodo.org/records/10596350"
+    },
+    "seton2012": {
+        "url": "https://zenodo.org/records/10596050"
+    },
+    "shephard2013": {
+        "url": "https://zenodo.org/records/10595889"
+    },
+    "TorsvikCocks2017": {
+        "url": ""
     }
 }

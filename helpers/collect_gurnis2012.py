@@ -12,22 +12,22 @@ import utils
 
 from plate_model_manager.zenodo import ZenodoRecord
 
-# https://zenodo.org/doi/10.5281/zenodo.10596049
-record = ZenodoRecord(10596049)
+# https://zenodo.org/doi/10.5281/zenodo.10596349
+record = ZenodoRecord(10596349)
 latest_id = record.get_latest_version_id()
 print(f"The latest version ID is: {latest_id}.")
 filenames = record.get_filenames(latest_id)
 print(f"The file names in the latest version: {filenames}")
 idx = 0
 for i in range(len(filenames)):
-    if filenames[i].startswith("Seton_etal_2012_ESR"):
+    if filenames[i].startswith("Gurnis_etal_2012_CompGeosci"):
         idx = i
         break
 file_links = record.get_file_links(latest_id)
 print(f"The file links in the latest version: {file_links}")
 
-model_path = utils.get_model_path(sys.argv, "seton2012")
-zip_path = "Seton_etal_2012_ESR"
+model_path = utils.get_model_path(sys.argv, "gurnis2012")
+zip_path = "Gurnis_etal_2012_CompGeosci"
 
 info_fp = open(f"{model_path}/info.txt", "w+")
 info_fp.write(f"{datetime.now()}\n")
@@ -46,33 +46,16 @@ files = glob.glob(f"{model_path}/{zip_path}/Rotations/*.rot")
 utils.zip_files(files, f"{model_path}/Rotations.zip", "Rotations", info_fp)
 
 # zip StaticPolygons
-files = glob.glob(
-    f"{model_path}/{zip_path}/StaticPolygons/Seton_etal_ESR2012_StaticPolygons.1.gpmlz"
-)
+files = glob.glob(f"{model_path}/{zip_path}/StaticPolygons/*")
 utils.zip_files(files, f"{model_path}/StaticPolygons.zip", "StaticPolygons", info_fp)
 
 # zip Coastlines
-files = glob.glob(
-    f"{model_path}/{zip_path}/Coastlines/Seton_etal_ESR2012_Coastline_2012.1.gpml"
-)
+files = glob.glob(f"{model_path}/{zip_path}/Coastlines/*")
 utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", info_fp)
 
 # zip Topologies
-files = glob.glob(
-    f"{model_path}/{zip_path}/Topologies/Seton_etal_ESR2012_PP_2012.1.gpml"
-)
+files = glob.glob(f"{model_path}/{zip_path}/Topologies/*")
 utils.zip_files(files, f"{model_path}/Topologies.zip", "Topologies", info_fp)
 
-# zip COBs
-files = glob.glob(f"{model_path}/{zip_path}/COBs/Seton_etal_ESR2012_COB.1.gpml")
-utils.zip_files(files, f"{model_path}/COBs.zip", "COBs", info_fp)
-
-# zip ContinentalPolygons
-files = glob.glob(
-    f"{model_path}/{zip_path}/Topologies/Seton_etal_ESR2012_ContinentalPolygons.gpmlz"
-)
-utils.zip_files(
-    files, f"{model_path}/ContinentalPolygons.zip", "ContinentalPolygons", info_fp
-)
 
 shutil.rmtree(f"{model_path}/{zip_path}")

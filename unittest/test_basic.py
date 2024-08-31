@@ -46,6 +46,7 @@ class BasicTestCase(unittest.TestCase):
         )
         model = pm_manager.get_model()
         logger.info(model.get_rotation_model())
+        model.get_layer("xx", return_none_if_not_exist=True)
 
         # 3
         pm_manager = PlateModelManager(

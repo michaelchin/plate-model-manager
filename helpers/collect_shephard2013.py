@@ -4,70 +4,65 @@ import os
 import shutil
 import sys
 import zipfile
+from datetime import datetime
+from pathlib import Path
 
 import requests
 import utils
 
-model_path = utils.get_model_path(sys.argv, "shephard2013")
+from plate_model_manager.zenodo import ZenodoRecord
 
+# https://zenodo.org/doi/10.5281/zenodo.10595888
+record = ZenodoRecord(10595888)
+latest_id = record.get_latest_version_id()
+print(f"The latest version ID is: {latest_id}.")
+filenames = record.get_filenames(latest_id)
+print(f"The file names in the latest version: {filenames}")
+idx = 0
+for i in range(len(filenames)):
+    if filenames[i].startswith("Shephard_etal_2013_ESR"):
+        idx = i
+        break
+file_links = record.get_file_links(latest_id)
+print(f"The file links in the latest version: {file_links}")
+
+model_path = utils.get_model_path(sys.argv, "shephard2013")
 zip_path = "Shephard_etal_2013_ESR"
 
+info_fp = open(f"{model_path}/info.txt", "w+")
+info_fp.write(f"{datetime.now()}\n")
+
 # download the model zip file
-r = requests.get(
-    "https://www.earthbyte.org/webdav/ftp/Data_Collections/Shephard_etal_2013_ESR.zip",
-    allow_redirects=True,
-)
+zip_url = file_links[idx]
+info_fp.write(f"Download zip file from {zip_url}\n")
+r = requests.get(zip_url, allow_redirects=True, verify=True)
 if r.status_code in [200]:
     z = zipfile.ZipFile(io.BytesIO(r.content))
-    z.extractall(f"{model_path}/")
+    Path(model_path).mkdir(parents=True, exist_ok=True)
+    z.extractall(f"{model_path}/{zip_path}")
 
 
 # zip Rotations
-with zipfile.ZipFile(
-    f"{model_path}/Rotations.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    f = f"{model_path}/{zip_path}/Shephard_etal_ESR2013_Global_EarthByte_2013.rot"
-    f_zip.write(f, f"Rotations/{os.path.basename(f)}")
+files = glob.glob(f"{model_path}/{zip_path}/Rotations/*.rot")
+utils.zip_files(files, f"{model_path}/Rotations.zip", "Rotations", info_fp)
 
 # zip StaticPolygons
-with zipfile.ZipFile(
-    f"{model_path}/StaticPolygons.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    f = f"{model_path}/{zip_path}/Static_Polygons/Shephard_etal_ESR2013_Global_staticpolygons.gpml"
-    f_zip.write(f, f"StaticPolygons/{os.path.basename(f)}")
+files = glob.glob(
+    f"{model_path}/{zip_path}/StaticPolygons/Shephard_etal_ESR2013_staticpolygons.gpml"
+)
+utils.zip_files(files, f"{model_path}/StaticPolygons.zip", "StaticPolygons", info_fp)
 
 # zip Coastlines
-with zipfile.ZipFile(
-    f"{model_path}/Coastlines.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = glob.glob(
-        f"{model_path}/{zip_path}/Coastlines/Shephard_etal_ESR2013_Global_Coastlines_cookiecuttostatic.gpml"
-    )
-    for f in files:
-        f_zip.write(f, f"Coastlines/{os.path.basename(f)}")
+files = glob.glob(
+    f"{model_path}/{zip_path}/Coastlines/Shephard_etal_ESR2013_Coastlines.gpml"
+)
+utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", info_fp)
 
 # zip Topologies
-with zipfile.ZipFile(
-    f"{model_path}/Topologies.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = glob.glob(
-        f"{model_path}/{zip_path}/Plate_Boundaries_and_Topologies/Shephard_etal_ESR2013_Global_EarthByte_2013.gpml"
-    )
-    for f in files:
-        f_zip.write(f, f"Topologies/{os.path.basename(f)}")
+files = glob.glob(
+    f"{model_path}/{zip_path}/PlateBoundaries/Shephard_etal_ESR2013_platebounds.gpml"
+)
+utils.zip_files(files, f"{model_path}/Topologies.zip", "Topologies", info_fp)
 
 
 shutil.rmtree(f"{model_path}/{zip_path}")
-os.remove(f"{model_path}/License.txt")

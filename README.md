@@ -18,6 +18,28 @@ Have you ever wondered where to get the plate tectonic reconstruction models for
 
 ### How to use
 
+#### Basic Usage
+
+👉 The Python code below downloads the "Muller2019" model into local folder "plate-models-data-dir" and returns the rotation file's location.
+
+```python
+from plate_model_manager import PlateModelManager
+
+print(PlateModelManager().get_model("Muller2019",data_dir="plate-models-data-dir").get_rotation_model())
+```
+
+![python print rotation screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-print-rotation.png)
+
+👉 The Python code below lists all available reconstruction models.
+
+```python
+from plate_model_manager import PlateModelManager
+
+print(PlateModelManager().get_available_model_names())
+```
+
+![python list all models screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-list-all-models.png)
+
 #### Use PMM with pyGPlates 🌰
 
 ```python
@@ -97,39 +119,18 @@ See the full example at https://github.com/GPlates/gplately/blob/master/Notebook
 
   ![pmm download all screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-download-all.png)
 
-#### Use in Python script
-
-👉 The Python code below prints all available model names.
-
-```python
-# print all available model names
-from plate_model_manager import PlateModelManager
-
-pm_manager = PlateModelManager()
-for name in pm_manager.get_available_model_names():
-  print(name)
-```
-
-![python list all models screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-list-all-models.png)
-
-👉 The Python code below downloads the "Muller2019" model into folder "plate-models-data-dir".
-The model.get_rotation_model() function returns the rotation file location.
-
-```python
-from plate_model_manager import PlateModelManager
-
-pm_manager = PlateModelManager()
-model = pm_manager.get_model("Muller2019",data_dir="plate-models-data-dir")
-print(model.get_rotation_model())
-```
-
-![python print rotation screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-print-rotation.png)
-
 ### Examples
 
-This Python module is mostly used in [GPlately](https://github.com/GPlates/gplately), [GPlates Web Service](https://github.com/GPlates/gplates-web-service), [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials) and [GPlates Python Proxy](https://github.com/michaelchin/gplates-python-proxy).
+This Python module is mostly used in 
 
-A good example of using PlateModelManager with PyGPlates can be found at https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb.
+- [GPlately](https://github.com/GPlates/gplately)
+- [GPlates Web Service](https://github.com/GPlates/gplates-web-service)
+- [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials)
+- [GWS Python Wrapper](https://github.com/michaelchin/gwspy)
+
+A good example of using PlateModelManager with PyGPlates can be found at 
+
+- https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb.
 
 The examples of using PlateModelManager with GPlately:
 

@@ -1,96 +1,73 @@
+import glob
 import io
-import os
 import shutil
 import sys
 import zipfile
+from datetime import datetime
+from pathlib import Path
 
 import requests
 import utils
 
+from plate_model_manager.zenodo import ZenodoRecord
+
+# hhttps://zenodo.org/doi/10.5281/zenodo.3854459
+record = ZenodoRecord(3854459)
+latest_id = record.get_latest_version_id()
+print(f"The latest version ID is: {latest_id}.")
+filenames = record.get_filenames(latest_id)
+print(f"The file names in the latest version: {filenames}")
+idx = 0
+for i in range(len(filenames)):
+    if filenames[i].startswith("1000Myr_synthetic_tectonic_reconstructions"):
+        idx = i
+        break
+file_links = record.get_file_links(latest_id)
+print(f"The file links in the latest version: {file_links}")
+
 model_path = utils.get_model_path(sys.argv, "cao2020")
+zip_path = "1000Myr_synthetic_tectonic_reconstructions"
 
-r = requests.get("https://zenodo.org/api/records?q=conceptdoi:3854459")
-for record in r.json()["hits"]["hits"]:
-    print(record["id"])
-    print(record["metadata"]["relations"]["version"])
+info_fp = open(f"{model_path}/info.txt", "w+")
+info_fp.write(f"{datetime.now()}\n")
 
-    for file in record["files"]:
-        print(file["key"])
-        print(file["links"]["self"])
-        # download the model zip file
-        r = requests.get(
-            file["links"]["self"],
-            allow_redirects=True,
-        )
-        if r.status_code in [200]:
-            z = zipfile.ZipFile(io.BytesIO(r.content))
-            z.extractall(f"{model_path}/")
+# download the model zip file
+zip_url = file_links[idx]
+info_fp.write(f"Download zip file from {zip_url}\n")
+r = requests.get(zip_url, allow_redirects=True, verify=True)
+if r.status_code in [200]:
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    Path(model_path).mkdir(parents=True, exist_ok=True)
+    z.extractall(f"{model_path}")
 
 
 # zip Rotations
-with zipfile.ZipFile(
-    f"{model_path}/Rotations.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = [
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/NLR_SLOW_CONTINENT_0Ma_1000Ma_NNR.rot",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/1000-410_toy_introversion_simplified.rot",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/410-250_toy_introversion_simplified.rot",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/Global_EB_250-0Ma_GK07_2017_ASM.rot",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/triple_junction_superoceanic_plates.rot",
-    ]
-    for f in files:
-        f_zip.write(f, f"Rotations/{os.path.basename(f)}")
+files = glob.glob(f"{model_path}/{zip_path}/*.rot")
+utils.zip_files(files, f"{model_path}/Rotations.zip", "Rotations", info_fp)
 
 # zip Coastlines
-with zipfile.ZipFile(
-    f"{model_path}/Coastlines.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = [
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/coastline_file_1000_250_new_valid_time.gpml",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/coastline_file_250_0_new_valid_time.gpml",
-    ]
-    for f in files:
-        f_zip.write(f, f"Coastlines/{os.path.basename(f)}")
+files = [
+    f"{model_path}/{zip_path}/coastline_file_1000_250_new_valid_time.gpml",
+    f"{model_path}/{zip_path}/coastline_file_250_0_new_valid_time.gpml",
+]
+utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", info_fp)
+
 
 # zip COBs
-with zipfile.ZipFile(
-    f"{model_path}/COBs.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    f_zip.write(
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/COBfile_1000_0_Toy_introversion.gpml",
-        "COBs/COBfile_1000_0_Toy_introversion.gpml",
-    )
+files = [
+    f"{model_path}/{zip_path}/COBfile_1000_0_Toy_introversion.gpml",
+]
+utils.zip_files(files, f"{model_path}/COBs.zip", "COBs", info_fp)
 
 # zip Topologies
-with zipfile.ZipFile(
-    f"{model_path}/Topologies.zip",
-    mode="w",
-    compression=zipfile.ZIP_DEFLATED,
-    compresslevel=9,
-) as f_zip:
-    files = [
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/TopologyBuildingBlocks_AREPS.gpml",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/Toy_introversion_plate_boundaries_1000_410_new_valid_time.gpml",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/Toy_introversion_plate_boundaries_410_250_new_valid_time.gpml",
-        f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/Global_EarthByte_Mesozoic-Cenozoic_plate_boundaries_2016_v5.gpml",
-    ]
-    for f in files:
-        f_zip.write(f, f"Topologies/{os.path.basename(f)}")
+files = [
+    f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/TopologyBuildingBlocks_AREPS.gpml",
+    f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/Toy_introversion_plate_boundaries_1000_410_new_valid_time.gpml",
+    f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/Toy_introversion_plate_boundaries_410_250_new_valid_time.gpml",
+    f"{model_path}/1000Myr_synthetic_tectonic_reconstructions/Global_EarthByte_Mesozoic-Cenozoic_plate_boundaries_2016_v5.gpml",
+]
+utils.zip_files(files, f"{model_path}/Topologies.zip", "Topologies", info_fp)
 
-shutil.rmtree(f"{model_path}/1000Myr_synthetic_tectonic_reconstructions")
+shutil.rmtree(f"{model_path}/{zip_path}")
 shutil.rmtree(f"{model_path}/__MACOSX")
-
-"""
-r = requests.get(
-    "https://zenodo.org/api/records?q=conceptdoi:3854459&all_versions=true"
-)
-"""
+info_fp.close()
