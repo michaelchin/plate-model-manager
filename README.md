@@ -27,7 +27,8 @@ from plate_model_manager import PlateModelManager
 
 print(PlateModelManager().get_model("Muller2019",data_dir="plate-models-data-dir").get_rotation_model())
 ```
-<img width="892" alt="Screenshot 2024-08-31 at 3 39 51 PM" src="https://github.com/user-attachments/assets/9082d031-844b-460d-a643-986f46929726">
+
+![python print rotation screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-print-rotation.png)
 
 👉 The Python code below lists all available reconstruction models.
 
@@ -36,7 +37,8 @@ from plate_model_manager import PlateModelManager
 
 print(PlateModelManager().get_available_model_names())
 ```
-<img width="1175" alt="Screenshot 2024-08-31 at 3 38 04 PM" src="https://github.com/user-attachments/assets/ad72aec3-49c1-458a-bdf2-6ac84567ddbb">
+
+![python list all models screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-list-all-models.png)
 
 #### Use PMM with pyGPlates 🌰
 
