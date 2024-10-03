@@ -5,25 +5,28 @@ import warnings
 
 pmm_logger = logging.getLogger("pmm")
 stdout_handler = logging.StreamHandler(sys.stdout)
+formatter = logging.Formatter(
+    fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d,%H:%M:%S",
+)
 
 
 def setup_logging():
     pmm_logger.propagate = False
-    fh = logging.FileHandler(f"pmm.log")
-    fh.setLevel(logging.INFO)
-    formatter = logging.Formatter(
-        fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d,%H:%M:%S",
-    )
-    fh.setFormatter(formatter)
     stdout_handler.setFormatter(formatter)
     stdout_handler.setLevel(logging.DEBUG)
-    pmm_logger.addHandler(fh)
     pmm_logger.addHandler(stdout_handler)
     pmm_logger.setLevel(logging.INFO)
 
     if is_debug_mode():
         turn_on_debug_logging()
+
+
+def add_logging_file(filename: str = "pmm.log", level=logging.INFO):
+    fh = logging.FileHandler(filename)
+    fh.setLevel(level)
+    fh.setFormatter(formatter)
+    pmm_logger.addHandler(fh)
 
 
 def turn_on_debug_logging():
