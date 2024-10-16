@@ -19,20 +19,21 @@
         "URL": "https://zenodo.org/records/11392269",
         "Version": "2024-06-20"
     },
-    "cao2023": {
+    "cao2024": {
         "BigTime": 18000,
         "SmallTime": 0,
-        "Rotations": "@<<SvrBaseURL>>@/cao2023/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/cao2024/Rotations.zip",
         "Layers": {
-            "Coastlines": "@<<SvrBaseURL>>@/cao2023/Coastlines.zip",
-            "ContinentalPolygons": "@<<SvrBaseURL>>@/cao2023/ContinentalPolygons.zip",
-            "Topologies": "@<<SvrBaseURL>>@/cao2023/Topologies.zip",
-            "COBs": "@<<SvrBaseURL>>@/cao2023/COBs.zip"
+            "StaticPolygons": "@<<SvrBaseURL>>@/cao2024/StaticPolygons.zip",
+            "Coastlines": "@<<SvrBaseURL>>@/cao2024/Coastlines.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/cao2024/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/cao2024/Topologies.zip",
+            "COBs": "@<<SvrBaseURL>>@/cao2024/COBs.zip"
         },
         "TimeDepRasters": {},
-        "Description": "cao2023 1.8G summit description",
-        "URL": "",
-        "Version": "2023-12-18"
+        "Description": "Earth's tectonic and plate boundary evolution over 1.8 billion years",
+        "URL": "https://zenodo.org/records/11536686",
+        "Version": "2024-10-18"
     },
     "zahirovic2022": {
         "BigTime": 410,
