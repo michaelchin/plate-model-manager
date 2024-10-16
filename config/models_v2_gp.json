@@ -92,6 +92,10 @@
             "Topologies": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Topologies.zip",
             "Terranes": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Terranes.zip"
         },
+        "TimeDepRasters": {
+            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennet_AgeGrids_0.1d_masked/seafloor_age_mask_{}.0Ma.nc",
+            "SpreadRate": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennett_etal_2020_SpreadRate_Grids/rategrid_final_mask_{}.nc"
+        },
         "Description": "The model was implemented into the M\u00c3\u00bcller et al. (2019) reference frame",
         "URL": "https://zenodo.org/records/10348271",
         "Version": "2024-07-18"
