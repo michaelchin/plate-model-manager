@@ -2,10 +2,13 @@ import json
 import os
 import re
 
-import requests
+import requests, logging
 
 from .exceptions import InvalidConfigFile, ServerUnavailable
 from .plate_model import PlateModel
+from typing import List, Union, Dict
+
+logger = logging.getLogger("pmm")
 
 
 class PlateModelManager:
@@ -14,7 +17,7 @@ class PlateModelManager:
 
     """
 
-    def __init__(self, model_manifest: str = None, timeout=(None, None)):
+    def __init__(self, model_manifest: str = "", timeout=(None, None)):
         """constructor
 
         :param model_manifest: the path to a models.json file
@@ -25,7 +28,7 @@ class PlateModelManager:
         else:
             self.model_manifest = model_manifest
 
-        self.models = None
+        self._models = None
         self.timeout = timeout
 
         if not isinstance(self.model_manifest, str):
@@ -36,7 +39,7 @@ class PlateModelManager:
         # check if the model manifest file is a local file
         if os.path.isfile(self.model_manifest):
             with open(self.model_manifest) as f:
-                self.models = json.load(f)
+                self._models = json.load(f)
         elif self.model_manifest.startswith(
             "http://"
         ) or self.model_manifest.startswith("https://"):
@@ -48,7 +51,7 @@ class PlateModelManager:
                         f"Unable to get valid JSON data from '{self.model_manifest}'. Http request return code: {r.status_code}"
                     )
                 else:
-                    self.models = r.json()
+                    self._models = r.json()
 
             except (
                 requests.exceptions.ConnectionError,
@@ -71,6 +74,19 @@ class PlateModelManager:
             self._replace_vars_with_values(self.models["vars"], self.models)
             del self.models["vars"]
 
+    @property
+    def models(self) -> Dict:
+        if self._models is not None:
+            return self._models
+        else:
+            raise Exception(
+                f"No model found. Check the model manifest {self.model_manifest} for errors."
+            )
+
+    @models.setter
+    def models(self, var) -> None:
+        self._models = var
+
     def _replace_vars_with_values(self, var_dict, json_obj):
         """replace the variables in `json_obj` with the real values. the variables are defined in `var_dict`"""
         for key, value in json_obj.items():
@@ -87,7 +103,9 @@ class PlateModelManager:
             else:
                 continue
 
-    def get_model(self, model_name: str = "default", data_dir: str = "."):
+    def get_model(
+        self, model_name: str = "default", data_dir: str = "."
+    ) -> Union[PlateModel, None]:
         """return a PlateModel object by model_name
 
         :param model_name: model name
@@ -105,14 +123,20 @@ class PlateModelManager:
                     m_name = self.models[model_name][1:]
 
                 m = self.get_model(m_name, data_dir=data_dir)
-
-                return PlateModel(model_name, model_cfg=m.get_cfg(), data_dir=data_dir)
+                if m is None:
+                    raise Exception(
+                        f"Unable to find model {m_name} to resolve an alias. There must be errors in the {self.model_manifest}"
+                    )
+                else:
+                    return PlateModel(
+                        model_name, model_cfg=m.get_cfg(), data_dir=data_dir
+                    )
             else:
                 return PlateModel(
                     model_name, model_cfg=self.models[model_name], data_dir=data_dir
                 )
         else:
-            print(f"Model {model_name} is not available.")
+            logger.warning(f"Model {model_name} is not available.")
             return None
 
     def get_available_model_names(self):
@@ -147,11 +171,11 @@ class PlateModelManager:
                 continue
         raise ServerUnavailable()
 
-    def download_all_models(self, data_dir="./"):
+    def download_all_models(self, data_dir="./") -> None:
         """download all available models into data_dir"""
-        model_names = self.get_available_model_names()
-        for name in model_names:
+        for name in self.get_available_model_names():
             print(f"download {name}")
             model = self.get_model(name)
-            model.set_data_dir(data_dir)
-            model.download_all_layers()
+            if model is not None:
+                model.set_data_dir(data_dir)
+                model.download_all_layers()

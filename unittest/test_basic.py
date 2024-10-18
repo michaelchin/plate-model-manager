@@ -8,6 +8,8 @@ from common import TEMP_TEST_DIR, get_test_logger, is_test_installed_module
 
 if not is_test_installed_module():
     sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
+else:
+    print("testing installed PMM package")
 
 import plate_model_manager
 from plate_model_manager import PlateModelManager

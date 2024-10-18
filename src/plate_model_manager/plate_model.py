@@ -8,7 +8,7 @@ import os
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import List, Union
+from typing import List, Union, Dict
 
 from .exceptions import LayerNotFoundInModel
 from .utils import download
@@ -53,7 +53,7 @@ class PlateModel:
         """
         self.model_name = model_name.lower()
         self.meta_filename = METADATA_FILENAME
-        self.model = model_cfg
+        self._model = model_cfg
         self.readonly = readonly
         self.timeout = timeout
 
@@ -68,7 +68,7 @@ class PlateModel:
                 )
             else:
                 with open(f"{self.model_dir}/{self.meta_filename}", "r") as f:
-                    self.model = json.load(f)
+                    self._model = json.load(f)
 
         if not readonly:
             # async and concurrent things
@@ -76,6 +76,19 @@ class PlateModel:
             self.loop = asyncio.new_event_loop()
             self.run = functools.partial(self.loop.run_in_executor, self.executor)
             asyncio.set_event_loop(self.loop)
+
+    @property
+    def model(self) -> Dict:
+        if self._model is not None:
+            return self._model
+        else:
+            raise Exception(
+                "The plate model is None. This should not happen. Something Extraordinary must have happened."
+            )
+
+    @model.setter
+    def model(self, var) -> None:
+        self._model = var
 
     def __getstate__(self):
         attributes = self.__dict__.copy()
@@ -143,30 +156,49 @@ class PlateModel:
         # print(rotation_files)
         return rotation_files
 
-    def get_coastlines(self):
+    def get_coastlines(
+        self, return_none_if_not_exist: bool = False
+    ) -> Union[List[str], None]:
         """return coastlines feature collection"""
-        return self.get_layer("Coastlines")
+        return self.get_layer(
+            "Coastlines", return_none_if_not_exist=return_none_if_not_exist
+        )
 
-    def get_static_polygons(self):
+    def get_static_polygons(
+        self, return_none_if_not_exist: bool = False
+    ) -> Union[List[str], None]:
         """return StaticPolygons feature collection"""
-        return self.get_layer("StaticPolygons")
+        return self.get_layer(
+            "StaticPolygons", return_none_if_not_exist=return_none_if_not_exist
+        )
 
-    def get_continental_polygons(self):
+    def get_continental_polygons(
+        self, return_none_if_not_exist: bool = False
+    ) -> Union[List[str], None]:
         """return ContinentalPolygons feature collection"""
-        return self.get_layer("ContinentalPolygons")
+        return self.get_layer(
+            "ContinentalPolygons", return_none_if_not_exist=return_none_if_not_exist
+        )
 
-    def get_topologies(self):
+    def get_topologies(
+        self, return_none_if_not_exist: bool = False
+    ) -> Union[List[str], None]:
         """return Topologies feature collection"""
-        return self.get_layer("Topologies")
+        return self.get_layer(
+            "Topologies", return_none_if_not_exist=return_none_if_not_exist
+        )
 
-    def get_COBs(self):
+    def get_COBs(
+        self, return_none_if_not_exist: bool = False
+    ) -> Union[List[str], None]:
         """return COBs feature collection"""
-        return self.get_layer("COBs")
+        return self.get_layer("COBs", return_none_if_not_exist=return_none_if_not_exist)
 
     def get_layer(
         self, layer_name: str, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """get layer files by layer name
+        """get layer files by layer name. raise LayerNotFoundInModel exception to get user's attention by default.
+        set `return_none_if_not_exist` if you are sure that your program is OK without this layer.
 
         :param layer_name: layer name
         :param return_none_if_not_exist: if True, return None when the layer does not exist in the model
@@ -201,6 +233,7 @@ class PlateModel:
 
         :returns: a local path of the raster file
         """
+
         if not "TimeDepRasters" in self.model:
             raise Exception("No time-dependent rasters found in this model.")
         if not raster_name in self.model["TimeDepRasters"]:
