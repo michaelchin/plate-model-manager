@@ -506,6 +506,7 @@ class PlateModel:
             # for other geometry layers
             return self.model["Layers"][layer_name]
         else:
+            logger.debug(f"{json.dumps(self.model, indent=4)}")
             raise LayerNotFoundInModel(
-                f"The layer ({layer_name}) is not found in the configuration file of model {self.model_name}."
+                f"The layer({layer_name}) was not found in model({self.model_name})."
             )
