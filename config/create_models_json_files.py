@@ -61,6 +61,6 @@ def generate_cfg(svr_base_url: str, output_file_name, version_1=False):
 
 
 generate_cfg("https://repo.gplates.org/webdav/pmm", "models.json", version_1=True)
-generate_cfg("https://repo.gplates.org/webdav/pmm", "models_v2.json", version_1=True)
+generate_cfg("https://repo.gplates.org/webdav/pmm", "models_v2.json")
 generate_cfg("https://www.earthbyte.org/webdav/pmm", "models_v2_eb.json")
 generate_cfg("https://portal.gplates.org/static/pmm", "models_v2_gp.json")

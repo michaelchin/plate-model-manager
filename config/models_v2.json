@@ -1,15 +1,18 @@
 {
+    "vars": {
+        "SvrBaseURL": "https://repo.gplates.org/webdav/pmm"
+    },
     "default": "@zahirovic2022",
     "alfonso2024": {
         "BigTime": 250,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/alfonso2024/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/alfonso2024/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/alfonso2024/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/alfonso2024/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/alfonso2024/Topologies.zip",
-            "Isochrons": "https://repo.gplates.org/webdav/pmm/alfonso2024/Isochrons.zip",
-            "Terranes": "https://repo.gplates.org/webdav/pmm/alfonso2024/Terranes.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/alfonso2024/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/alfonso2024/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/alfonso2024/Topologies.zip",
+            "Isochrons": "@<<SvrBaseURL>>@/alfonso2024/Isochrons.zip",
+            "Terranes": "@<<SvrBaseURL>>@/alfonso2024/Terranes.zip"
         },
         "TimeDepRasters": {},
         "Description": "alfonso2024",
@@ -19,13 +22,13 @@
     "cao2024": {
         "BigTime": 18000,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/cao2024/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/cao2024/Rotations.zip",
         "Layers": {
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/cao2024/StaticPolygons.zip",
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/cao2024/Coastlines.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/cao2024/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/cao2024/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/cao2024/COBs.zip"
+            "StaticPolygons": "@<<SvrBaseURL>>@/cao2024/StaticPolygons.zip",
+            "Coastlines": "@<<SvrBaseURL>>@/cao2024/Coastlines.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/cao2024/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/cao2024/Topologies.zip",
+            "COBs": "@<<SvrBaseURL>>@/cao2024/COBs.zip"
         },
         "TimeDepRasters": {},
         "Description": "Earth's tectonic and plate boundary evolution over 1.8 billion years",
@@ -36,14 +39,14 @@
     "muller2022": {
         "BigTime": 1000,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/muller2022/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/muller2022/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/muller2022/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2022/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/muller2022/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/muller2022/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/muller2022/COBs.zip",
-            "Cratons": "https://repo.gplates.org/webdav/pmm/muller2022/Cratons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/muller2022/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/muller2022/StaticPolygons.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/muller2022/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/muller2022/Topologies.zip",
+            "COBs": "@<<SvrBaseURL>>@/muller2022/COBs.zip",
+            "Cratons": "@<<SvrBaseURL>>@/muller2022/Cratons.zip"
         },
         "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time \u2013 hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
         "URL": "https://zenodo.org/records/10910449",
@@ -52,12 +55,12 @@
     "zahirovic2022": {
         "BigTime": 410,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/zahirovic2022/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/zahirovic2022/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/zahirovic2022/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2022/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2022/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/zahirovic2022/Topologies.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/zahirovic2022/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/zahirovic2022/StaticPolygons.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/zahirovic2022/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/zahirovic2022/Topologies.zip"
         },
         "TimeDepRasters": {},
         "Description": "Subduction kinematics and carbonate platform interactions",
@@ -67,13 +70,13 @@
     "merdith2021": {
         "BigTime": 1000,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/merdith2021/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/merdith2021/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/merdith2021/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/merdith2021/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/merdith2021/Topologies.zip",
-            "Cratons": "https://repo.gplates.org/webdav/pmm/merdith2021/Cratons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/merdith2021/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/merdith2021/StaticPolygons.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/merdith2021/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/merdith2021/Topologies.zip",
+            "Cratons": "@<<SvrBaseURL>>@/merdith2021/Cratons.zip"
         },
         "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
         "URL": "https://zenodo.org/records/12525525",
@@ -115,21 +118,21 @@
     "muller2019": {
         "BigTime": 250,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/muller2019/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/muller2019/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/muller2019/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2019/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/muller2019/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/muller2019/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/muller2019/COBs.zip",
-            "Hotspots": "https://repo.gplates.org/webdav/pmm/muller2019/Hotspots.zip",
-            "SeafloorFabric": "https://repo.gplates.org/webdav/pmm/muller2019/SeafloorFabric.zip",
-            "Whittaker2015LIPs": "https://repo.gplates.org/webdav/pmm/muller2019/Whittaker2015LIPs.zip",
-            "Johansson2018LIPs": "https://repo.gplates.org/webdav/pmm/muller2019/Johansson2018LIPs.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/muller2019/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/muller2019/StaticPolygons.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/muller2019/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/muller2019/Topologies.zip",
+            "COBs": "@<<SvrBaseURL>>@/muller2019/COBs.zip",
+            "Hotspots": "@<<SvrBaseURL>>@/muller2019/Hotspots.zip",
+            "SeafloorFabric": "@<<SvrBaseURL>>@/muller2019/SeafloorFabric.zip",
+            "Whittaker2015LIPs": "@<<SvrBaseURL>>@/muller2019/Whittaker2015LIPs.zip",
+            "Johansson2018LIPs": "@<<SvrBaseURL>>@/muller2019/Johansson2018LIPs.zip"
         },
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc",
-            "SedimentThickness": "https://repo.gplates.org/webdav/pmm/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{}.nc"
+            "SedimentThickness": "@<<SvrBaseURL>>@/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{}.nc"
         },
         "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones.",
         "URL": "https://zenodo.org/records/11601026",
@@ -138,12 +141,12 @@
     "young2018": {
         "BigTime": 410,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/young2018/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/young2018/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/young2018/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/young2018/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/young2018/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/young2018/Topologies.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/young2018/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/young2018/StaticPolygons.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/young2018/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/young2018/Topologies.zip"
         },
         "TimeDepRasters": {},
         "Description": "Global kinematics of tectonic plates and subduction zones since the late Paleozoic Era",
@@ -153,10 +156,10 @@
     "torsvikcocks2017": {
         "BigTime": 540,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/torsvikcocks2017/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/torsvikcocks2017/StaticPolygons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/torsvikcocks2017/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/torsvikcocks2017/StaticPolygons.zip"
         },
         "Description": "https://gwsdoc.gplates.org/models#torsvikcocks2017. Only locations on land can be reconstructed.",
         "URL": "https://www.earthdynamics.org/earthhistory/data_info.html",
@@ -185,11 +188,11 @@
     "matthews2016_pmag_ref": {
         "BigTime": 410,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/matthews2016_pmag_ref/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_pmag_ref/ContinentalPolygons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/matthews2016_pmag_ref/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/matthews2016_pmag_ref/StaticPolygons.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/matthews2016_pmag_ref/ContinentalPolygons.zip"
         },
         "Description": "This plate model represents the first continuous late Paleozoic to present-day global plate model with evolving plate boundaries, building on and extending two previously published models for the late Paleozoic (410\u2013250 Ma) (Domeier and Torsvik, 2014 ) and the MULLER2016 model Mesozoic-Cenozoic (230\u20130 Ma). The model was designed for continuity during the 250\u2013230 Ma transition period between the two models, used an updated absolute reference frame of the Mesozoic-Cenozoic model and added a new Paleozoic reconstruction for the Baltica-derived Alexander Terrane, now accreted to western North America.",
         "URL": "https://gwsdoc.gplates.org/models#matthews2016_pmag_ref",
@@ -198,12 +201,12 @@
     "muller2016": {
         "BigTime": 230,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/muller2016/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/muller2016/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/muller2016/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/muller2016/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/muller2016/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/muller2016/COBs.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/muller2016/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/muller2016/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/muller2016/Topologies.zip",
+            "COBs": "@<<SvrBaseURL>>@/muller2016/COBs.zip"
         },
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_2016_AREPS_Agegrids/Muller_etal_2016_AREPS_Agegrids_v1.17/Muller_etal_2016_AREPS_v1.17_netCDF/Muller_etal_2016_AREPS_v1.17_AgeGrid-{}.nc"
@@ -216,13 +219,13 @@
     "zahirovic2016": {
         "BigTime": 230,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/zahirovic2016/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2016/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Topologies.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2016/ContinentalPolygons.zip",
-            "Isochrons": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Isochrons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/zahirovic2016/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/zahirovic2016/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/zahirovic2016/Topologies.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/zahirovic2016/ContinentalPolygons.zip",
+            "Isochrons": "@<<SvrBaseURL>>@/zahirovic2016/Isochrons.zip"
         },
         "Description": "",
         "URL": "https://zenodo.org/records/10531297",
@@ -231,11 +234,11 @@
     "domeier2014": {
         "BigTime": 410,
         "SmallTime": 250,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/domeier2014/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/domeier2014/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/domeier2014/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/domeier2014/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/domeier2014/Topologies.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/domeier2014/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/domeier2014/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/domeier2014/Topologies.zip"
         },
         "Description": "https://gwsdoc.gplates.org/models#domeier2014",
         "URL": "",
@@ -244,11 +247,11 @@
     "shephard2013": {
         "BigTime": 200,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/shephard2013/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/shephard2013/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/shephard2013/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/shephard2013/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/shephard2013/Topologies.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/shephard2013/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/shephard2013/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/shephard2013/Topologies.zip"
         },
         "TimeDepRasters": {},
         "Description": "the tectonic evolution of the Arctic since Pangea breakup",
@@ -258,11 +261,11 @@
     "gurnis2012": {
         "BigTime": 140,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/gurnis2012/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/gurnis2012/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/gurnis2012/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/gurnis2012/StaticPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/gurnis2012/Topologies.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/gurnis2012/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/gurnis2012/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/gurnis2012/Topologies.zip"
         },
         "Description": "Plate tectonic reconstructions with continuously closing plates",
         "URL": "https://zenodo.org/records/10596350",
@@ -271,13 +274,13 @@
     "seton2012": {
         "BigTime": 200,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/seton2012/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/seton2012/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/seton2012/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/seton2012/StaticPolygons.zip",
-            "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/seton2012/ContinentalPolygons.zip",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/seton2012/Topologies.zip",
-            "COBs": "https://repo.gplates.org/webdav/pmm/seton2012/COBs.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/seton2012/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/seton2012/StaticPolygons.zip",
+            "ContinentalPolygons": "@<<SvrBaseURL>>@/seton2012/ContinentalPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/seton2012/Topologies.zip",
+            "COBs": "@<<SvrBaseURL>>@/seton2012/COBs.zip"
         },
         "TimeDepRasters": {
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Seton_etal_2012_ESR/Seton_etal_2012_ESR_Agegrids/netCDF_0-200Ma/agegrid_{}.nc"
@@ -290,10 +293,10 @@
     "golonka": {
         "BigTime": 540,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/golonka/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/golonka/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/golonka/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/golonka/StaticPolygons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/golonka/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/golonka/StaticPolygons.zip"
         },
         "Description": "https://gwsdoc.gplates.org/models#golonka",
         "URL": "",
@@ -302,10 +305,10 @@
     "paleomap": {
         "BigTime": 750,
         "SmallTime": 0,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/paleomap/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/paleomap/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/paleomap/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/paleomap/StaticPolygons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/paleomap/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/paleomap/StaticPolygons.zip"
         },
         "Description": "also known as Scotese2016",
         "URL": "https://zenodo.org/records/10596610",
@@ -314,10 +317,10 @@
     "rodinia": {
         "BigTime": 1100,
         "SmallTime": 530,
-        "Rotations": "https://repo.gplates.org/webdav/pmm/rodinia/Rotations.zip",
+        "Rotations": "@<<SvrBaseURL>>@/rodinia/Rotations.zip",
         "Layers": {
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/rodinia/Coastlines.zip",
-            "StaticPolygons": "https://repo.gplates.org/webdav/pmm/rodinia/StaticPolygons.zip"
+            "Coastlines": "@<<SvrBaseURL>>@/rodinia/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/rodinia/StaticPolygons.zip"
         },
         "Description": "https://gwsdoc.gplates.org/models#rodinia",
         "URL": "",
