@@ -36,12 +36,16 @@ class TimeDepRastersTestCase(unittest.TestCase):
         # )
         self.model_name = "matthews2016_mantle_ref"
         self.model = model_manager.get_model(self.model_name)
-        self.model.set_data_dir(TEMP_TEST_DIR)
+        if self.model is not None:
+            self.model.set_data_dir(TEMP_TEST_DIR)
         if os.path.isdir(f"{TEMP_TEST_DIR}/matthews2016_mantle_ref/Rasters"):
             shutil.rmtree(f"{TEMP_TEST_DIR}/matthews2016_mantle_ref/Rasters")
 
     def test(self):
         logger.info("test ...")
+
+        if self.model is None:
+            raise Exception("The self.model is None. This should not happen!")
 
         filepath = self.model.get_raster("AgeGrids", 10)
         self.assertTrue(len(filepath) > 0)

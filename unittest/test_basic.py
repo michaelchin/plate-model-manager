@@ -8,6 +8,8 @@ from common import TEMP_TEST_DIR, get_test_logger, is_test_installed_module
 
 if not is_test_installed_module():
     sys.path.insert(0, f"{os.path.dirname(__file__)}/../src")
+else:
+    print("testing installed PMM package")
 
 import plate_model_manager
 from plate_model_manager import PlateModelManager
@@ -31,29 +33,32 @@ class BasicTestCase(unittest.TestCase):
 
     def test_basic(self):
         with self.assertRaises(InvalidConfigFile):
-            pm_manager = PlateModelManager(123, timeout=(5, 5))
+            pm_manager = PlateModelManager(123, timeout=(5, 5))  # type: ignore
         with self.assertRaises(InvalidConfigFile):
             pm_manager = PlateModelManager("123", timeout=(5, 5))
 
         # 1
         pm_manager = PlateModelManager(timeout=(5, 5))
         model = pm_manager.get_model("Muller2019", data_dir=TEMP_TEST_DIR)
-        logger.info(model.get_rotation_model())
+        if model is not None:
+            logger.info(model.get_rotation_model())
 
         # 2
         pm_manager = PlateModelManager(
             model_manifest=f"{os.path.dirname(__file__)}/../config/models.json"
         )
         model = pm_manager.get_model()
-        logger.info(model.get_rotation_model())
-        model.get_layer("xx", return_none_if_not_exist=True)
+        if model is not None:
+            logger.info(model.get_rotation_model())
+            model.get_layer("xx", return_none_if_not_exist=True)
 
         # 3
         pm_manager = PlateModelManager(
             model_manifest=f"{os.path.dirname(__file__)}/models_test.json"
         )
         model = pm_manager.get_model("test-model", data_dir=TEMP_TEST_DIR)
-        logger.info(model.get_rotation_model())
+        if model is not None:
+            logger.info(model.get_rotation_model())
 
 
 if __name__ == "__main__":

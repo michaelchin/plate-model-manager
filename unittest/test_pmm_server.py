@@ -54,6 +54,8 @@ class PMMServerTestCase(unittest.TestCase):
         for name in model_names:
             print(f"testing {name}")
             model = pm_manager.get_model(name, data_dir=TEMP_TEST_DIR)
+            if not model:
+                raise Exception(f"Unable to get model ({name}).")
             layer_names = [
                 n
                 for n in self.model_cfg[get_real_model_name(name, self.model_cfg)][
@@ -72,9 +74,11 @@ class PMMServerTestCase(unittest.TestCase):
             # make sure other layer files
             for layer in layer_names:
                 files = model.get_layer(layer)
-                self.assertTrue(len(files))
-                for f in files:
-                    self.assertTrue(os.path.isfile(f))
+                self.assertTrue(files is not None)
+                if files is not None:
+                    self.assertTrue(len(files) > 0)
+                    for f in files:
+                        self.assertTrue(os.path.isfile(f))
 
     def test_model_in_server(self):
         pm_manager = PlateModelManager()

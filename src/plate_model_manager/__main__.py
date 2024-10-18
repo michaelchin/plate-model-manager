@@ -45,13 +45,16 @@ def _run_download_command(args):
         logger.info(f"All models have been downloaded and saved in {args.path}")
     else:
         model = pm_manager.get_model(args.model)
-        model.set_data_dir(args.path)
-        # print(args.download_rasters)
-        if args.download_rasters:
-            model.download_all()
-        else:
-            model.download_all_layers()
-        logger.info(f"Model({args.model}) has been downloaded and saved in {args.path}")
+        if model is not None:
+            model.set_data_dir(args.path)
+            # print(args.download_rasters)
+            if args.download_rasters:
+                model.download_all()
+            else:
+                model.download_all_layers()
+            logger.info(
+                f"Model({args.model}) has been downloaded and saved in {args.path}"
+            )
 
 
 def main():

@@ -180,6 +180,7 @@ class RequestsFetcher(FileFetcher):
         self,
         urls,
         filepaths: Union[list, str],
+        filenames=[],
         etags=[],
         auto_unzip: bool = True,
         timeout=(None, None),
@@ -233,7 +234,7 @@ def fetch_file(
     url: str,
     filepath: str,
     filename: Union[str, None] = None,
-    etag: str = None,
+    etag: Union[str, None] = None,
     auto_unzip: bool = True,
     timeout=(None, None),
 ):
