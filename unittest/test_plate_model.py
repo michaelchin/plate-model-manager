@@ -35,11 +35,14 @@ class PlateModelTestCase(unittest.TestCase):
         # )
         self.model_name = "Muller2019"
         self.model = model_manager.get_model(self.model_name)
+        if self.model is None:
+            raise Exception("The self.model is None. This should not happen!")
         self.model.set_data_dir(TEMP_TEST_DIR)
 
     def test_get(self):
         logger.info("test_get ...")
-
+        if self.model is None:
+            raise Exception("The self.model is None. This should not happen!")
         layers = self.model.get_avail_layers()
         self.assertTrue(len(layers) > 0)
         logger.info(layers)
@@ -51,22 +54,31 @@ class PlateModelTestCase(unittest.TestCase):
             self.assertTrue(os.path.isfile(f))
 
         coastlines_files = self.model.get_layer("Coastlines")
-        self.assertTrue(len(coastlines_files) > 0)
-        logger.info(coastlines_files)
-        for f in coastlines_files:
-            self.assertTrue(os.path.isfile(f))
+        if coastlines_files is None:
+            self.assertTrue(False)
+        else:
+            self.assertTrue(len(coastlines_files) > 0)
+            logger.info(coastlines_files)
+            for f in coastlines_files:
+                self.assertTrue(os.path.isfile(f))
 
         cob_files = self.model.get_COBs()
-        self.assertTrue(len(cob_files) > 0)
-        logger.info(cob_files)
-        for f in cob_files:
-            self.assertTrue(os.path.isfile(f))
+        if cob_files is None:
+            self.assertTrue(False)
+        else:
+            self.assertTrue(len(cob_files) > 0)
+            logger.info(cob_files)
+            for f in cob_files:
+                self.assertTrue(os.path.isfile(f))
 
         topology_files = self.model.get_topologies()
-        self.assertTrue(len(topology_files) > 0)
-        logger.info(topology_files)
-        for f in topology_files:
-            self.assertTrue(os.path.isfile(f))
+        if topology_files is None:
+            self.assertTrue(False)
+        else:
+            self.assertTrue(len(topology_files) > 0)
+            logger.info(topology_files)
+            for f in topology_files:
+                self.assertTrue(os.path.isfile(f))
 
         data_dir = self.model.get_data_dir()
         self.assertEqual(TEMP_TEST_DIR, data_dir)
@@ -86,6 +98,8 @@ class PlateModelTestCase(unittest.TestCase):
 
     def test_download(self):
         logger.info("test_download ...")
+        if self.model is None:
+            raise Exception("The self.model is None. This should not happen!")
 
         self.model.download_all_layers()
 
@@ -96,6 +110,8 @@ class PlateModelTestCase(unittest.TestCase):
         "this will download a large volume of data",
     )
     def test_download_all(self):
+        if self.model is None:
+            raise Exception("The self.model is None. This should not happen!")
         self.model.download_all()
 
 

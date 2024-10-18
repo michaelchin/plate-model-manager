@@ -48,6 +48,7 @@ class FileFetcher(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def fetch_files(
+        self,
         urls,
         filepaths,
         filenames=[],

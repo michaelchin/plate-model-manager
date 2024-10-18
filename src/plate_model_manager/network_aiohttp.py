@@ -24,7 +24,7 @@ class AiohttpFetcher(FileFetcher):
         url: str,
         filepath: str,
         filename: Union[str, None] = None,
-        etag: str = None,
+        etag: Union[str, None] = None,
         auto_unzip: bool = True,
     ):
         """download a file from "url" and save to "filepath"
@@ -160,6 +160,7 @@ class AiohttpFetcher(FileFetcher):
         self,
         urls,
         filepaths,
+        filenames=[],
         etags=[],
         auto_unzip: bool = True,
     ):
@@ -227,7 +228,7 @@ def fetch_file(
     url: str,
     filepath: str,
     filename: Union[str, None] = None,
-    etag: str = None,
+    etag: Union[str, None] = None,
     auto_unzip: bool = True,
 ):
     fetcher = AiohttpFetcher()

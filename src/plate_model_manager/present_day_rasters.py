@@ -3,6 +3,7 @@ import json
 import logging
 import os
 from hashlib import sha256
+from typing import List, Union, Dict
 
 import requests
 
@@ -32,21 +33,21 @@ class PresentDayRasterManager:
             self.raster_manifest = DEFAULT_PRESENT_DAY_RASTERS_MANIFEST
         else:
             self.raster_manifest = raster_manifest
-        self.rasters = None
+        self._rasters = None
 
         self.data_dir = "present-day-rasters"
 
         # check if the model manifest file is a local file
         if os.path.isfile(self.raster_manifest):
             with open(self.raster_manifest) as f:
-                self.rasters = json.load(f)
+                self._rasters = json.load(f)
         elif self.raster_manifest.startswith(
             "http://"
         ) or self.raster_manifest.startswith("https://"):
             # try the http(s) url
             try:
                 r = requests.get(self.raster_manifest)
-                self.rasters = r.json()
+                self._rasters = r.json()
 
             except requests.exceptions.ConnectionError:
                 raise Exception(
@@ -57,6 +58,19 @@ class PresentDayRasterManager:
             raise Exception(
                 f"The model_manifest '{self.raster_manifest}' should be either a local file path or a http(s) URL."
             )
+
+    @property
+    def rasters(self) -> Dict:
+        if self._rasters is not None:
+            return self._rasters
+        else:
+            raise Exception(
+                "The self._rasters is None. This should not happen. Something Extraordinary must have happened."
+            )
+
+    @rasters.setter
+    def rasters(self, var) -> None:
+        self._rasters = var
 
     def set_data_dir(self, folder):
         self.data_dir = folder

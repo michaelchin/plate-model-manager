@@ -24,7 +24,8 @@ class PlateModelReadonlyTestCase(unittest.TestCase):
         self.model_name = "Muller2019"
         self.data_dir = TEMP_TEST_DIR
         model = model_manager.get_model(self.model_name)
-        model.set_data_dir(self.data_dir)
+        if model is not None:
+            model.set_data_dir(self.data_dir)
 
     def test_readonly_plate_model(self):
         model = PlateModel(self.model_name, data_dir=self.data_dir, readonly=True)
@@ -38,22 +39,31 @@ class PlateModelReadonlyTestCase(unittest.TestCase):
         logger.info(rotation_files)
 
         coastlines_files = model.get_layer("Coastlines")
-        self.assertTrue(len(coastlines_files) > 0)
-        logger.info(coastlines_files)
-        for f in coastlines_files:
-            self.assertTrue(os.path.isfile(f))
+        if coastlines_files is None:
+            self.assertTrue(False)
+        else:
+            self.assertTrue(len(coastlines_files) > 0)
+            logger.info(coastlines_files)
+            for f in coastlines_files:
+                self.assertTrue(os.path.isfile(f))
 
         cob_files = model.get_COBs()
-        self.assertTrue(len(cob_files) > 0)
-        logger.info(cob_files)
-        for f in cob_files:
-            self.assertTrue(os.path.isfile(f))
+        if cob_files is None:
+            self.assertTrue(False)
+        else:
+            self.assertTrue(len(cob_files) > 0)
+            logger.info(cob_files)
+            for f in cob_files:
+                self.assertTrue(os.path.isfile(f))
 
         topology_files = model.get_topologies()
-        self.assertTrue(len(topology_files) > 0)
-        logger.info(topology_files)
-        for f in topology_files:
-            self.assertTrue(os.path.isfile(f))
+        if topology_files is None:
+            self.assertTrue(False)
+        else:
+            self.assertTrue(len(topology_files) > 0)
+            logger.info(topology_files)
+            for f in topology_files:
+                self.assertTrue(os.path.isfile(f))
 
         data_dir = model.get_data_dir()
         self.assertEqual(TEMP_TEST_DIR, data_dir)

@@ -43,14 +43,19 @@ def save_compressed_data(url, data, dst_path):
                 tar.close()
     # .gz
     elif url.endswith(".gz"):
+        fn = url.split("/")[-1][:-3]
+        if not fn:
+            raise Exception(
+                f"The url ends with .gz. But unable to extract the file name. Check the URL {url}"
+            )
         try:
-            fn = url.split("/")[-1][:-3]
             with open(f"{dst_path}/{fn}", "wb+") as f_out:
                 with gzip.GzipFile(fileobj=data) as f_in:
                     shutil.copyfileobj(f_in, f_out)
                     f_in.close()
                 f_out.close()
         except:
+            os.remove(f"{dst_path}/{fn}")
             misc.print_warning(
                 f"The {url} seems a gzip file. But it is in fact not. Will not decompress the file."
             )
@@ -69,8 +74,12 @@ def save_compressed_data(url, data, dst_path):
                 tar.close()
     # .bz2
     elif url.endswith(".bz2"):
+        fn = url.split("/")[-1][:-4]
+        if not fn:
+            raise Exception(
+                f"The url ends with .bz2. But unable to extract the file name. Check the URL {url}"
+            )
         try:
-            fn = url.split("/")[-1][:-4]
             with open(f"{dst_path}/{fn}", "wb+") as f_out:
                 data = bz2.decompress(data.read())
                 f_out.write(data)
@@ -83,13 +92,18 @@ def save_compressed_data(url, data, dst_path):
             raise Exception("Bad compressed data!")
     # .lzma
     elif url.endswith(".lzma"):
+        fn = url.split("/")[-1][:-5]
+        if not fn:
+            raise Exception(
+                f"The url ends with .lzma. But unable to extract the file name. Check the URL {url}"
+            )
         try:
-            fn = url.split("/")[-1][:-5]
             with open(f"{dst_path}/{fn}", "wb+") as f_out:
                 data = lzma.decompress(data.read())
                 f_out.write(data)
                 f_out.close()
         except:
+            os.remove(f"{dst_path}/{fn}")
             misc.print_warning(
                 f"The {url} seems a lzma file. But it is in fact not. Will not decompress the file."
             )
@@ -108,8 +122,12 @@ def save_compressed_data(url, data, dst_path):
                 tar.close()
     # .xz
     elif url.endswith(".xz"):
+        fn = url.split("/")[-1][:-3]
+        if not fn:
+            raise Exception(
+                f"The url ends with .xz. But unable to extract the file name. Check the URL {url}"
+            )
         try:
-            fn = url.split("/")[-1][:-3]
             with open(f"{dst_path}/{fn}", "wb+") as f_out:
                 data = lzma.decompress(data.read())
                 f_out.write(data)

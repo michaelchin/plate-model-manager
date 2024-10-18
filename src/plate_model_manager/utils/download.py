@@ -171,9 +171,11 @@ class FileDownloader:
                 self.dst_dir,
                 filename=self.filename,
                 filesize=self.file_size,
+                etag=None,
                 auto_unzip=self.auto_unzip,
                 check_etag=False,
             )
+
         else:
             self.new_etag = client.fetch_file(
                 self.file_url,
