@@ -1,11 +1,45 @@
 import glob
-import os
+import os, io
 import shutil
 import tempfile
-import zipfile
+import zipfile, sys
 from pathlib import Path
 
 import requests
+from plate_model_manager.zenodo import ZenodoRecord
+from datetime import datetime
+
+
+def download_files_from_zenodo(
+    rid: str, model_name: str, filename_prefix: str, dst_path: str = "files-from-zenodo"
+):
+    record = ZenodoRecord(rid)
+    latest_id = record.get_latest_version_id()
+    print(f"The latest version ID is: {latest_id}.")
+    filenames = record.get_filenames(latest_id)
+    print(f"The file names in the latest version: {filenames}")
+    idx = 0
+    for i in range(len(filenames)):
+        if filenames[i].startswith(filename_prefix):
+            idx = i
+            break
+    file_links = record.get_file_links(latest_id)
+    print(f"The file links in the latest version: {file_links}")
+
+    model_path = get_model_path(sys.argv, model_name)
+
+    info_fp = open(f"{model_path}/info.txt", "w+")
+    info_fp.write(f"{datetime.now()}\n")
+
+    # download the model zip file
+    zip_url = file_links[idx]
+    info_fp.write(f"Download zip file from {zip_url}\n")
+    r = requests.get(zip_url, allow_redirects=True, verify=True)
+    if r.status_code in [200]:
+        z = zipfile.ZipFile(io.BytesIO(r.content))
+        Path(model_path).mkdir(parents=True, exist_ok=True)
+        z.extractall(f"{model_path}/{dst_path}")
+    return model_path, info_fp
 
 
 def get_model_path(argv, name):
@@ -153,6 +187,10 @@ def fetch_file(url, model_path):
         return file_path
     else:
         return None
+
+
+def zip_files_ex(files, model_path, name, log_fp=None):
+    zip_files(files, f"{model_path}/{name}.zip", name, log_fp)
 
 
 def zip_files(files, zip_filepath, zip_folder, log_fp=None):
