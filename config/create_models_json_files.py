@@ -4,7 +4,8 @@
 # generate models.json, models_v2_gp.json and models_v2_eb.json
 # you should only edit models_v2.json and use this program to generate other files
 
-import json, re
+import json
+import re
 from functools import cmp_to_key
 
 
@@ -44,7 +45,7 @@ def generate_cfg(svr_base_url: str, output_file_name, version_1=False):
     assert output_file_name
     if svr_base_url.endswith("/"):
         svr_base_url = svr_base_url[:-1]
-    with open("models_v2.json", "r") as f:
+    with open("models_raw_data.json", "r") as f:
         cfg_data = json.load(f)
         cfg_data_str = ""
         if version_1:
@@ -60,5 +61,6 @@ def generate_cfg(svr_base_url: str, output_file_name, version_1=False):
 
 
 generate_cfg("https://repo.gplates.org/webdav/pmm", "models.json", version_1=True)
+generate_cfg("https://repo.gplates.org/webdav/pmm", "models_v2.json", version_1=True)
 generate_cfg("https://www.earthbyte.org/webdav/pmm", "models_v2_eb.json")
 generate_cfg("https://portal.gplates.org/static/pmm", "models_v2_gp.json")

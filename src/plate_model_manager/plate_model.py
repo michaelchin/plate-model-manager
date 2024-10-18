@@ -8,6 +8,7 @@ import os
 import shutil
 from datetime import datetime
 from pathlib import Path
+from typing import List, Union
 
 from .exceptions import LayerNotFoundInModel
 from .utils import download
@@ -162,7 +163,9 @@ class PlateModel:
         """return COBs feature collection"""
         return self.get_layer("COBs")
 
-    def get_layer(self, layer_name, return_none_if_not_exist=False):
+    def get_layer(
+        self, layer_name: str, return_none_if_not_exist: bool = False
+    ) -> Union[List[str], None]:
         """get layer files by layer name
 
         :param layer_name: layer name
@@ -193,7 +196,7 @@ class PlateModel:
             else:
                 raise e
 
-    def get_raster(self, raster_name, time):
+    def get_raster(self, raster_name: str, time: Union[int, float]) -> str:
         """return a local path for the raster
 
         :returns: a local path of the raster file
@@ -219,7 +222,9 @@ class PlateModel:
         else:
             raise Exception(f"Failed to download {url}")
 
-    def get_rasters(self, raster_name, times):
+    def get_rasters(
+        self, raster_name: str, times: List[Union[int, float]]
+    ) -> List[str]:
         """return local paths for the raster files
 
         :param times: a list of times
@@ -277,7 +282,7 @@ class PlateModel:
         return model_path
 
     @staticmethod
-    def is_model_dir(folder_path):
+    def is_model_dir(folder_path: str):
         """return True if it is a model dir, otherwise False"""
         return os.path.isdir(folder_path) and os.path.isfile(
             f"{folder_path}/.metadata.json"

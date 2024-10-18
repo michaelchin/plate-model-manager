@@ -117,7 +117,7 @@ class PlateModelManager:
 
     def get_available_model_names(self):
         """return the names of available models as a list"""
-        return [name for name in self.models]
+        return list(self.models.keys())
 
     @staticmethod
     def get_local_available_model_names(local_dir):
