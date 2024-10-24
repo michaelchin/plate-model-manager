@@ -336,5 +336,30 @@
         "Description": "",
         "URL": "https://earthbyte.org/webdav/ftp/incoming/mchin/plate-models/MULLER2008",
         "Version": "2024-10-23"
+    },
+    "gibbons2015": {
+        "BigTime": 300,
+        "SmallTime": 0,
+        "Rotations": "@<<SvrBaseURL>>@/gibbons2015/Rotations.zip",
+        "Layers": {
+            "Coastlines": "@<<SvrBaseURL>>@/gibbons2015/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/gibbons2015/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/gibbons2015/Topologies.zip"
+        },
+        "Description": "",
+        "URL": "https://zenodo.org/records/10595658",
+        "Version": "2024-10-24"
+    },
+    "zahirovic2014": {
+        "BigTime": 300,
+        "SmallTime": 0,
+        "Rotations": "@<<SvrBaseURL>>@/zahirovic2014/Rotations.zip",
+        "Layers": {
+            "Coastlines": "@<<SvrBaseURL>>@/zahirovic2014/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/zahirovic2014/StaticPolygons.zip"
+        },
+        "Description": "",
+        "URL": "https://zenodo.org/records/10595658",
+        "Version": "2024-10-24"
     }
 }

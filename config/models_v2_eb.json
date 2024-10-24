@@ -48,7 +48,7 @@
             "COBs": "@<<SvrBaseURL>>@/muller2022/COBs.zip",
             "Cratons": "@<<SvrBaseURL>>@/muller2022/Cratons.zip"
         },
-        "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time \u00e2\u20ac\u201c hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
+        "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time \u2013 hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
         "URL": "https://zenodo.org/records/10910449",
         "Version": "2024-07-18"
     },
@@ -97,7 +97,7 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennet_AgeGrids_0.1d_masked/seafloor_age_mask_{}.0Ma.nc",
             "SpreadRate": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennett_etal_2020_SpreadRate_Grids/rategrid_final_mask_{}.nc"
         },
-        "Description": "The model was implemented into the M\u00c3\u00bcller et al. (2019) reference frame",
+        "Description": "The model was implemented into the M\u00fcller et al. (2019) reference frame",
         "URL": "https://zenodo.org/records/10348271",
         "Version": "2024-07-18"
     },
@@ -194,7 +194,7 @@
             "StaticPolygons": "@<<SvrBaseURL>>@/matthews2016_pmag_ref/StaticPolygons.zip",
             "ContinentalPolygons": "@<<SvrBaseURL>>@/matthews2016_pmag_ref/ContinentalPolygons.zip"
         },
-        "Description": "This plate model represents the first continuous late Paleozoic to present-day global plate model with evolving plate boundaries, building on and extending two previously published models for the late Paleozoic (410\u00e2\u20ac\u201c250 Ma) (Domeier and Torsvik, 2014 ) and the MULLER2016 model Mesozoic-Cenozoic (230\u00e2\u20ac\u201c0 Ma). The model was designed for continuity during the 250\u00e2\u20ac\u201c230 Ma transition period between the two models, used an updated absolute reference frame of the Mesozoic-Cenozoic model and added a new Paleozoic reconstruction for the Baltica-derived Alexander Terrane, now accreted to western North America.",
+        "Description": "This plate model represents the first continuous late Paleozoic to present-day global plate model with evolving plate boundaries, building on and extending two previously published models for the late Paleozoic (410\u2013250 Ma) (Domeier and Torsvik, 2014 ) and the MULLER2016 model Mesozoic-Cenozoic (230\u20130 Ma). The model was designed for continuity during the 250\u2013230 Ma transition period between the two models, used an updated absolute reference frame of the Mesozoic-Cenozoic model and added a new Paleozoic reconstruction for the Baltica-derived Alexander Terrane, now accreted to western North America.",
         "URL": "https://gwsdoc.gplates.org/models#matthews2016_pmag_ref",
         "Version": "2024-07-23"
     },
@@ -231,6 +231,19 @@
         "URL": "https://zenodo.org/records/10531297",
         "Version": "2024-08-02"
     },
+    "gibbons2015": {
+        "BigTime": 300,
+        "SmallTime": 0,
+        "Rotations": "@<<SvrBaseURL>>@/gibbons2015/Rotations.zip",
+        "Layers": {
+            "Coastlines": "@<<SvrBaseURL>>@/gibbons2015/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/gibbons2015/StaticPolygons.zip",
+            "Topologies": "@<<SvrBaseURL>>@/gibbons2015/Topologies.zip"
+        },
+        "Description": "",
+        "URL": "https://zenodo.org/records/10595658",
+        "Version": "2024-10-24"
+    },
     "domeier2014": {
         "BigTime": 410,
         "SmallTime": 250,
@@ -243,6 +256,18 @@
         "Description": "https://gwsdoc.gplates.org/models#domeier2014",
         "URL": "",
         "Version": "2023-12-06"
+    },
+    "zahirovic2014": {
+        "BigTime": 300,
+        "SmallTime": 0,
+        "Rotations": "@<<SvrBaseURL>>@/zahirovic2014/Rotations.zip",
+        "Layers": {
+            "Coastlines": "@<<SvrBaseURL>>@/zahirovic2014/Coastlines.zip",
+            "StaticPolygons": "@<<SvrBaseURL>>@/zahirovic2014/StaticPolygons.zip"
+        },
+        "Description": "",
+        "URL": "https://zenodo.org/records/10595658",
+        "Version": "2024-10-24"
     },
     "shephard2013": {
         "BigTime": 200,
