@@ -79,6 +79,7 @@
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">LayerNotFoundInModel</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">download</span>
@@ -125,7 +126,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_filename</span> <span class="o">=</span> <span class="n">METADATA_FILENAME</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model_cfg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span> <span class="o">=</span> <span class="n">readonly</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
 
@@ -140,7 +141,7 @@
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">readonly</span><span class="p">:</span>
             <span class="c1"># async and concurrent things</span>
@@ -148,6 +149,19 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">run</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="p">)</span>
             <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;The plate model is None. This should not happen. Something Extraordinary must have happened.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="nd">@model</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">var</span>
 
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">attributes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -241,43 +255,64 @@
 
 <div class="viewcode-block" id="PlateModel.get_coastlines">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_coastlines">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_coastlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_coastlines</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return coastlines feature collection&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;Coastlines&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span>
+            <span class="s2">&quot;Coastlines&quot;</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="o">=</span><span class="n">return_none_if_not_exist</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateModel.get_static_polygons">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_static_polygons">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_static_polygons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_static_polygons</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return StaticPolygons feature collection&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;StaticPolygons&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span>
+            <span class="s2">&quot;StaticPolygons&quot;</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="o">=</span><span class="n">return_none_if_not_exist</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateModel.get_continental_polygons">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_continental_polygons">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_continental_polygons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_continental_polygons</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return ContinentalPolygons feature collection&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;ContinentalPolygons&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span>
+            <span class="s2">&quot;ContinentalPolygons&quot;</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="o">=</span><span class="n">return_none_if_not_exist</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateModel.get_topologies">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_topologies">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_topologies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_topologies</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return Topologies feature collection&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;Topologies&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span>
+            <span class="s2">&quot;Topologies&quot;</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="o">=</span><span class="n">return_none_if_not_exist</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateModel.get_COBs">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_COBs">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_COBs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_COBs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return COBs feature collection&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;COBs&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="s2">&quot;COBs&quot;</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="o">=</span><span class="n">return_none_if_not_exist</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateModel.get_layer">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_layer">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;get layer files by layer name</span>
+    <span class="k">def</span> <span class="nf">get_layer</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">return_none_if_not_exist</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;get layer files by layer name. raise LayerNotFoundInModel exception to get user&#39;s attention by default.</span>
+<span class="sd">        set `return_none_if_not_exist` if you are sure that your program is OK without this layer.</span>
 
 <span class="sd">        :param layer_name: layer name</span>
 <span class="sd">        :param return_none_if_not_exist: if True, return None when the layer does not exist in the model</span>
@@ -310,11 +345,12 @@
 
 <div class="viewcode-block" id="PlateModel.get_raster">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_raster">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return a local path for the raster</span>
 
 <span class="sd">        :returns: a local path of the raster file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;TimeDepRasters&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No time-dependent rasters found in this model.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">raster_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;TimeDepRasters&quot;</span><span class="p">]:</span>
@@ -339,7 +375,9 @@
 
 <div class="viewcode-block" id="PlateModel.get_rasters">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.get_rasters">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_rasters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_rasters</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">raster_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return local paths for the raster files</span>
 
 <span class="sd">        :param times: a list of times</span>
@@ -403,7 +441,7 @@
 <div class="viewcode-block" id="PlateModel.is_model_dir">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.plate_model.PlateModel.is_model_dir">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_model_dir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">is_model_dir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;return True if it is a model dir, otherwise False&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder_path</span><span class="si">}</span><span class="s2">/.metadata.json&quot;</span>
@@ -622,8 +660,9 @@
             <span class="c1"># for other geometry layers</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;Layers&quot;</span><span class="p">][</span><span class="n">layer_name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">LayerNotFoundInModel</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;The layer (</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">) is not found in the configuration file of model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;The layer(</span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">) was not found in model(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">).&quot;</span>
             <span class="p">)</span></div>
 
 </pre></div>

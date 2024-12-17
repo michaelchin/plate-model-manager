@@ -74,6 +74,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha256</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
@@ -108,21 +109,21 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span> <span class="o">=</span> <span class="n">DEFAULT_PRESENT_DAY_RASTERS_MANIFEST</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span> <span class="o">=</span> <span class="n">raster_manifest</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rasters</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;present-day-rasters&quot;</span>
 
         <span class="c1"># check if the model manifest file is a local file</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rasters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
             <span class="s2">&quot;http://&quot;</span>
         <span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">):</span>
             <span class="c1"># try the http(s) url</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">rasters</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_rasters</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
             <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -133,6 +134,19 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The model_manifest &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_manifest</span><span class="si">}</span><span class="s2">&#39; should be either a local file path or a http(s) URL.&quot;</span>
             <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rasters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rasters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rasters</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;The self._rasters is None. This should not happen. Something Extraordinary must have happened.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="nd">@rasters</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">rasters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rasters</span> <span class="o">=</span> <span class="n">var</span>
 
 <div class="viewcode-block" id="PresentDayRasterManager.set_data_dir">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager.set_data_dir">[docs]</a>
