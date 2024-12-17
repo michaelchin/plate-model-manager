@@ -51,11 +51,19 @@ files = glob.glob(
 )
 utils.zip_files(files, f"{model_path}/StaticPolygons.zip", "StaticPolygons", info_fp)
 
-# zip Coastlines
-files = glob.glob(
-    f"{model_path}/{zip_path}/Coastlines/Seton_etal_ESR2012_Coastline_2012.1.gpml"
+# fetch coastlines
+utils.fetch_coastlines(
+    "https://www.earthbyte.org/webdav/ftp/incoming/mchin/plate-models/SETON2012/Seton_etal_ESR2012_Coastlines_2012.1_Polygon.gpmlz",
+    model_path,
+    "Seton_etal_ESR2012_Coastlines_2012.1_Polygon.gpmlz",
 )
-utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", info_fp)
+
+# zip Coastlines
+# do not use this one. the coastlines are polylines and will not work with GWS
+# files = glob.glob(
+#    f"{model_path}/{zip_path}/Coastlines/Seton_etal_ESR2012_Coastline_2012.1.gpml"
+# )
+# utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", info_fp)
 
 # zip Topologies
 files = glob.glob(
