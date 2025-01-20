@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plate_model_manager.network_aiohttp &mdash; plate-model-manager 1.2.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
@@ -69,16 +69,16 @@
            <div itemprop="articleBody">
              
   <h1>Source code for plate_model_manager.network_aiohttp</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">aiohttp</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.file_fetcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileFetcher</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">unzip</span>
+<span class="kn">from</span> <span class="nn">.file_fetcher</span> <span class="kn">import</span> <span class="n">FileFetcher</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">unzip</span>
 
 <span class="c1"># This file contains experimental code to download files concurrently using aiohttp.</span>
 <span class="c1"># Later, I realized that &quot;requests&quot;+&quot;ThreadPoolExecutor&quot; works as well.</span>
@@ -88,13 +88,13 @@
 
 <div class="viewcode-block" id="AiohttpFetcher">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">AiohttpFetcher</span><span class="p">(</span><span class="n">FileFetcher</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">AiohttpFetcher</span><span class="p">(</span><span class="n">FileFetcher</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
 <div class="viewcode-block" id="AiohttpFetcher.fetch_file">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher.fetch_file">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_file</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -113,7 +113,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">():</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
             <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_file</span><span class="p">(</span>
                     <span class="n">session</span><span class="p">,</span>
@@ -130,7 +130,7 @@
         <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">f</span><span class="p">())</span></div>
 
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">session</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -182,7 +182,7 @@
 
             <span class="k">return</span> <span class="n">new_etag</span>
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_range</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">List</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;async funtion to get patial content of a file from the server</span>
@@ -208,7 +208,7 @@
         <span class="c1"># et = time.time()</span>
         <span class="c1"># print(f&quot;{index} -- time: {et - st}&quot;)</span>
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_large_file</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_large_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;async implementation of fetch_large_file&quot;&quot;&quot;</span>
@@ -228,13 +228,13 @@
                 <span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                 <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_run_fetch_large_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_run_fetch_large_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;run async function&quot;&quot;&quot;</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
 
 <div class="viewcode-block" id="AiohttpFetcher.fetch_files">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher.fetch_files">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_files</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">urls</span><span class="p">,</span>
         <span class="n">filepaths</span><span class="p">,</span>
@@ -251,7 +251,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">():</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
             <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
                 <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">urls</span><span class="p">):</span>
@@ -293,7 +293,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_etags</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">f</span><span class="p">())</span>
         <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">nest_asyncio</span>
+            <span class="kn">import</span> <span class="nn">nest_asyncio</span>
 
             <span class="n">nest_asyncio</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
             <span class="n">new_etags</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">f</span><span class="p">())</span>
@@ -306,7 +306,7 @@
 
 <div class="viewcode-block" id="fetch_file">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.fetch_file">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">fetch_file</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -322,7 +322,7 @@
 
 <div class="viewcode-block" id="fetch_files">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.fetch_files">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">fetch_files</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
     <span class="n">urls</span><span class="p">,</span>
     <span class="n">filepaths</span><span class="p">,</span>
     <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
@@ -335,7 +335,7 @@
 
 <div class="viewcode-block" id="fetch_large_file">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.fetch_large_file">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">fetch_large_file</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
