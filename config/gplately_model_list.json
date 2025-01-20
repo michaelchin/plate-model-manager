@@ -2,14 +2,20 @@
     "alfonso2024": {
         "url": "https://zenodo.org/records/11392269"
     },
+    "cao2024": {
+        "url": "https://zenodo.org/records/11536686"
+    },
     "muller2022": {
         "url": "https://zenodo.org/records/10910449"
     },
-    "muller2019": {
-        "url": "https://zenodo.org/records/11601026"
+    "zahirovic2022": {
+        "url": "https://zenodo.org/records/4729045"
     },
     "merdith2021": {
         "url": "https://zenodo.org/records/12525525"
+    },
+    "clennett2020": {
+        "url": "https://zenodo.org/records/10348271"
     },
     "clennett2020_m2019": {
         "url": "https://zenodo.org/records/10348271"
@@ -17,8 +23,14 @@
     "clennett2020_s2013": {
         "url": "https://zenodo.org/records/10348271"
     },
+    "muller2019": {
+        "url": "https://zenodo.org/records/11601026"
+    },
     "young2018": {
         "url": "https://zenodo.org/records/10525370"
+    },
+    "TorsvikCocks2017": {
+        "url": ""
     },
     "matthews2016": {
         "url": "https://zenodo.org/records/10526157"
@@ -35,16 +47,23 @@
     "zahirovic2016": {
         "url": "https://zenodo.org/records/10531297"
     },
+    "shephard2013": {
+        "url": "https://zenodo.org/records/10595889"
+    },
+    "Gibbons2015": {
+        "url": "https://zenodo.org/records/10595658"
+    },
+    "Zahirovic2014": {
+        "url": "https://zenodo.org/records/10595658"
+    },
     "gurnis2012": {
         "url": "https://zenodo.org/records/10596350"
     },
     "seton2012": {
         "url": "https://zenodo.org/records/10596050"
     },
-    "shephard2013": {
-        "url": "https://zenodo.org/records/10595889"
-    },
-    "TorsvikCocks2017": {
+    "Muller2008": {
         "url": ""
     }
+   
 }

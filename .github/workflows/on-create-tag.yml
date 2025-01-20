@@ -1,4 +1,4 @@
-name: Create a new release
+name: Create a new release after a new tag is pushed (disabled for now)
 
 permissions:
   contents: write
@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    # skip this action for now
     if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
