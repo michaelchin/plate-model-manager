@@ -29,7 +29,7 @@
     "young2018": {
         "url": "https://zenodo.org/records/10525370"
     },
-    "TorsvikCocks2017": {
+    "torsvikcocks2017": {
         "url": ""
     },
     "matthews2016": {
@@ -50,10 +50,10 @@
     "shephard2013": {
         "url": "https://zenodo.org/records/10595889"
     },
-    "Gibbons2015": {
+    "gibbons2015": {
         "url": "https://zenodo.org/records/10595658"
     },
-    "Zahirovic2014": {
+    "zahirovic2014": {
         "url": "https://zenodo.org/records/10595658"
     },
     "gurnis2012": {
@@ -62,8 +62,7 @@
     "seton2012": {
         "url": "https://zenodo.org/records/10596050"
     },
-    "Muller2008": {
+    "muller2008": {
         "url": ""
     }
-   
 }

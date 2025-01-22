@@ -72,7 +72,7 @@ class RequestsFetcher(FileFetcher):
                 try:
                     unzip.save_compressed_data(url, io.BytesIO(r.content), filepath)
                 except Exception as ex:
-                    print(ex)
+                    # print(ex)
                     self._save_file(filepath, filename, r.content)
             else:
                 self._save_file(filepath, filename, r.content)
