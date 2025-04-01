@@ -1,16 +1,14 @@
-.. plate-model-manager documentation master file, created by
-   sphinx-quickstart on Fri May  5 13:13:53 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Plate Model Manager Documentation
+=================================
 
-Welcome to plate_model_manager's documentation!
-=================================================
+Originally the ``plate-model-manager`` was designed for GPlately_. 
+Later, it was found also useful in other scenarios and contexts. 
+The ``plate-model-manager`` downloads and manages the plate reconstruction model files. 
+It is a dataset manager for plate tectonic reconstruction models, similar to NPM_ or Conda_ for software packages.
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   modules
+Have you ever wondered where to get the plate tectonic reconstruction models for your research? 
+Are you tired of downloading files from Internet manually and specify file paths when calling PyGPlates_ functions? 
+If the answer is yes, you probably want to check out this ``plate-model-manager`` Python module.
 
 Indices and tables
 ==================
@@ -18,3 +16,25 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. Hidden TOCs
+
+.. toctree::
+   :caption: Quick Start
+   :maxdepth: 2
+   :hidden:
+
+   installation
+   basic_usages
+   
+.. toctree::
+   :caption: API Reference
+   :maxdepth: 2
+   :hidden:
+
+   modules
+
+.. _GPlately: https://github.com/GPlates/gplately
+.. _NPM: https://www.npmjs.com/
+.. _Conda: https://anaconda.org/anaconda/conda
+.. _PyGPlates: https://www.gplates.org/docs/pygplates/
