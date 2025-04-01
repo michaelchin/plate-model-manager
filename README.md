@@ -8,17 +8,23 @@
 ![platforms](https://anaconda.org/conda-forge/plate-model-manager/badges/platforms.svg)
 ![downloads](https://anaconda.org/conda-forge/plate-model-manager/badges/downloads.svg)
 
-Originally the plate-model-manager was designed for [GPlately](https://github.com/GPlates/gplately). Later, it was found also useful in other scenarios and contexts. The plate-model-manager downloads and manages the plate reconstruction model files. It is a dataset manager for plate tectonic reconstruction models, similar to NPM or Conda for software packages.
+Originally the `plate-model-manager` was designed for [GPlately](https://github.com/GPlates/gplately). Later, it was found also useful in other scenarios and contexts. The `plate-model-manager` downloads and manages the plate reconstruction model files. It is a dataset manager for plate tectonic reconstruction models, similar to [NPM](https://www.npmjs.com/) or [Conda](https://anaconda.org/anaconda/conda) for software packages.
 
-Have you ever wondered where to get the plate tectonic reconstruction models for your research? Are you tired of downloading files from Internet manually and specify file paths when calling PyGPlates functions? If the answer is yes, you probably want to check out this plate-model-manager Python module.
+Have you ever wondered where to get the plate tectonic reconstruction models for your research? Are you tired of downloading files from Internet manually and specify file paths when calling [PyGPlates](https://www.gplates.org/docs/pygplates/) functions? If the answer is yes, you probably want to check out this `plate-model-manager` Python module.
 
 ### How to install
 
 `pip install plate-model-manager`
 
+or
+
+`conda install conda-forge::plate-model-manager`
+
+For more information regarding installation, visit [this page](https://michaelchin.github.io/plate-model-manager/latest/installation.html)
+
 ### How to use
 
-#### Basic Usage
+Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/basic_usages.html) to see how to use the `plate-model-manager` package in assorted scenarios.
 
 👉 The Python code below downloads the "Muller2019" model into local folder "plate-models-data-dir" and returns the rotation file's location.
 
@@ -121,14 +127,14 @@ See the full example at https://github.com/GPlates/gplately/blob/master/Notebook
 
 ### Examples
 
-This Python module is mostly used in 
+This Python module is mostly used in
 
 - [GPlately](https://github.com/GPlates/gplately)
 - [GPlates Web Service](https://github.com/GPlates/gplates-web-service)
 - [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials)
 - [GWS Python Wrapper](https://github.com/michaelchin/gwspy)
 
-A good example of using PlateModelManager with PyGPlates can be found at 
+A good example of using PlateModelManager with PyGPlates can be found at
 
 - https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb.
 
