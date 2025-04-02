@@ -7,14 +7,19 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "plate-model-manager"
-copyright = "2023-2024, Michael Chin"
+copyright = "2023-2025, The University of Sydney"
 author = "Michael Chin"
-release = "1.2.0"
+release = "1.2.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.viewcode", "sphinx.ext.napoleon"]
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.autosummary",
+]
 
 templates_path = ["_templates"]
 exclude_patterns = []

@@ -20,15 +20,18 @@ Indices and tables
 .. Hidden TOCs
 
 .. toctree::
-   :caption: Quick Start
+   :caption: Doc v1.2.2
    :maxdepth: 2
    :hidden:
 
    installation
    basic_usages
-   
+   examples
+   command_line_interface
+   api
+
 .. toctree::
-   :caption: API Reference
+   :caption: everything under the hood 
    :maxdepth: 2
    :hidden:
 
