@@ -32,3 +32,9 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 autosummary_generate = True
+
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": False,
+    "private-members": True,
+}
