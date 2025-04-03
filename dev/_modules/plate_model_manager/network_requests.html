@@ -1,20 +1,20 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plate_model_manager.network_requests &mdash; plate-model-manager 1.2.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-
+  <title>plate_model_manager.network_requests &mdash; plate-model-manager 1.2.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -39,9 +39,13 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Documentation v1.2.2</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">plate_model_manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic_usages.html">Basic Usages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../command_line_interface.html">Command Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -87,15 +91,11 @@
 <span class="c1"># Download partial content of a large file concurrently may/maynot work depending on the server configuration.</span>
 
 
-<div class="viewcode-block" id="RequestsFetcher">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher">[docs]</a>
-<span class="k">class</span> <span class="nc">RequestsFetcher</span><span class="p">(</span><span class="n">FileFetcher</span><span class="p">):</span>
+<div class="viewcode-block" id="RequestsFetcher"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher">[docs]</a><span class="k">class</span> <span class="nc">RequestsFetcher</span><span class="p">(</span><span class="n">FileFetcher</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="RequestsFetcher.fetch_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher.fetch_file">[docs]</a>
-    <span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
+<div class="viewcode-block" id="RequestsFetcher.fetch_file"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher.fetch_file">[docs]</a>    <span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -147,7 +147,7 @@
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">unzip</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-                    <span class="c1"># print(ex)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
@@ -159,7 +159,6 @@
             <span class="n">new_etag</span> <span class="o">=</span> <span class="n">new_etag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-gzip&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">new_etag</span></div>
-
 
     <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -252,9 +251,7 @@
         <span class="c1"># print(tasks)</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
 
-<div class="viewcode-block" id="RequestsFetcher.fetch_files">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher.fetch_files">[docs]</a>
-    <span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
+<div class="viewcode-block" id="RequestsFetcher.fetch_files"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher.fetch_files">[docs]</a>    <span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">urls</span><span class="p">,</span>
         <span class="n">filepaths</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
@@ -305,14 +302,10 @@
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
-            <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
-</div>
+            <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
 
-
-<div class="viewcode-block" id="fetch_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_file">[docs]</a>
-<span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
+<div class="viewcode-block" id="fetch_file"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_file">[docs]</a><span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -331,10 +324,7 @@
     <span class="p">)</span></div>
 
 
-
-<div class="viewcode-block" id="fetch_files">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_files">[docs]</a>
-<span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
+<div class="viewcode-block" id="fetch_files"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_files">[docs]</a><span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
     <span class="n">urls</span><span class="p">,</span>
     <span class="n">filepaths</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">etags</span><span class="o">=</span><span class="p">[],</span>
@@ -347,10 +337,7 @@
     <span class="p">)</span></div>
 
 
-
-<div class="viewcode-block" id="fetch_large_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_large_file">[docs]</a>
-<span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
+<div class="viewcode-block" id="fetch_large_file"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_requests.fetch_large_file">[docs]</a><span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -371,7 +358,6 @@
         <span class="n">check_etag</span><span class="o">=</span><span class="n">check_etag</span><span class="p">,</span>
         <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
     <span class="p">)</span></div>
-
 </pre></div>
 
            </div>
@@ -381,7 +367,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024, Michael Chin.</p>
+    <p>&#169; Copyright 2023-2025, The University of Sydney.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

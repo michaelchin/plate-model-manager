@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>plate_model_manager.PlateModelManager &mdash; plate-model-manager 1.2.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="plate_model_manager.PlateModel" href="plate_model_manager.PlateModel.html" />
+    <link rel="prev" title="API Reference" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            plate-model-manager
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation v1.2.2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_usages.html">Basic Usages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_interface.html">Command Line Interface (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#platemodelmanager">PlateModelManager</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">plate_model_manager.PlateModelManager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager"><code class="docutils literal notranslate"><span class="pre">PlateModelManager</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#platemodel">PlateModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#presentdayrastermanager">PresentDayRasterManager</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">plate-model-manager</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">plate_model_manager.PlateModelManager</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/plate_model_manager.PlateModelManager.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="plate-model-manager-platemodelmanager">
+<h1>plate_model_manager.PlateModelManager<a class="headerlink" href="#plate-model-manager-platemodelmanager" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.</span></span><span class="sig-name descname"><span class="pre">PlateModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plate_model_manager/plate_model_manager.html#PlateModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager" title="Permalink to this definition"></a></dt>
+<dd><p>load a models.json file and manage plate models
+see an example models.json file at PlateModelManager.get_default_repo_url()</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plate_model_manager/plate_model_manager.html#PlateModelManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_manifest</strong> – the path to a models.json file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plate_model_manager.PlateModelManager.__init__" title="plate_model_manager.PlateModelManager.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([model_manifest, timeout])</p></td>
+<td><p>constructor</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.download_all_models" title="plate_model_manager.plate_model_manager.PlateModelManager.download_all_models"><code class="xref py py-obj docutils literal notranslate"><span class="pre">download_all_models</span></code></a>([data_dir])</p></td>
+<td><p>download all available models into data_dir</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_available_model_names" title="plate_model_manager.plate_model_manager.PlateModelManager.get_available_model_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_available_model_names</span></code></a>()</p></td>
+<td><p>return the names of available models as a list</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_default_repo_url" title="plate_model_manager.plate_model_manager.PlateModelManager.get_default_repo_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_default_repo_url</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_local_available_model_names" title="plate_model_manager.plate_model_manager.PlateModelManager.get_local_available_model_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_local_available_model_names</span></code></a>(local_dir)</p></td>
+<td><p>list all model names in a local folder</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_model" title="plate_model_manager.plate_model_manager.PlateModelManager.get_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_model</span></code></a>([model_name, data_dir])</p></td>
+<td><p>return a PlateModel object by model_name</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.models" title="plate_model_manager.plate_model_manager.PlateModelManager.models"><code class="xref py py-obj docutils literal notranslate"><span class="pre">models</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plate_model_manager.PlateModel.html" class="btn btn-neutral float-right" title="plate_model_manager.PlateModel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025, The University of Sydney.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

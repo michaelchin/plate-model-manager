@@ -1,20 +1,20 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plate_model_manager.zenodo &mdash; plate-model-manager 1.2.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-
+  <title>plate_model_manager.zenodo &mdash; plate-model-manager 1.2.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -39,9 +39,13 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Documentation v1.2.2</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">plate_model_manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic_usages.html">Basic Usages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../command_line_interface.html">Command Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -73,30 +77,20 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
 
 
-<div class="viewcode-block" id="ZenodoRecord">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord">[docs]</a>
-<span class="k">class</span> <span class="nc">ZenodoRecord</span><span class="p">:</span>
+<div class="viewcode-block" id="ZenodoRecord"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord">[docs]</a><span class="k">class</span> <span class="nc">ZenodoRecord</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conceptrecid</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conceptrecid</span> <span class="o">=</span> <span class="n">conceptrecid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_record_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://zenodo.org/api/records?q=conceptrecid:</span><span class="si">{</span><span class="n">conceptrecid</span><span class="si">}</span><span class="s2">&amp;all_versions=true&quot;</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_record_url</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sub_records</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;hits&quot;</span><span class="p">][</span><span class="s2">&quot;hits&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="ZenodoRecord.get_all_versions">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_all_versions">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_all_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]:</span>
+<div class="viewcode-block" id="ZenodoRecord.get_all_versions"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_all_versions">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_versions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_records</span></div>
 
-
-<div class="viewcode-block" id="ZenodoRecord.get_all_version_ids">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_all_version_ids">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_all_version_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="ZenodoRecord.get_all_version_ids"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_all_version_ids">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_version_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_versions</span><span class="p">()]</span></div>
 
-
-<div class="viewcode-block" id="ZenodoRecord.get_version">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_version">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="ZenodoRecord.get_version"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_versions</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">record</span>
@@ -105,10 +99,7 @@
             <span class="sa">f</span><span class="s2">&quot;Unable to get version(</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">). Check </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_record_url</span><span class="si">}</span><span class="s2"> to find out what is going on.&quot;</span>
         <span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="ZenodoRecord.get_latest_version">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_latest_version">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_latest_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="ZenodoRecord.get_latest_version"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_latest_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_latest_version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_records</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">][</span><span class="s2">&quot;relations&quot;</span><span class="p">][</span><span class="s2">&quot;version&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;is_last&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">record</span>
@@ -117,27 +108,16 @@
             <span class="sa">f</span><span class="s2">&quot;Unable to find the latest version. Check </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_record_url</span><span class="si">}</span><span class="s2"> to find out what is going on.&quot;</span>
         <span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="ZenodoRecord.get_latest_version_id">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_latest_version_id">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_latest_version_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="ZenodoRecord.get_latest_version_id"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_latest_version_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_latest_version_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_latest_version</span><span class="p">()[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span></div>
 
-
-<div class="viewcode-block" id="ZenodoRecord.get_file_links">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_file_links">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_file_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="ZenodoRecord.get_file_links"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_file_links">[docs]</a>    <span class="k">def</span> <span class="nf">get_file_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;links&quot;</span><span class="p">][</span><span class="s2">&quot;self&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span></div>
 
-
-<div class="viewcode-block" id="ZenodoRecord.get_filenames">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_filenames">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="ZenodoRecord.get_filenames"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_filenames">[docs]</a>    <span class="k">def</span> <span class="nf">get_filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span></div>
-</div>
-
+        <span class="k">return</span> <span class="p">[</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span></div></div>
 </pre></div>
 
            </div>
@@ -147,7 +127,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024, Michael Chin.</p>
+    <p>&#169; Copyright 2023-2025, The University of Sydney.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

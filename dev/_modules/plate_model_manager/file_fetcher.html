@@ -1,20 +1,20 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../../">
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plate_model_manager.file_fetcher &mdash; plate-model-manager 1.2.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-
+  <title>plate_model_manager.file_fetcher &mdash; plate-model-manager 1.2.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6efca38a"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -39,9 +39,13 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Documentation v1.2.2</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">plate_model_manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic_usages.html">Basic Usages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../command_line_interface.html">Command Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -79,9 +83,7 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">misc</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">unzip</span>
 
 
-<div class="viewcode-block" id="FileFetcher">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher">[docs]</a>
-<span class="k">class</span> <span class="nc">FileFetcher</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="FileFetcher"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher">[docs]</a><span class="k">class</span> <span class="nc">FileFetcher</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">__subclasshook__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">subclass</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
@@ -94,9 +96,7 @@
             <span class="ow">or</span> <span class="bp">NotImplemented</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="FileFetcher.fetch_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_file">[docs]</a>
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="FileFetcher.fetch_file"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_file">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -121,10 +121,7 @@
 
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-
-<div class="viewcode-block" id="FileFetcher.fetch_files">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_files">[docs]</a>
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="FileFetcher.fetch_files"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_files">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">fetch_files</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">urls</span><span class="p">,</span>
@@ -144,14 +141,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_run_fetch_large_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-<div class="viewcode-block" id="FileFetcher.fetch_large_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_large_file">[docs]</a>
-    <span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
+<div class="viewcode-block" id="FileFetcher.fetch_large_file"><a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_large_file">[docs]</a>    <span class="k">def</span> <span class="nf">fetch_large_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -239,7 +233,6 @@
 
         <span class="k">return</span> <span class="n">new_etag</span></div>
 
-
     <span class="k">def</span> <span class="nf">_save_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;helper function to save file to hard drive&quot;&quot;&quot;</span>
 
@@ -248,7 +241,6 @@
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: overwriting </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;wb+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">of</span><span class="p">:</span>
             <span class="n">of</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
-
 </pre></div>
 
            </div>
@@ -258,7 +250,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024, Michael Chin.</p>
+    <p>&#169; Copyright 2023-2025, The University of Sydney.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
