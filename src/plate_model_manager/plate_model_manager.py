@@ -1,24 +1,26 @@
 import json
+import logging
 import os
 import re
+from typing import Dict, Union
 
-import requests, logging
+import requests
 
 from .exceptions import InvalidConfigFile, ServerUnavailable
 from .plate_model import PlateModel
-from typing import List, Union, Dict
 
 logger = logging.getLogger("pmm")
 
 
 class PlateModelManager:
-    """load a models.json file and manage plate models
-    see an example models.json file at PlateModelManager.get_default_repo_url()
+    """class to manage plate models
 
+    Load a models.json file and manage plate models.
+    See an example models.json file at PlateModelManager.get_default_repo_url().
     """
 
     def __init__(self, model_manifest: str = "", timeout=(None, None)):
-        """constructor
+        """Constructor
 
         :param model_manifest: the path to a models.json file
 
