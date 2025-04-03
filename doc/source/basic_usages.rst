@@ -1,6 +1,10 @@
 Basic Usages
 ============
 
+.. contents::
+   :local:
+   :depth: 2
+
 Download .rot file(s) from a model
 ----------------------------------
 

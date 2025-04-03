@@ -1,5 +1,5 @@
-Plate Model Manager Documentation
-=================================
+Plate Model Manager Documentation v1.2.2
+========================================
 
 Originally the ``plate-model-manager`` was designed for GPlately_. 
 Later, it was found also useful in other scenarios and contexts. 
@@ -20,7 +20,7 @@ Indices and tables
 .. Hidden TOCs
 
 .. toctree::
-   :caption: Doc v1.2.2
+   :caption: Documentation v1.2.2
    :maxdepth: 2
    :hidden:
 

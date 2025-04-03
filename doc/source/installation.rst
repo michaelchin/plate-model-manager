@@ -1,6 +1,10 @@
 Installation
 ============
 
+.. contents::
+   :local:
+   :depth: 2
+   
 How to install
 --------------
 
