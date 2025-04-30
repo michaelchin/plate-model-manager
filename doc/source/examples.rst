@@ -42,9 +42,11 @@ Use PMM with pyGPlates
     print(reconstructed_feature_geometries[0].get_reconstructed_geometry().to_lat_lon())
 
 .. seealso::
-    `use PMM with pyGPlates example notebook`_
+    Example notebook of using PMM with pyGPlates:
+    
+    - `use PMM with pyGPlates`_
 
-.. _use PMM with pyGPlates example notebook: https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb
+.. _use PMM with pyGPlates: https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb
 
 
 Use PMM with GPlately 
@@ -84,6 +86,10 @@ Use PMM with GPlately
     agegrid = Raster(model.get_raster("AgeGrids", time=100))
 
 .. seealso::
-    `use PMM with GPlately example`_
+    Examples of using PMM with GPlately:
+    
+    - `introducing plate model manager`_
+    - `working with plate model manager`_
 
-.. _use PMM with GPlately example: https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working_with_plate_model_manager.py
+.. _introducing plate model manager: https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/introducing_plate_model_manager.py
+.. _working with plate model manager: https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working_with_plate_model_manager.py
