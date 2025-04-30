@@ -30,25 +30,16 @@ Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/basic
 
 Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/command_line_interface.html) to see how to use the `plate-model-manager` command lines.
 
-### Examples
+### Software adoption
 
-This Python module is mostly used in
+This `plate-model-manager` module is mostly used in
 
 - [GPlately](https://github.com/GPlates/gplately)
 - [GPlates Web Service](https://github.com/GPlates/gplates-web-service)
 - [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials)
 - [GWS Python Wrapper](https://github.com/michaelchin/gwspy)
 
-A good example of using PlateModelManager with PyGPlates can be found at
-
-- https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb.
-
-The examples of using PlateModelManager with GPlately:
-
-- https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/introducing-plate-model-manager.py
-- https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working-with-plate-model-manager.py
-
-The PlateModelManager can also be used with the GPlates desktop. Use the command line to download the plate model files and open the files with GPlates desktop. This will save the trouble of downloading files from Internet manually.
+The PlateModelManager can also be used with the GPlates desktop. Use the command line to download the plate model files and open the files with GPlates desktop. This is an alternative to downloading files from the internet manually.
 
 ### Dependencies
 
