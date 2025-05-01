@@ -7,6 +7,6 @@ pip3 install .
 rm doc/source/plate_model_manager.rst
 rm doc/source/modules.rst
 pip3 install -U sphinx sphinx_rtd_theme
-sphinx-apidoc -o doc/source src/plate_model_manager/
+sphinx-apidoc -f -o doc/source src/plate_model_manager/
 cd doc
 make html

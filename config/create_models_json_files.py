@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-# use models_v2.json as input
-# generate models.json, models_v2_gp.json and models_v2_eb.json
-# you should only edit models_v2.json and use this program to generate other files
+# use models_raw_data.json as input
+# generate models.json, models_v2.json, models_v2_gp.json and models_v2_eb.json
+# you should only edit models_raw_data.json and use this program to generate other files
 
 import json
 import re

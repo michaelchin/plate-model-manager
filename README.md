@@ -8,136 +8,43 @@
 ![platforms](https://anaconda.org/conda-forge/plate-model-manager/badges/platforms.svg)
 ![downloads](https://anaconda.org/conda-forge/plate-model-manager/badges/downloads.svg)
 
-Originally the plate-model-manager was designed for [GPlately](https://github.com/GPlates/gplately). Later, it was found also useful in other scenarios and contexts. The plate-model-manager downloads and manages the plate reconstruction model files. It is a dataset manager for plate tectonic reconstruction models, similar to NPM or Conda for software packages.
+Originally the `plate-model-manager` was designed for [GPlately](https://github.com/GPlates/gplately). Later, it was found also useful in other scenarios and contexts. The `plate-model-manager` downloads and manages the plate reconstruction model files. It is a dataset manager for plate tectonic reconstruction models, similar to [NPM](https://www.npmjs.com/) or [Conda](https://anaconda.org/anaconda/conda) for software packages.
 
-Have you ever wondered where to get the plate tectonic reconstruction models for your research? Are you tired of downloading files from Internet manually and specify file paths when calling PyGPlates functions? If the answer is yes, you probably want to check out this plate-model-manager Python module.
+Have you ever wondered where to get the plate tectonic reconstruction models for your research? Are you tired of downloading files from Internet manually and specify file paths when calling [PyGPlates](https://www.gplates.org/docs/pygplates/) functions? If the answer is yes, you probably want to check out this `plate-model-manager` Python module.
 
 ### How to install
 
 `pip install plate-model-manager`
 
-### How to use
+or
 
-#### Basic Usage
+`conda install conda-forge::plate-model-manager`
 
-👉 The Python code below downloads the "Muller2019" model into local folder "plate-models-data-dir" and returns the rotation file's location.
+For more information regarding installation, visit [this page](https://michaelchin.github.io/plate-model-manager/latest/installation.html)
 
-```python
-from plate_model_manager import PlateModelManager
+### How to use the Python module
 
-print(PlateModelManager().get_model("Muller2019",data_dir="plate-models-data-dir").get_rotation_model())
-```
+Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/basic_usages.html) to see how to use the `plate-model-manager` package in assorted scenarios.
 
-![python print rotation screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-print-rotation.png)
+### How to use the command line
 
-👉 The Python code below lists all available reconstruction models.
+Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/command_line_interface.html) to see how to use the `plate-model-manager` command lines.
 
-```python
-from plate_model_manager import PlateModelManager
+### Documentation
 
-print(PlateModelManager().get_available_model_names())
-```
+- [latest](https://michaelchin.github.io/plate-model-manager/latest/)
+- [v1.2.0](https://michaelchin.github.io/plate-model-manager/v1.2.0/)
 
-![python list all models screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-python-list-all-models.png)
+### Software adoption
 
-#### Use PMM with pyGPlates 🌰
-
-```python
-pm_manager = PlateModelManager()
-model = pm_manager.get_model("Muller2019")
-
-# create a point feature at (0,0)
-point_feature = pygplates.Feature()
-point_feature.set_geometry(pygplates.PointOnSphere(0, 0))
-
-# assign plate ID
-point_feature_with_PID = pygplates.partition_into_plates(
-  model.get_static_polygons(), # 👈👀 LOOK HERE
-  model.get_rotation_model(), # 👈👀 LOOK HERE
-  [point_feature])
-
-# Reconstruct the point features.
-reconstructed_feature_geometries = []
-time=140
-pygplates.reconstruct(
-  point_feature_with_PID,
-  model.get_rotation_model(), # 👈👀 LOOK HERE
-  reconstructed_feature_geometries,
-  time)
-
-print(reconstructed_feature_geometries[0].get_reconstructed_geometry().to_lat_lon())
-```
-
-See the full example at https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb
-
-#### Use PMM with GPlately 🌰
-
-```python
-pm_manager = PlateModelManager()
-model = pm_manager.get_model("Muller2019")
-model.set_data_dir("plate-model-repo")
-
-age = 55
-test_model = PlateReconstruction(
-    model.get_rotation_model(), # 👈👀 LOOK HERE
-    topology_features=model.get_layer("Topologies"), # 👈👀 LOOK HERE
-    static_polygons=model.get_layer("StaticPolygons"), # 👈👀 LOOK HERE
-)
-gplot = PlotTopologies(
-    test_model,
-    coastlines=model.get_layer("Coastlines"), # 👈👀 LOOK HERE
-    COBs=model.get_layer("COBs"), # 👈👀 LOOK HERE
-    time=age,
-)
-```
-
-See the full example at https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working-with-plate-model-manager.py
-
-#### Use the command line
-
-- `pmm ls`
-
-  This command will list all available plate tectonic reconstruction models.
-
-  ![pmm ls command screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-ls-command.png)
-
-- `pmm ls Muller2019`
-
-  This command will show the details of model 'Muller2019'.
-
-  ![pmm ls model command screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-ls-model.png)
-
-- `pmm download Muller2019 plate-models-data-dir`
-
-  This command will download model "Muller2019" into a folder 'plate-models-data-dir'.
-
-  ![pmm download model screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-download-model.png)
-
-- `pmm download all`
-
-  This command will download all available models into the current working directory.
-
-  ![pmm download all screenshot](https://github.com/michaelchin/plate-model-manager/raw/main/images/screenshot-pmm-download-all.png)
-
-### Examples
-
-This Python module is mostly used in 
+The `plate-model-manager` module is used in
 
 - [GPlately](https://github.com/GPlates/gplately)
 - [GPlates Web Service](https://github.com/GPlates/gplates-web-service)
 - [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials)
 - [GWS Python Wrapper](https://github.com/michaelchin/gwspy)
 
-A good example of using PlateModelManager with PyGPlates can be found at 
-
-- https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb.
-
-The examples of using PlateModelManager with GPlately:
-
-- https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/introducing-plate-model-manager.py
-- https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working-with-plate-model-manager.py
-
-The PlateModelManager can also be used with the GPlates desktop. Use the command line to download the plate model files and open the files with GPlates desktop. This will save the trouble of downloading files from Internet manually.
+The `plate-model-manager` can also be used with the GPlates desktop application. To do so, use the `plate-model-manager` command-line tool to download the plate model files, then open them in GPlates. This provides a convenient alternative to manually downloading files from the internet.
 
 ### Dependencies
 
