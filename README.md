@@ -37,14 +37,14 @@ Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/comma
 
 ### Software adoption
 
-This `plate-model-manager` module is mostly used in
+The `plate-model-manager` module is used in
 
 - [GPlately](https://github.com/GPlates/gplately)
 - [GPlates Web Service](https://github.com/GPlates/gplates-web-service)
 - [PyGPlates Tutorials](https://github.com/GPlates/pygplates-tutorials)
 - [GWS Python Wrapper](https://github.com/michaelchin/gwspy)
 
-The PlateModelManager can also be used with the GPlates desktop. Use the command line to download the plate model files and open the files with GPlates desktop. This is an alternative to downloading files from the internet manually.
+The `plate-model-manager` can also be used with the GPlates desktop application. To do so, use the `plate-model-manager` command-line tool to download the plate model files, then open them in GPlates. This provides a convenient alternative to manually downloading files from the internet.
 
 ### Dependencies
 
