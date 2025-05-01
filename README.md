@@ -26,9 +26,14 @@ For more information regarding installation, visit [this page](https://michaelch
 
 Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/basic_usages.html) to see how to use the `plate-model-manager` package in assorted scenarios.
 
-#### How to use the command line
+### How to use the command line
 
 Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/command_line_interface.html) to see how to use the `plate-model-manager` command lines.
+
+### Documentation
+
+- [latest](https://michaelchin.github.io/plate-model-manager/latest/)
+- [v1.2.0](https://michaelchin.github.io/plate-model-manager/v1.2.0/)
 
 ### Software adoption
 
