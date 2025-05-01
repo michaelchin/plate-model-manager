@@ -10,31 +10,31 @@ PlateModelManager
 
 The ``PlateModelManager`` class manages the plate models.
 
-.. autosummary::
-   :nosignatures:
-   :toctree: generated
-
-   plate_model_manager.PlateModelManager
+.. autoclass:: plate_model_manager.PlateModelManager
+    :members:
+    :undoc-members:
+    :special-members: __init__
+    :exclude-members: models
 
 PlateModel
 ----------
 
 The ``PlateModel`` class manages the layers in a plate model.
 
-.. autosummary::
-   :nosignatures:
-   :toctree: generated
-
-   plate_model_manager.PlateModel
-  
+.. autoclass:: plate_model_manager.PlateModel
+    :members:
+    :undoc-members:
+    :special-members: __init__
+    :exclude-members: model
+    
 PresentDayRasterManager
 -----------------------
 
 The ``PresentDayRasterManager`` class manages the present-day rasters.
 
-.. autosummary::
-   :nosignatures:
-   :toctree: generated
-
-   plate_model_manager.PresentDayRasterManager
-  
+.. autoclass:: plate_model_manager.PresentDayRasterManager
+    :members:
+    :undoc-members:
+    :special-members: __init__
+    :exclude-members: rasters
+    

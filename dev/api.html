@@ -1,25 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API Reference &mdash; plate-model-manager 1.2.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fd7cadf9"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="plate_model_manager.PlateModelManager" href="generated/plate_model_manager.PlateModelManager.html" />
+    <link rel="next" title="plate_model_manager" href="modules.html" />
     <link rel="prev" title="Command Line Interface (CLI)" href="command_line_interface.html" /> 
 </head>
 
@@ -42,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Doc v1.2.2</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Documentation v1.2.2</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_usages.html">Basic Usages</a></li>
@@ -50,15 +50,63 @@
 <li class="toctree-l1"><a class="reference internal" href="command_line_interface.html">Command Line Interface (CLI)</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#platemodelmanager">PlateModelManager</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/plate_model_manager.PlateModelManager.html">plate_model_manager.PlateModelManager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plate_model_manager.PlateModelManager"><code class="docutils literal notranslate"><span class="pre">PlateModelManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager.__init__"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager._replace_vars_with_values"><code class="docutils literal notranslate"><span class="pre">PlateModelManager._replace_vars_with_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager.download_all_models"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.download_all_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager.get_available_model_names"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.get_available_model_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager.get_default_repo_url"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.get_default_repo_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager.get_local_available_model_names"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.get_local_available_model_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModelManager.get_model"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.get_model()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#platemodel">PlateModel</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/plate_model_manager.PlateModel.html">plate_model_manager.PlateModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plate_model_manager.PlateModel"><code class="docutils literal notranslate"><span class="pre">PlateModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.__init__"><code class="docutils literal notranslate"><span class="pre">PlateModel.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel._get_layer_file_url"><code class="docutils literal notranslate"><span class="pre">PlateModel._get_layer_file_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.create_model_dir"><code class="docutils literal notranslate"><span class="pre">PlateModel.create_model_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.download_all"><code class="docutils literal notranslate"><span class="pre">PlateModel.download_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.download_all_layers"><code class="docutils literal notranslate"><span class="pre">PlateModel.download_all_layers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.download_layer_files"><code class="docutils literal notranslate"><span class="pre">PlateModel.download_layer_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.download_raster"><code class="docutils literal notranslate"><span class="pre">PlateModel.download_raster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.download_time_dependent_rasters"><code class="docutils literal notranslate"><span class="pre">PlateModel.download_time_dependent_rasters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_COBs"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_COBs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_avail_layers"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_avail_layers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_avail_time_dependent_raster_names"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_avail_time_dependent_raster_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_big_time"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_big_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_cfg"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_cfg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_coastlines"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_coastlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_continental_polygons"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_continental_polygons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_data_dir"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_data_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_layer"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_model_dir"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_model_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_raster"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_raster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_rasters"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_rasters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_rotation_model"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_rotation_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_small_time"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_small_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_static_polygons"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_static_polygons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.get_topologies"><code class="docutils literal notranslate"><span class="pre">PlateModel.get_topologies()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.is_model_dir"><code class="docutils literal notranslate"><span class="pre">PlateModel.is_model_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.purge"><code class="docutils literal notranslate"><span class="pre">PlateModel.purge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.purge_layer"><code class="docutils literal notranslate"><span class="pre">PlateModel.purge_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.purge_time_dependent_rasters"><code class="docutils literal notranslate"><span class="pre">PlateModel.purge_time_dependent_rasters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PlateModel.set_data_dir"><code class="docutils literal notranslate"><span class="pre">PlateModel.set_data_dir()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#presentdayrastermanager">PresentDayRasterManager</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/plate_model_manager.PresentDayRasterManager.html">plate_model_manager.PresentDayRasterManager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plate_model_manager.PresentDayRasterManager"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PresentDayRasterManager.__init__"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PresentDayRasterManager._check_raster_avail"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager._check_raster_avail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PresentDayRasterManager.get_raster"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.get_raster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PresentDayRasterManager.is_wms"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.is_wms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PresentDayRasterManager.list_present_day_rasters"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.list_present_day_rasters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plate_model_manager.PresentDayRasterManager.set_data_dir"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.set_data_dir()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -94,7 +142,7 @@
            <div itemprop="articleBody">
              
   <section id="api-reference">
-<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h1>
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#platemodelmanager" id="id1">PlateModelManager</a></p></li>
@@ -103,37 +151,363 @@
 </ul>
 </nav>
 <section id="platemodelmanager">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">PlateModelManager</a><a class="headerlink" href="#platemodelmanager" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">PlateModelManager</a><a class="headerlink" href="#platemodelmanager" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">PlateModelManager</span></code> class manages the plate models.</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/plate_model_manager.PlateModelManager.html#plate_model_manager.PlateModelManager" title="plate_model_manager.PlateModelManager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plate_model_manager.PlateModelManager</span></code></a></p></td>
-<td><p>load a models.json file and manage plate models see an example models.json file at PlateModelManager.get_default_repo_url()</p></td>
-</tr>
-</tbody>
-</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.</span></span><span class="sig-name descname"><span class="pre">PlateModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager" title="Link to this definition"></a></dt>
+<dd><p>class to manage plate models</p>
+<p>Load a models.json file and manage plate models.
+See an example models.json file at PlateModelManager.get_default_repo_url().</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager.__init__" title="Link to this definition"></a></dt>
+<dd><p>Constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_manifest</strong> – the path to a models.json file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager._replace_vars_with_values">
+<span class="sig-name descname"><span class="pre">_replace_vars_with_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager._replace_vars_with_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager._replace_vars_with_values" title="Link to this definition"></a></dt>
+<dd><p>replace the variables in <cite>json_obj</cite> with the real values. the variables are defined in <cite>var_dict</cite></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager.download_all_models">
+<span class="sig-name descname"><span class="pre">download_all_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager.download_all_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager.download_all_models" title="Link to this definition"></a></dt>
+<dd><p>download all available models into data_dir</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager.get_available_model_names">
+<span class="sig-name descname"><span class="pre">get_available_model_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager.get_available_model_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager.get_available_model_names" title="Link to this definition"></a></dt>
+<dd><p>return the names of available models as a list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager.get_default_repo_url">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_default_repo_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager.get_default_repo_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager.get_default_repo_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager.get_local_available_model_names">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_local_available_model_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager.get_local_available_model_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager.get_local_available_model_names" title="Link to this definition"></a></dt>
+<dd><p>list all model names in a local folder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModelManager.get_model">
+<span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model.PlateModel" title="plate_model_manager.plate_model.PlateModel"><span class="pre">PlateModel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model_manager.html#PlateModelManager.get_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModelManager.get_model" title="Link to this definition"></a></dt>
+<dd><p>return a PlateModel object by model_name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> – model name</p></li>
+<li><p><strong>data_dir</strong> – the default data_dir for the model. This dir can be changed with PlateModel.set_data_dir() later.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a PlateModel object or none if model name is no good</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="platemodel">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">PlateModel</a><a class="headerlink" href="#platemodel" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">PlateModel</a><a class="headerlink" href="#platemodel" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">PlateModel</span></code> class manages the layers in a plate model.</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/plate_model_manager.PlateModel.html#plate_model_manager.PlateModel" title="plate_model_manager.PlateModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plate_model_manager.PlateModel</span></code></a></p></td>
-<td><p>Class to manage a plate model</p></td>
-</tr>
-</tbody>
-</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.</span></span><span class="sig-name descname"><span class="pre">PlateModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_cfg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel" title="Link to this definition"></a></dt>
+<dd><p>Class to manage a plate model</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_cfg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.__init__" title="Link to this definition"></a></dt>
+<dd><p>Constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> – model name</p></li>
+<li><p><strong>model_cfg</strong> – model configuration in JSON format</p></li>
+<li><p><strong>data_dir</strong> – the folder path of the model data</p></li>
+<li><p><strong>readonly</strong> – this will return whatever local folder has. Will not attempt to download data from internet</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel._get_layer_file_url">
+<span class="sig-name descname"><span class="pre">_get_layer_file_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel._get_layer_file_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel._get_layer_file_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.create_model_dir">
+<span class="sig-name descname"><span class="pre">create_model_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.create_model_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.create_model_dir" title="Link to this definition"></a></dt>
+<dd><p>create a model folder with a .metadata.json file in it</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.download_all">
+<span class="sig-name descname"><span class="pre">download_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.download_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.download_all" title="Link to this definition"></a></dt>
+<dd><p>download everything in this plate model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.download_all_layers">
+<span class="sig-name descname"><span class="pre">download_all_layers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.download_all_layers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.download_all_layers" title="Link to this definition"></a></dt>
+<dd><p>download all layers. Call download_layer_files() on every layer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.download_layer_files">
+<span class="sig-name descname"><span class="pre">download_layer_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.download_layer_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.download_layer_files" title="Link to this definition"></a></dt>
+<dd><p>given the layer name, download the layer files.
+The layer files are in a .zip file. download and unzip it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>layer_name</strong> – such as “Rotations”,”Coastlines”, “StaticPolygons”, “ContinentalPolygons”, “Topologies”, etc</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the folder path which contains the layer files</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.download_raster">
+<span class="sig-name descname"><span class="pre">download_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.download_raster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.download_raster" title="Link to this definition"></a></dt>
+<dd><p>download a single raster file from “url” and save the file in “dst_path”
+a metadata file will also be created for the raster file in folder f”{dst_path}/metadata”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – the url to the raster file</p></li>
+<li><p><strong>dst_path</strong> – the folder path to save the raster file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.download_time_dependent_rasters">
+<span class="sig-name descname"><span class="pre">download_time_dependent_rasters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.download_time_dependent_rasters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.download_time_dependent_rasters" title="Link to this definition"></a></dt>
+<dd><p>download time dependent rasters, such agegrids</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raster_name</strong> – raster name, such as AgeGrids. see the models.json</p></li>
+<li><p><strong>times</strong> – if not given, download from begin to end with 1My interval</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_COBs">
+<span class="sig-name descname"><span class="pre">get_COBs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_none_if_not_exist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_COBs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_COBs" title="Link to this definition"></a></dt>
+<dd><p>return COBs feature collection</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_avail_layers">
+<span class="sig-name descname"><span class="pre">get_avail_layers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_avail_layers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_avail_layers" title="Link to this definition"></a></dt>
+<dd><p>get all available layers in this plate model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_avail_time_dependent_raster_names">
+<span class="sig-name descname"><span class="pre">get_avail_time_dependent_raster_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_avail_time_dependent_raster_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_avail_time_dependent_raster_names" title="Link to this definition"></a></dt>
+<dd><p>return the names of all time dependent rasters which have been configurated in this model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_big_time">
+<span class="sig-name descname"><span class="pre">get_big_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_big_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_big_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_cfg">
+<span class="sig-name descname"><span class="pre">get_cfg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_cfg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_cfg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_coastlines">
+<span class="sig-name descname"><span class="pre">get_coastlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_none_if_not_exist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_coastlines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_coastlines" title="Link to this definition"></a></dt>
+<dd><p>return coastlines feature collection</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_continental_polygons">
+<span class="sig-name descname"><span class="pre">get_continental_polygons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_none_if_not_exist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_continental_polygons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_continental_polygons" title="Link to this definition"></a></dt>
+<dd><p>return ContinentalPolygons feature collection</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_data_dir">
+<span class="sig-name descname"><span class="pre">get_data_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_data_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_data_dir" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_layer">
+<span class="sig-name descname"><span class="pre">get_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_none_if_not_exist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_layer" title="Link to this definition"></a></dt>
+<dd><p>get layer files by layer name. raise LayerNotFoundInModel exception to get user’s attention by default.
+set <cite>return_none_if_not_exist</cite> if you are sure that your program is OK without this layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer_name</strong> – layer name</p></li>
+<li><p><strong>return_none_if_not_exist</strong> – if True, return None when the layer does not exist in the model</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a list of file names or None if return_none_if_not_exist is True</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="plate_model_manager.html#plate_model_manager.exceptions.LayerNotFoundInModel" title="plate_model_manager.exceptions.LayerNotFoundInModel"><strong>LayerNotFoundInModel</strong></a> – if the layer name does not exist in this model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_model_dir">
+<span class="sig-name descname"><span class="pre">get_model_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_model_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_model_dir" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_raster">
+<span class="sig-name descname"><span class="pre">get_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_raster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_raster" title="Link to this definition"></a></dt>
+<dd><p>return a local path for the raster</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a local path of the raster file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_rasters">
+<span class="sig-name descname"><span class="pre">get_rasters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_rasters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_rasters" title="Link to this definition"></a></dt>
+<dd><p>return local paths for the raster files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>times</strong> – a list of times</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a list of local paths</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_rotation_model">
+<span class="sig-name descname"><span class="pre">get_rotation_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_rotation_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_rotation_model" title="Link to this definition"></a></dt>
+<dd><p>return a list of rotation files</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_small_time">
+<span class="sig-name descname"><span class="pre">get_small_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_small_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_small_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_static_polygons">
+<span class="sig-name descname"><span class="pre">get_static_polygons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_none_if_not_exist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_static_polygons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_static_polygons" title="Link to this definition"></a></dt>
+<dd><p>return StaticPolygons feature collection</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.get_topologies">
+<span class="sig-name descname"><span class="pre">get_topologies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_none_if_not_exist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.get_topologies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.get_topologies" title="Link to this definition"></a></dt>
+<dd><p>return Topologies feature collection</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.is_model_dir">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_model_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.is_model_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.is_model_dir" title="Link to this definition"></a></dt>
+<dd><p>return True if it is a model dir, otherwise False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.purge">
+<span class="sig-name descname"><span class="pre">purge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.purge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.purge" title="Link to this definition"></a></dt>
+<dd><p>remove the model folder and everything inside it</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.purge_layer">
+<span class="sig-name descname"><span class="pre">purge_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.purge_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.purge_layer" title="Link to this definition"></a></dt>
+<dd><p>remove the layer folder of the given layer name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.purge_time_dependent_rasters">
+<span class="sig-name descname"><span class="pre">purge_time_dependent_rasters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.purge_time_dependent_rasters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.purge_time_dependent_rasters" title="Link to this definition"></a></dt>
+<dd><p>remove the raster folder of the given raster name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PlateModel.set_data_dir">
+<span class="sig-name descname"><span class="pre">set_data_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/plate_model.html#PlateModel.set_data_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PlateModel.set_data_dir" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="presentdayrastermanager">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">PresentDayRasterManager</a><a class="headerlink" href="#presentdayrastermanager" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">PresentDayRasterManager</a><a class="headerlink" href="#presentdayrastermanager" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager</span></code> class manages the present-day rasters.</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/plate_model_manager.PresentDayRasterManager.html#plate_model_manager.PresentDayRasterManager" title="plate_model_manager.PresentDayRasterManager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plate_model_manager.PresentDayRasterManager</span></code></a></p></td>
-<td><p>manage present-day rasters</p></td>
-</tr>
-</tbody>
-</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="plate_model_manager.PresentDayRasterManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plate_model_manager.</span></span><span class="sig-name descname"><span class="pre">PresentDayRasterManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_manifest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PresentDayRasterManager" title="Link to this definition"></a></dt>
+<dd><p>manage present-day rasters</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PresentDayRasterManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_manifest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PresentDayRasterManager.__init__" title="Link to this definition"></a></dt>
+<dd><p>constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>raster_manifest</strong> – the path to a present_day_rasters.json file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PresentDayRasterManager._check_raster_avail">
+<span class="sig-name descname"><span class="pre">_check_raster_avail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager._check_raster_avail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PresentDayRasterManager._check_raster_avail" title="Link to this definition"></a></dt>
+<dd><p>check if the raster name is in raster configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PresentDayRasterManager.get_raster">
+<span class="sig-name descname"><span class="pre">get_raster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[-180,</span> <span class="pre">-80,</span> <span class="pre">180,</span> <span class="pre">80]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">large_file_hint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.get_raster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PresentDayRasterManager.get_raster" title="Link to this definition"></a></dt>
+<dd><p>download the raster by name. Save the raster in self.data_dir</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PresentDayRasterManager.is_wms">
+<span class="sig-name descname"><span class="pre">is_wms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_raster_avail_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.is_wms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PresentDayRasterManager.is_wms" title="Link to this definition"></a></dt>
+<dd><p>return True if the raster is served by Web Map Service, otherwise False</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PresentDayRasterManager.list_present_day_rasters">
+<span class="sig-name descname"><span class="pre">list_present_day_rasters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.list_present_day_rasters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PresentDayRasterManager.list_present_day_rasters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plate_model_manager.PresentDayRasterManager.set_data_dir">
+<span class="sig-name descname"><span class="pre">set_data_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plate_model_manager/present_day_rasters.html#PresentDayRasterManager.set_data_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plate_model_manager.PresentDayRasterManager.set_data_dir" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -142,7 +516,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="command_line_interface.html" class="btn btn-neutral float-left" title="Command Line Interface (CLI)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="generated/plate_model_manager.PlateModelManager.html" class="btn btn-neutral float-right" title="plate_model_manager.PlateModelManager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="plate_model_manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

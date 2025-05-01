@@ -1,26 +1,26 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plate_model_manager &mdash; plate-model-manager 1.2.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fd7cadf9"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="plate_model_manager package" href="plate_model_manager.html" />
-    <link rel="prev" title="plate_model_manager.PresentDayRasterManager" href="generated/plate_model_manager.PresentDayRasterManager.html" /> 
+    <link rel="prev" title="API Reference" href="api.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -83,7 +83,7 @@
            <div itemprop="articleBody">
              
   <section id="plate-model-manager">
-<h1>plate_model_manager<a class="headerlink" href="#plate-model-manager" title="Permalink to this heading"></a></h1>
+<h1>plate_model_manager<a class="headerlink" href="#plate-model-manager" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="plate_model_manager.html">plate_model_manager package</a><ul>
@@ -96,6 +96,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="plate_model_manager.html#module-plate_model_manager.file_fetcher">plate_model_manager.file_fetcher module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher"><code class="docutils literal notranslate"><span class="pre">FileFetcher</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher._abc_impl"><code class="docutils literal notranslate"><span class="pre">FileFetcher._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher._run_fetch_large_file"><code class="docutils literal notranslate"><span class="pre">FileFetcher._run_fetch_large_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher._save_file"><code class="docutils literal notranslate"><span class="pre">FileFetcher._save_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_file"><code class="docutils literal notranslate"><span class="pre">FileFetcher.fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_files"><code class="docutils literal notranslate"><span class="pre">FileFetcher.fetch_files()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.file_fetcher.FileFetcher.fetch_large_file"><code class="docutils literal notranslate"><span class="pre">FileFetcher.fetch_large_file()</span></code></a></li>
@@ -105,6 +108,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="plate_model_manager.html#module-plate_model_manager.network_aiohttp">plate_model_manager.network_aiohttp module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._abc_impl"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._fetch_file"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher._fetch_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._fetch_large_file"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher._fetch_large_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._fetch_range"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher._fetch_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._run_fetch_large_file"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher._run_fetch_large_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher.fetch_file"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher.fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher.fetch_files"><code class="docutils literal notranslate"><span class="pre">AiohttpFetcher.fetch_files()</span></code></a></li>
 </ul>
@@ -116,6 +124,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="plate_model_manager.html#module-plate_model_manager.network_requests">plate_model_manager.network_requests module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher._abc_impl"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher._abc_impl</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher._async_fetch_files"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher._async_fetch_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher._fetch_large_file"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher._fetch_large_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher._fetch_range"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher._fetch_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher._run_fetch_large_file"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher._run_fetch_large_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher.fetch_file"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher.fetch_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.network_requests.RequestsFetcher.fetch_files"><code class="docutils literal notranslate"><span class="pre">RequestsFetcher.fetch_files()</span></code></a></li>
 </ul>
@@ -127,6 +140,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="plate_model_manager.html#module-plate_model_manager.plate_model">plate_model_manager.plate_model module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model.PlateModel"><code class="docutils literal notranslate"><span class="pre">PlateModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model.PlateModel._get_layer_file_url"><code class="docutils literal notranslate"><span class="pre">PlateModel._get_layer_file_url()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model.PlateModel.create_model_dir"><code class="docutils literal notranslate"><span class="pre">PlateModel.create_model_dir()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_all"><code class="docutils literal notranslate"><span class="pre">PlateModel.download_all()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model.PlateModel.download_all_layers"><code class="docutils literal notranslate"><span class="pre">PlateModel.download_all_layers()</span></code></a></li>
@@ -161,6 +175,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="plate_model_manager.html#module-plate_model_manager.plate_model_manager">plate_model_manager.plate_model_manager module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager"><code class="docutils literal notranslate"><span class="pre">PlateModelManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager._replace_vars_with_values"><code class="docutils literal notranslate"><span class="pre">PlateModelManager._replace_vars_with_values()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.download_all_models"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.download_all_models()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_available_model_names"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.get_available_model_names()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.plate_model_manager.PlateModelManager.get_default_repo_url"><code class="docutils literal notranslate"><span class="pre">PlateModelManager.get_default_repo_url()</span></code></a></li>
@@ -173,6 +188,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="plate_model_manager.html#module-plate_model_manager.present_day_rasters">plate_model_manager.present_day_rasters module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager._check_raster_avail"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager._check_raster_avail()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager.get_raster"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.get_raster()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager.is_wms"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.is_wms()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="plate_model_manager.html#plate_model_manager.present_day_rasters.PresentDayRasterManager.list_present_day_rasters"><code class="docutils literal notranslate"><span class="pre">PresentDayRasterManager.list_present_day_rasters()</span></code></a></li>
@@ -207,7 +223,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="generated/plate_model_manager.PresentDayRasterManager.html" class="btn btn-neutral float-left" title="plate_model_manager.PresentDayRasterManager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="plate_model_manager.html" class="btn btn-neutral float-right" title="plate_model_manager package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

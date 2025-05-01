@@ -27,7 +27,7 @@ Use ``-U`` or ``--upgrade`` to upgrade plate_model_manager installation.
 
 .. note::
     
-    Check out the `plate-model-manager PyPI page`_
+    See more at the `plate-model-manager PyPI page`_
     
 .. _plate-model-manager PyPI page: https://pypi.org/project/plate-model-manager/
 
@@ -47,6 +47,6 @@ Use ``conda update`` to upgrade plate_model_manager installation.
 
 .. note::
     
-    Check out the `plate-model-manager conda-forge page`_
+    See more at the `plate-model-manager conda-forge page`_
 
 .. _plate-model-manager conda-forge page: https://anaconda.org/conda-forge/plate-model-manager
