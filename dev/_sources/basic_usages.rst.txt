@@ -5,8 +5,8 @@ Basic Usages
    :local:
    :depth: 2
 
-Download .rot file(s) from a model
-----------------------------------
+Download rotation files
+-----------------------
 
 The Python code below downloads the ``rotation`` files from the ``Cao2024`` model into a local folder ``plate-models-data-dir`` 
 and displays the file paths on screen.
@@ -25,8 +25,8 @@ and displays the file paths on screen.
 .. seealso::
     See the :ref:`list-all-models` section for how to get a list of available models.
 
-Download a layer from a model
------------------------------
+Download a layer
+----------------
 
 The Python code below downloads the ``Coastlines`` layer from the ``Cao2024`` model 
 and displays the file paths on screen.
@@ -47,10 +47,10 @@ and displays the file paths on screen.
 
 .. _list-all-layers:
 
-List all layer names in a model
--------------------------------
+List all layer names
+--------------------
 
-The Python code below displays a list of available layers in the model Cao2024 on the screen.
+The Python code below displays a list of available layers in the model **Cao2024** on the screen.
 
 .. code-block:: python
     :linenos:
