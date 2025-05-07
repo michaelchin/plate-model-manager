@@ -47,8 +47,8 @@ if r.status_code in [200]:
 
 # zip Rotations
 files = [
-    f"{model_path}/{zip_path}/optimisation/1800_1000_rotfile_20240725_run3.rot",
-    f"{model_path}/{zip_path}/optimisation/1000_0_rotfile_20240725_run3.rot",
+    f"{model_path}/{zip_path}/optimisation/1800_1000_rotfile_20240725.rot",
+    f"{model_path}/{zip_path}/optimisation/1000_0_rotfile_20240725.rot",
 ]
 utils.zip_files(files, f"{model_path}/Rotations.zip", "Rotations", info_fp)
 
