@@ -10,19 +10,11 @@ Have you ever wondered where to get the plate tectonic reconstruction models for
 Are you tired of downloading files from Internet manually and specify file paths when calling PyGPlates_ functions? 
 If the answer is yes, you probably want to check out this ``plate-model-manager`` Python module.
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-.. Hidden TOCs
 
 .. toctree::
-   :caption: Documentation v1.2.2
-   :maxdepth: 2
-   :hidden:
+   :caption: User Guide
+   :maxdepth: 3
 
    installation
    basic_usages
@@ -30,12 +22,21 @@ Indices and tables
    command_line_interface
    api
 
+.. Hidden TOCs
+
 .. toctree::
    :caption: everything under the hood 
    :maxdepth: 2
    :hidden:
 
    modules
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 .. _GPlately: https://github.com/GPlates/gplately
 .. _NPM: https://www.npmjs.com/

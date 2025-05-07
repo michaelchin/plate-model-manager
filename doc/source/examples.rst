@@ -5,8 +5,8 @@ Examples
    :local:
    :depth: 2
 
-Use PMM with pyGPlates 
-----------------------
+Use with pyGPlates 
+------------------
 
 .. code-block:: python
     :linenos:
@@ -49,8 +49,8 @@ Use PMM with pyGPlates
 .. _use PMM with pyGPlates: https://github.com/GPlates/pygplates-tutorials/blob/master/notebooks/working-with-plate-model-manager.ipynb
 
 
-Use PMM with GPlately 
----------------------
+Use with GPlately 
+-----------------
 
 .. code-block:: python
     :linenos:
