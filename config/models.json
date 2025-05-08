@@ -29,8 +29,8 @@
         },
         "TimeDepRasters": {},
         "Description": "alfonso2024",
-        "URL": "https://zenodo.org/records/11392269",
-        "Version": "2024-06-20"
+        "URL": "https://doi.org/10.5281/zenodo.11392268",
+        "Version": "10.5281/zenodo.11392269"
     },
     "cao2024": {
         "BigTime": 18000,
@@ -62,8 +62,8 @@
             "Cratons": "https://repo.gplates.org/webdav/pmm/muller2022/Cratons.zip"
         },
         "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time \u2013 hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
-        "URL": "https://zenodo.org/records/10910449",
-        "Version": "2024-07-18"
+        "URL": "https://doi.org/10.5281/zenodo.10297173",
+        "Version": "10.5281/zenodo.10910449"
     },
     "zahirovic2022": {
         "BigTime": 410,
@@ -78,7 +78,7 @@
         "TimeDepRasters": {},
         "Description": "Subduction kinematics and carbonate platform interactions",
         "URL": "https://zenodo.org/records/4729045",
-        "Version": "2023-12-06"
+        "Version": "10.5281/zenodo.13899315"
     },
     "merdith2021": {
         "BigTime": 1000,
@@ -92,8 +92,8 @@
             "Cratons": "https://repo.gplates.org/webdav/pmm/merdith2021/Cratons.zip"
         },
         "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
-        "URL": "https://zenodo.org/records/12525525",
-        "Version": "2024-07-18"
+        "URL": "https://doi.org/10.5281/zenodo.10346399",
+        "Version": "10.5281/zenodo.12525525"
     },
     "clennett2020": "@clennett2020_m2019",
     "clennett2020_m2019": {
@@ -111,8 +111,8 @@
             "SpreadRate": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennett_etal_2020_SpreadRate_Grids/rategrid_final_mask_{}.nc"
         },
         "Description": "The model was implemented into the M\u00fcller et al. (2019) reference frame",
-        "URL": "https://zenodo.org/records/10348271",
-        "Version": "2024-07-18"
+        "URL": "https://doi.org/10.5281/zenodo.10348270",
+        "Version": "10.5281/zenodo.10348271"
     },
     "clennett2020_s2013": {
         "BigTime": 170,
@@ -125,8 +125,8 @@
             "Terranes": "https://repo.gplates.org/webdav/pmm/clennett2020_s2013/Terranes.zip"
         },
         "Description": "The model was implemented into the Shephard et al. (2013) global plate model.",
-        "URL": "https://zenodo.org/records/10348271",
-        "Version": "2024-07-18"
+        "URL": "https://doi.org/10.5281/zenodo.10348270",
+        "Version": "10.5281/zenodo.10348271"
     },
     "muller2019": {
         "BigTime": 250,
@@ -148,8 +148,8 @@
             "SedimentThickness": "https://repo.gplates.org/webdav/pmm/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{}.nc"
         },
         "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones.",
-        "URL": "https://zenodo.org/records/11601026",
-        "Version": "2024-07-09"
+        "URL": "10.5281/zenodo.10525286",
+        "Version": "10.5281/zenodo.11601026"
     },
     "young2018": {
         "BigTime": 410,
@@ -163,8 +163,8 @@
         },
         "TimeDepRasters": {},
         "Description": "Global kinematics of tectonic plates and subduction zones since the late Paleozoic Era",
-        "URL": "https://zenodo.org/records/10525370",
-        "Version": "2024-07-18"
+        "URL": "https://doi.org/10.5281/zenodo.10525369",
+        "Version": "10.5281/zenodo.10525370"
     },
     "torsvikcocks2017": {
         "BigTime": 540,
@@ -195,8 +195,8 @@
             "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/topologies/topologies-{}-Ma.png"
         },
         "Description": "This model is identical to MATTHEWS2016_pmag_ref in terms of relative plate models but uses a true polar wander corrected paleomagnetic model, viewed as a proxy for a mantle reference frame model.",
-        "URL": "https://zenodo.org/records/10526157",
-        "Version": "2024-07-18"
+        "URL": "https://doi.org/10.5281/zenodo.10526156",
+        "Version": "10.5281/zenodo.10526157"
     },
     "matthews2016_pmag_ref": {
         "BigTime": 410,
@@ -225,8 +225,8 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_2016_AREPS_Agegrids/Muller_etal_2016_AREPS_Agegrids_v1.17/Muller_etal_2016_AREPS_v1.17_netCDF/Muller_etal_2016_AREPS_v1.17_AgeGrid-{}.nc"
         },
         "Description": "This model represents an update of the SETON2012 model, both in terms of relative and absolute plate motions. The absolute reference used is based on the same hotspot model for the last 100 Ma as used in SETON2012, and a true-polar wander corrected paleomagnetic model for 230 to 100 Ma, with an added 10 deg longitudinal correction for the time period from 100-230 Ma in an attempt to minimise geodynamically unreasonable longitudinal plate motions, resulting in a modified mantle reference frame.",
-        "URL": "https://zenodo.org/records/11607841",
-        "Version": "2024-08-02"
+        "URL": "https://doi.org/10.5281/zenodo.10565444",
+        "Version": "10.5281/zenodo.11607841"
     },
     "scotese2016": "@paleomap",
     "zahirovic2016": {
@@ -241,8 +241,8 @@
             "Isochrons": "https://repo.gplates.org/webdav/pmm/zahirovic2016/Isochrons.zip"
         },
         "Description": "",
-        "URL": "https://zenodo.org/records/10531297",
-        "Version": "2024-08-02"
+        "URL": "https://doi.org/10.5281/zenodo.10531296",
+        "Version": "10.5281/zenodo.10531297"
     },
     "gibbons2015": {
         "BigTime": 300,
@@ -254,8 +254,8 @@
             "Topologies": "https://repo.gplates.org/webdav/pmm/gibbons2015/Topologies.zip"
         },
         "Description": "",
-        "URL": "https://zenodo.org/records/10595658",
-        "Version": "2024-10-24"
+        "URL": "https://doi.org/10.5281/zenodo.10595658",
+        "Version": "10.5281/zenodo.10595659"
     },
     "domeier2014": {
         "BigTime": 410,
@@ -266,9 +266,9 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/domeier2014/StaticPolygons.zip",
             "Topologies": "https://repo.gplates.org/webdav/pmm/domeier2014/Topologies.zip"
         },
-        "Description": "https://gwsdoc.gplates.org/models#domeier2014",
-        "URL": "",
-        "Version": "2023-12-06"
+        "Description": "unknown",
+        "URL": "unknown",
+        "Version": "unknown"
     },
     "zahirovic2014": {
         "BigTime": 300,
@@ -279,8 +279,8 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/zahirovic2014/StaticPolygons.zip"
         },
         "Description": "",
-        "URL": "https://zenodo.org/records/10595658",
-        "Version": "2024-10-24"
+        "URL": "https://doi.org/10.5281/zenodo.10595658",
+        "Version": "10.5281/zenodo.10595659"
     },
     "shephard2013": {
         "BigTime": 200,
@@ -293,8 +293,8 @@
         },
         "TimeDepRasters": {},
         "Description": "the tectonic evolution of the Arctic since Pangea breakup",
-        "URL": "https://zenodo.org/records/10595889",
-        "Version": "2024-08-06"
+        "URL": "https://doi.org/10.5281/zenodo.10595888",
+        "Version": "10.5281/zenodo.10595889"
     },
     "gurnis2012": {
         "BigTime": 140,
@@ -306,8 +306,8 @@
             "Topologies": "https://repo.gplates.org/webdav/pmm/gurnis2012/Topologies.zip"
         },
         "Description": "Plate tectonic reconstructions with continuously closing plates",
-        "URL": "https://zenodo.org/records/10596350",
-        "Version": "2024-08-06"
+        "URL": "https://doi.org/10.5281/zenodo.10596349",
+        "Version": "10.5281/zenodo.10596350"
     },
     "seton2012": {
         "BigTime": 200,
@@ -324,8 +324,8 @@
             "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Seton_etal_2012_ESR/Seton_etal_2012_ESR_Agegrids/netCDF_0-200Ma/agegrid_{}.nc"
         },
         "Description": "This model represents the first global plate model with topological plate boundaries. It is based on a hybrid reference frame hybrid absolute reference frame, based on a moving hotspot model for the last 100 Ma, and a true-polar wander corrected paleomagnetic model for 200 to 100 Ma. This combination of absolute reference frames is viewed as a proxy for a mantle reference frame model.",
-        "URL": "https://zenodo.org/records/10596050",
-        "Version": "2024-08-06"
+        "URL": "https://doi.org/10.5281/zenodo.10596049",
+        "Version": "10.5281/zenodo.10596050"
     },
     "li2008": "@rodinia",
     "muller2008": {
@@ -348,7 +348,7 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/golonka/StaticPolygons.zip"
         },
         "Description": "https://gwsdoc.gplates.org/models#golonka",
-        "URL": "",
+        "URL": "https://gwsdoc.gplates.org/models#golonka",
         "Version": "2023-12-06"
     },
     "paleomap": {
@@ -360,8 +360,8 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/paleomap/StaticPolygons.zip"
         },
         "Description": "also known as Scotese2016",
-        "URL": "https://zenodo.org/records/10596610",
-        "Version": "2024-08-02"
+        "URL": "https://doi.org/10.5281/zenodo.10596609",
+        "Version": "10.5281/zenodo.10596610"
     },
     "rodinia": {
         "BigTime": 1100,
@@ -372,7 +372,7 @@
             "StaticPolygons": "https://repo.gplates.org/webdav/pmm/rodinia/StaticPolygons.zip"
         },
         "Description": "https://gwsdoc.gplates.org/models#rodinia",
-        "URL": "",
+        "URL": "https://gwsdoc.gplates.org/models#rodinia",
         "Version": "2023-12-06"
     }
 }
