@@ -151,7 +151,7 @@
             "SedimentThickness": "@<<SvrBaseURL>>@/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{}.nc"
         },
         "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones.",
-        "URL": "10.5281/zenodo.10525286",
+        "URL": "https://doi.org/10.5281/zenodo.10525286",
         "Version": "10.5281/zenodo.11601026"
     },
     "young2018": {
