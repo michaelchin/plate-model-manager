@@ -13,16 +13,20 @@ logger = logging.getLogger("pmm")
 
 
 class PlateModelManager:
-    """class to manage plate models
-
-    Load a models.json file and manage plate models.
-    See an example models.json file at PlateModelManager.get_default_repo_url().
+    """Manage a set of public available plate reconstruction models.
+    The model files are hosted on EarthByte servers.
+    You need Internet connection to download the files.
     """
+
+    # Load a models.json file and manage plate models.
+    # See an example models.json file at PlateModelManager.get_default_repo_url().
 
     def __init__(self, model_manifest: str = "", timeout=(None, None)):
         """Constructor
 
-        :param model_manifest: the path to a models.json file
+        :param model_manifest: the URL to a ``models.json`` configuration file.
+                               Normally you don't need to provide this parameter unless
+                               you would like to setup your own plate model server.
 
         """
         if not model_manifest:
@@ -78,6 +82,7 @@ class PlateModelManager:
 
     @property
     def models(self) -> Dict:
+        """configuration data for all the models"""
         if self._models is not None:
             return self._models
         else:
@@ -108,12 +113,15 @@ class PlateModelManager:
     def get_model(
         self, model_name: str = "default", data_dir: str = "."
     ) -> Union[PlateModel, None]:
-        """return a PlateModel object by model_name
+        """return a :class:`PlateModel` object for a given model name.
 
-        :param model_name: model name
-        :param data_dir: the default data_dir for the model. This dir can be changed with PlateModel.set_data_dir() later.
+        Call :meth:`get_available_model_names()` to see a list of available model names.
 
-        :returns: a PlateModel object or none if model name is no good
+        :param model_name: the model name of interest
+        :param data_dir: The default folder to save the model files.
+                         This ``data_dir`` can be changed with :meth:`PlateModel.set_data_dir()` later.
+
+        :returns: a :class:`PlateModel` object or ``None`` if the model name is no good.
 
         """
         model_name = model_name.lower()
@@ -142,12 +150,12 @@ class PlateModelManager:
             return None
 
     def get_available_model_names(self):
-        """return the names of available models as a list"""
+        """Return the names of available models as a list."""
         return list(self.models.keys())
 
     @staticmethod
     def get_local_available_model_names(local_dir):
-        """list all model names in a local folder"""
+        """Return a list of model names in a local folder."""
         models = []
         for file in os.listdir(local_dir):
             d = os.path.join(local_dir, file)
@@ -157,6 +165,7 @@ class PlateModelManager:
 
     @staticmethod
     def get_default_repo_url():
+        """Return the URL to the configuration data of models."""
         default_repo_url_list = [
             "https://repo.gplates.org/webdav/pmm/config/models_v2.json",
             "https://www.earthbyte.org/webdav/pmm/config/models_v2_eb.json",
@@ -174,7 +183,7 @@ class PlateModelManager:
         raise ServerUnavailable()
 
     def download_all_models(self, data_dir="./") -> None:
-        """download all available models into data_dir"""
+        """Download all available models into the ``data_dir``."""
         for name in self.get_available_model_names():
             print(f"download {name}")
             model = self.get_model(name)

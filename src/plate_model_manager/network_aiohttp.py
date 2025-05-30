@@ -93,7 +93,7 @@ class AiohttpFetcher(FileFetcher):
                     try:
                         unzip.save_compressed_data(url, io.BytesIO(content), filepath)
                     except Exception as ex:
-                        print(ex)
+                        # print(ex)
                         self._save_file(filepath, filename, content)
                 else:
                     self._save_file(filepath, filename, content)

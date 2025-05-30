@@ -8,7 +8,7 @@ API Reference
 PlateModelManager
 -----------------
 
-The ``PlateModelManager`` class manages the plate models.
+The ``PlateModelManager`` class manages the plate reconstruction models.
 
 .. autoclass:: plate_model_manager.PlateModelManager
     :members:
@@ -19,7 +19,7 @@ The ``PlateModelManager`` class manages the plate models.
 PlateModel
 ----------
 
-The ``PlateModel`` class manages the layers in a plate model.
+The ``PlateModel`` class manages the files in a plate reconstruction model.
 
 .. autoclass:: plate_model_manager.PlateModel
     :members:

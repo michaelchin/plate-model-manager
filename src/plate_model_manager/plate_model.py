@@ -8,7 +8,7 @@ import os
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import List, Union, Dict
+from typing import Dict, List, Union
 
 from .exceptions import LayerNotFoundInModel
 from .utils import download
@@ -33,7 +33,14 @@ logger = logging.getLogger("pmm")
 
 
 class PlateModel:
-    """Class to manage a plate model"""
+    """Download and manage files for a plate reconstruction model.
+
+    👀👇 **LOOK HERE!!!** 👀👇
+
+    Normally you should always use :py:meth:`PlateModelManager.get_model()` to get a :class:`PlateModel` object.
+    Create a :class:`PlateModel` object directly only when you don't have Internet connection and would like to use the local model files in ``readonly`` mode.
+    Do not create a :class:`PlateModel` object directly if you have no idea what's going on.
+    """
 
     def __init__(
         self,
@@ -45,10 +52,17 @@ class PlateModel:
     ):
         """Constructor
 
-        :param model_name: model name
-        :param model_cfg: model configuration in JSON format
-        :param data_dir: the folder path of the model data
-        :param readonly: this will return whatever local folder has. Will not attempt to download data from internet
+        :param model_name: The model name of interest.
+        :type model_name: :class:`~str`
+        :param model_cfg: Model configuration in JSON format.
+                          The configuration is either downloaded from the server or
+                          loaded from a local file ``.metadata.json``. If you are confused by this parameter,
+                          use :py:meth:`PlateModelManager.get_model()` to get a :class:`PlateModel` object instead.
+        :param data_dir: The folder path to save the model data.
+        :param readonly: If this flag is set to ``True``, The ``PlateModel`` object will use
+                         the files in the local folder and will not attempt to
+                         download/update the files from the server.
+        :type readonly: :class:`~bool`
 
         """
         self.model_name = model_name.lower()
@@ -79,6 +93,7 @@ class PlateModel:
 
     @property
     def model(self) -> Dict:
+        """the mode configuration"""
         if self._model is not None:
             return self._model
         else:
@@ -114,9 +129,11 @@ class PlateModel:
                 pass  # ignore the exception when closing the loop if any
 
     def get_cfg(self):
+        """return model configuration"""
         return self.model
 
     def get_model_dir(self):
+        """return the path to a folder containing the model files"""
         if PlateModel.is_model_dir(self.model_dir):
             return self.model_dir
         elif not self.readonly:
@@ -127,16 +144,20 @@ class PlateModel:
             )
 
     def get_data_dir(self):
+        """return the path to a folder containing a set of downloaded models"""
         return self.data_dir
 
     def set_data_dir(self, new_dir):
+        """change the folder in which you would like to save your model"""
         self.data_dir = new_dir
         self.model_dir = f"{self.data_dir}/{self.model_name}/"
 
     def get_big_time(self):
+        """the max (big number in Ma) reconstruction time in the model"""
         return self.model["BigTime"]
 
     def get_small_time(self):
+        """the min (small number in Ma) reconstruction time in the model"""
         return self.model["SmallTime"]
 
     def get_avail_layers(self):
@@ -159,7 +180,7 @@ class PlateModel:
     def get_coastlines(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return coastlines feature collection"""
+        """return a list of coastlines files"""
         return self.get_layer(
             "Coastlines", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -167,7 +188,7 @@ class PlateModel:
     def get_static_polygons(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return StaticPolygons feature collection"""
+        """return a list of static polygons files"""
         return self.get_layer(
             "StaticPolygons", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -175,7 +196,7 @@ class PlateModel:
     def get_continental_polygons(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return ContinentalPolygons feature collection"""
+        """return a list of continental polygons files"""
         return self.get_layer(
             "ContinentalPolygons", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -183,7 +204,7 @@ class PlateModel:
     def get_topologies(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return Topologies feature collection"""
+        """return a list of topologies files"""
         return self.get_layer(
             "Topologies", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -191,21 +212,23 @@ class PlateModel:
     def get_COBs(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return COBs feature collection"""
+        """return a list of continent-ocean boundaries files"""
         return self.get_layer("COBs", return_none_if_not_exist=return_none_if_not_exist)
 
     def get_layer(
         self, layer_name: str, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """get layer files by layer name. raise LayerNotFoundInModel exception to get user's attention by default.
-        set `return_none_if_not_exist` if you are sure that your program is OK without this layer.
+        """Get a list of layer files by a layer name. Call :meth:`get_avail_layers` to get all the available layer names.
+
+        Raise :class:`LayerNotFoundInModel` exception to get user's attention by default.
+        Set ``return_none_if_not_exist`` to ``True`` if you don't want to see the :class:`LayerNotFoundInModel` exception.
 
         :param layer_name: layer name
-        :param return_none_if_not_exist: if True, return None when the layer does not exist in the model
+        :param return_none_if_not_exist: If set to ``True``, return ``None`` when the layer does not exist in the model.
 
-        :returns: a list of file names or None if return_none_if_not_exist is True
+        :returns: a list of file names or ``None`` if ``return_none_if_not_exist`` is set to ``True``
 
-        :raises LayerNotFoundInModel: if the layer name does not exist in this model
+        :raises :class:`LayerNotFoundInModel`: if the layer name does not exist in this model
 
         """
         try:
@@ -229,9 +252,13 @@ class PlateModel:
                 raise e
 
     def get_raster(self, raster_name: str, time: Union[int, float]) -> str:
-        """return a local path for the raster
+        """return a local path for the raster file
+
+        :param time: a single time
+        :type time: :class:`int` or :class:`float`
 
         :returns: a local path of the raster file
+        :rtype: :class:`str`
         """
 
         if not "TimeDepRasters" in self.model:
@@ -289,7 +316,7 @@ class PlateModel:
         return paths
 
     def create_model_dir(self):
-        """create a model folder with a .metadata.json file in it"""
+        """create an empty model folder and put a ``.metadata.json`` file in it"""
         if self.readonly:
             raise Exception("Unable to create model dir in readonly mode.")
         if not self.model_dir:
@@ -316,7 +343,7 @@ class PlateModel:
 
     @staticmethod
     def is_model_dir(folder_path: str):
-        """return True if it is a model dir, otherwise False"""
+        """return ``True`` if it is a model dir, otherwise ``False``"""
         return os.path.isdir(folder_path) and os.path.isfile(
             f"{folder_path}/.metadata.json"
         )
@@ -339,10 +366,12 @@ class PlateModel:
             shutil.rmtree(raster_path)
 
     def download_layer_files(self, layer_name):
-        """given the layer name, download the layer files.
-        The layer files are in a .zip file. download and unzip it.
+        """Download the layer files for a given the layer name. Call :meth:`get_layer` whenever possible.
 
-        :param layer_name: such as "Rotations","Coastlines", "StaticPolygons", "ContinentalPolygons", "Topologies", etc
+        The layer files are in a ".zip" file. This function will download and unzip it.
+
+        :param layer_name: the layer name, such as "Rotations","Coastlines", "StaticPolygons", "ContinentalPolygons", "Topologies", etc.
+                           Call :meth:`get_avail_layers` to get all the available layer names.
 
         :returns: the folder path which contains the layer files
 
@@ -381,7 +410,7 @@ class PlateModel:
         return layer_folder
 
     def download_all_layers(self):
-        """download all layers. Call download_layer_files() on every layer"""
+        """Download all layers. Call :meth:`download_layer_files()` on every available layer."""
         if self.readonly:
             raise Exception("Unable to download all layers in readonly mode.")
 
@@ -405,16 +434,18 @@ class PlateModel:
             self.loop.run_until_complete(f())
 
     def get_avail_time_dependent_raster_names(self):
-        """return the names of all time dependent rasters which have been configurated in this model."""
+        """Return the names of all time dependent rasters which have been configurated in this model."""
         if not "TimeDepRasters" in self.model:
             return []
         else:
             return [name for name in self.model["TimeDepRasters"]]
 
     def download_time_dependent_rasters(self, raster_name, times=None):
-        """download time dependent rasters, such agegrids
+        """Download time dependent rasters for a given raster name.
 
-        :param raster_name: raster name, such as AgeGrids. see the models.json
+        Call :meth:`get_avail_time_dependent_raster_names()` to see all the available raster names in this model.
+
+        :param raster_name: the raster name of interest
         :param times: if not given, download from begin to end with 1My interval
         """
         if self.readonly:
@@ -460,8 +491,9 @@ class PlateModel:
             )
 
     def download_raster(self, url, dst_path):
-        """download a single raster file from "url" and save the file in "dst_path"
-        a metadata file will also be created for the raster file in folder f"{dst_path}/metadata"
+        """Download a single raster file from ``url`` and save the file in ``dst_path``.
+
+        A metadata file will also be created for the raster file in folder ``f"{dst_path}/metadata"``
 
         :param url: the url to the raster file
         :param dst_path: the folder path to save the raster file

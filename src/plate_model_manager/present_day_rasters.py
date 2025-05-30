@@ -3,7 +3,7 @@ import json
 import logging
 import os
 from hashlib import sha256
-from typing import List, Union, Dict
+from typing import Dict
 
 import requests
 
@@ -21,13 +21,16 @@ class RasterNameNotFound(Exception):
 
 
 class PresentDayRasterManager:
-    """manage present-day rasters"""
+    """Manage the present-day rasters."""
 
-    def __init__(self, raster_manifest=None):
+    def __init__(self, data_dir="present-day-rasters", raster_manifest=None):
         """constructor
 
-        :param raster_manifest: the path to a present_day_rasters.json file
+        :param raster_manifest: The URL to a ``present_day_rasters.json`` file.
+                                Normally you don't need to provide this parameter unless
+                                you would like to setup your own present-day raster server.
 
+        :param data_dir: The path to a folder to save the present-day raster files.
         """
         if not raster_manifest:
             self.raster_manifest = DEFAULT_PRESENT_DAY_RASTERS_MANIFEST
@@ -35,7 +38,7 @@ class PresentDayRasterManager:
             self.raster_manifest = raster_manifest
         self._rasters = None
 
-        self.data_dir = "present-day-rasters"
+        self.data_dir = data_dir
 
         # check if the model manifest file is a local file
         if os.path.isfile(self.raster_manifest):
@@ -72,10 +75,12 @@ class PresentDayRasterManager:
     def rasters(self, var) -> None:
         self._rasters = var
 
-    def set_data_dir(self, folder):
-        self.data_dir = folder
+    def set_data_dir(self, data_dir):
+        """set a new data folder to save the present-day rasters"""
+        self.data_dir = data_dir
 
     def list_present_day_rasters(self):
+        """return a list of available  present-day rasters"""
         return [name for name in self.rasters]
 
     def _check_raster_avail(self, _name: str):
@@ -86,7 +91,7 @@ class PresentDayRasterManager:
         return name
 
     def is_wms(self, _name: str, check_raster_avail_flag=True):
-        """return True if the raster is served by Web Map Service, otherwise False"""
+        """return ``True`` if the raster is served by ``Web Map Service``, otherwise ``False``"""
         if check_raster_avail_flag:
             name = self._check_raster_avail(_name)
         else:
@@ -108,7 +113,17 @@ class PresentDayRasterManager:
         bbox=[-180, -80, 180, 80],
         large_file_hint=True,
     ):
-        """download the raster by name. Save the raster in self.data_dir"""
+        """Download a raster file by name.
+        Save the raster file in ``self.data_dir``.
+        Return the local path to the raster file.
+        Call :meth:`list_present_day_rasters()` to see a list of available present-day raster names.
+
+        :param _name: the raster name of interest
+        :type _name: :class:`str`
+
+        :return: the local path to the downloaded raster file
+        :rtype: :class:`str`
+        """
         name = self._check_raster_avail(_name)
         is_wms_flag = self.is_wms(name, check_raster_avail_flag=False)
 
