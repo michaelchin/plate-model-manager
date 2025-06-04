@@ -52,14 +52,14 @@ class PlateModel:
     ):
         """Constructor
 
-        :param model_name: The model name of interest.
+        :param model_name: the model name of interest
         :type model_name: :class:`~str`
         :param model_cfg: Model configuration in JSON format.
                           The configuration is either downloaded from the server or
                           loaded from a local file ``.metadata.json``. If you are confused by this parameter,
                           use :py:meth:`PlateModelManager.get_model()` to get a :class:`PlateModel` object instead.
-        :param data_dir: The folder path to save the model data.
-        :param readonly: If this flag is set to ``True``, The ``PlateModel`` object will use
+        :param data_dir: the folder path to save the model data
+        :param readonly: If this flag is set to ``True``, The :class:`PlateModel` object will use
                          the files in the local folder and will not attempt to
                          download/update the files from the server.
         :type readonly: :class:`~bool`
@@ -129,7 +129,7 @@ class PlateModel:
                 pass  # ignore the exception when closing the loop if any
 
     def get_cfg(self):
-        """return model configuration"""
+        """return the model configuration"""
         return self.model
 
     def get_model_dir(self):
@@ -144,11 +144,11 @@ class PlateModel:
             )
 
     def get_data_dir(self):
-        """return the path to a folder containing a set of downloaded models"""
+        """return the path to a folder (parent folder of the ``model dir``) containing a set of downloaded models"""
         return self.data_dir
 
     def set_data_dir(self, new_dir):
-        """change the folder in which you would like to save your model"""
+        """change the folder (parent folder of the ``model dir``) in which you would like to save your model"""
         self.data_dir = new_dir
         self.model_dir = f"{self.data_dir}/{self.model_name}/"
 
@@ -169,7 +169,7 @@ class PlateModel:
     def get_rotation_model(self):
         """return a list of rotation files"""
         if not self.readonly:
-            rotation_folder = self.download_layer_files("Rotations")
+            rotation_folder = self._download_layer_files("Rotations")
         else:
             rotation_folder = f"{self.model_dir}/Rotations"
         rotation_files = glob.glob(f"{rotation_folder}/*.rot")
@@ -180,7 +180,7 @@ class PlateModel:
     def get_coastlines(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return a list of coastlines files"""
+        """return a list of ``coastlines`` files"""
         return self.get_layer(
             "Coastlines", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -188,7 +188,7 @@ class PlateModel:
     def get_static_polygons(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return a list of static polygons files"""
+        """return a list of ``static polygons`` files"""
         return self.get_layer(
             "StaticPolygons", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -196,7 +196,7 @@ class PlateModel:
     def get_continental_polygons(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return a list of continental polygons files"""
+        """return a list of ``continental polygons`` files"""
         return self.get_layer(
             "ContinentalPolygons", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -204,7 +204,7 @@ class PlateModel:
     def get_topologies(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return a list of topologies files"""
+        """return a list of ``topologies`` files"""
         return self.get_layer(
             "Topologies", return_none_if_not_exist=return_none_if_not_exist
         )
@@ -212,7 +212,7 @@ class PlateModel:
     def get_COBs(
         self, return_none_if_not_exist: bool = False
     ) -> Union[List[str], None]:
-        """return a list of continent-ocean boundaries files"""
+        """return a list of ``Continent-Ocean Boundaries`` files"""
         return self.get_layer("COBs", return_none_if_not_exist=return_none_if_not_exist)
 
     def get_layer(
@@ -233,7 +233,7 @@ class PlateModel:
         """
         try:
             if not self.readonly:
-                layer_folder = self.download_layer_files(layer_name)
+                layer_folder = self._download_layer_files(layer_name)
             else:
                 layer_folder = f"{self.model_dir}/{layer_name}"
             files = []
@@ -270,7 +270,7 @@ class PlateModel:
         url = self.model["TimeDepRasters"][raster_name].format(time)
 
         if not self.readonly:
-            self.download_raster(url, f"{self.get_model_dir()}/Rasters/{raster_name}")
+            self._download_raster(url, f"{self.get_model_dir()}/Rasters/{raster_name}")
         file_name = url.split("/")[-1]
         local_path = f"{self.get_model_dir()}/Rasters/{raster_name}/{file_name}"
         if os.path.isfile(local_path):
@@ -316,7 +316,7 @@ class PlateModel:
         return paths
 
     def create_model_dir(self):
-        """create an empty model folder and put a ``.metadata.json`` file in it"""
+        """create an empty folder for the model and put a ``.metadata.json`` file in the folder"""
         if self.readonly:
             raise Exception("Unable to create model dir in readonly mode.")
         if not self.model_dir:
@@ -365,8 +365,8 @@ class PlateModel:
         if os.path.isdir(raster_path):
             shutil.rmtree(raster_path)
 
-    def download_layer_files(self, layer_name):
-        """Download the layer files for a given the layer name. Call :meth:`get_layer` whenever possible.
+    def _download_layer_files(self, layer_name):
+        """Download layer files for a given layer name. You should use :meth:`get_layer`, instead of this one, whenever possible.
 
         The layer files are in a ".zip" file. This function will download and unzip it.
 
@@ -410,17 +410,17 @@ class PlateModel:
         return layer_folder
 
     def download_all_layers(self):
-        """Download all layers. Call :meth:`download_layer_files()` on every available layer."""
+        """Download all layers. This function calls :meth:`download_layer_files()` on every available layer."""
         if self.readonly:
             raise Exception("Unable to download all layers in readonly mode.")
 
         async def f():
             tasks = []
             if "Rotations" in self.model:
-                tasks.append(self.run(self.download_layer_files, "Rotations"))
+                tasks.append(self.run(self._download_layer_files, "Rotations"))
             if "Layers" in self.model:
                 for layer in self.model["Layers"]:
-                    tasks.append(self.run(self.download_layer_files, layer))
+                    tasks.append(self.run(self._download_layer_files, layer))
 
             # print(tasks)
             await asyncio.wait(tasks)
@@ -434,14 +434,14 @@ class PlateModel:
             self.loop.run_until_complete(f())
 
     def get_avail_time_dependent_raster_names(self):
-        """Return the names of all time dependent rasters which have been configurated in this model."""
+        """return all time-dependent raster names in this plate model"""
         if not "TimeDepRasters" in self.model:
             return []
         else:
             return [name for name in self.model["TimeDepRasters"]]
 
     def download_time_dependent_rasters(self, raster_name, times=None):
-        """Download time dependent rasters for a given raster name.
+        """Download time-dependent rasters for a given raster name.
 
         Call :meth:`get_avail_time_dependent_raster_names()` to see all the available raster names in this model.
 
@@ -468,7 +468,7 @@ class PlateModel:
                 for time in times:
                     tasks.append(
                         self.run(
-                            self.download_raster,
+                            self._download_raster,
                             self.model["TimeDepRasters"][raster_name].format(time),
                             dst_path,
                         )
@@ -490,7 +490,7 @@ class PlateModel:
                 f"Unable to find {raster_name} configuration in this model {self.model_name}."
             )
 
-    def download_raster(self, url, dst_path):
+    def _download_raster(self, url, dst_path):
         """Download a single raster file from ``url`` and save the file in ``dst_path``.
 
         A metadata file will also be created for the raster file in folder ``f"{dst_path}/metadata"``
