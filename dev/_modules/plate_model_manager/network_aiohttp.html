@@ -138,8 +138,6 @@
         <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">f</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="AiohttpFetcher._fetch_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._fetch_file">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">session</span><span class="p">,</span>
@@ -179,7 +177,7 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">unzip</span><span class="o">.</span><span class="n">save_compressed_data</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">content</span><span class="p">),</span> <span class="n">filepath</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+                        <span class="c1"># print(ex)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_save_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
@@ -190,11 +188,8 @@
                 <span class="c1"># remove the content-encoding awareness thing</span>
                 <span class="n">new_etag</span> <span class="o">=</span> <span class="n">new_etag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-gzip&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-            <span class="k">return</span> <span class="n">new_etag</span></div>
+            <span class="k">return</span> <span class="n">new_etag</span>
 
-
-<div class="viewcode-block" id="AiohttpFetcher._fetch_range">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._fetch_range">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_range</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">List</span>
     <span class="p">):</span>
@@ -217,13 +212,10 @@
                 <span class="n">c</span> <span class="o">=</span> <span class="k">await</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
                 <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to fetch range from </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> at index </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
-
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to fetch range from </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> at index </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1"># et = time.time()</span>
         <span class="c1"># print(f&quot;{index} -- time: {et - st}&quot;)</span>
 
-<div class="viewcode-block" id="AiohttpFetcher._fetch_large_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._fetch_large_file">[docs]</a>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_large_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span>
     <span class="p">):</span>
@@ -242,15 +234,11 @@
 
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunks</span><span class="p">):</span>
                 <span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+                <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
-
-<div class="viewcode-block" id="AiohttpFetcher._run_fetch_large_file">
-<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher._run_fetch_large_file">[docs]</a>
     <span class="k">def</span> <span class="nf">_run_fetch_large_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;run async function&quot;&quot;&quot;</span>
-        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span></div>
-
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fetch_large_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filesize</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
 
 <div class="viewcode-block" id="AiohttpFetcher.fetch_files">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.network_aiohttp.AiohttpFetcher.fetch_files">[docs]</a>
