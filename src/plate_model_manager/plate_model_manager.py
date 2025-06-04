@@ -24,7 +24,7 @@ class PlateModelManager:
     def __init__(self, model_manifest: str = "", timeout=(None, None)):
         """Constructor
 
-        :param model_manifest: the URL to a ``models.json`` configuration file.
+        :param model_manifest: The URL to a ``models.json`` configuration file.
                                Normally you don't need to provide this parameter unless
                                you would like to setup your own plate model server.
 
@@ -82,7 +82,7 @@ class PlateModelManager:
 
     @property
     def models(self) -> Dict:
-        """configuration data for all the models"""
+        """The configuration data for all the models."""
         if self._models is not None:
             return self._models
         else:
@@ -95,7 +95,7 @@ class PlateModelManager:
         self._models = var
 
     def _replace_vars_with_values(self, var_dict, json_obj):
-        """replace the variables in `json_obj` with the real values. the variables are defined in `var_dict`"""
+        """Replace the variables in `json_obj` with the real values. The variables are defined in `var_dict`."""
         for key, value in json_obj.items():
             if key == "vars":
                 continue

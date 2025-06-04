@@ -24,7 +24,7 @@ class PresentDayRasterManager:
     """Manage the present-day rasters."""
 
     def __init__(self, data_dir="present-day-rasters", raster_manifest=None):
-        """constructor
+        """Constructor
 
         :param raster_manifest: The URL to a ``present_day_rasters.json`` file.
                                 Normally you don't need to provide this parameter unless
@@ -76,22 +76,22 @@ class PresentDayRasterManager:
         self._rasters = var
 
     def set_data_dir(self, data_dir):
-        """set a new data folder to save the present-day rasters"""
+        """Set a new data folder to save the present-day rasters"""
         self.data_dir = data_dir
 
     def list_present_day_rasters(self):
-        """return a list of available  present-day rasters"""
+        """Return a list of available  present-day rasters"""
         return [name for name in self.rasters]
 
     def _check_raster_avail(self, _name: str):
-        """check if the raster name is in raster configuration"""
+        """Check if the raster name is in raster configuration"""
         name = _name.lower()
         if not name in self.rasters:
             raise RasterNameNotFound(f"Raster {name} is not found in {self.rasters}.")
         return name
 
     def is_wms(self, _name: str, check_raster_avail_flag=True):
-        """return ``True`` if the raster is served by ``Web Map Service``, otherwise ``False``"""
+        """Return ``True`` if the raster is served by ``Web Map Service``, otherwise ``False``"""
         if check_raster_avail_flag:
             name = self._check_raster_avail(_name)
         else:
@@ -113,15 +113,14 @@ class PresentDayRasterManager:
         bbox=[-180, -80, 180, 80],
         large_file_hint=True,
     ):
-        """Download a raster file by name.
-        Save the raster file in ``self.data_dir``.
-        Return the local path to the raster file.
+        """Download a raster file by name, save the raster file in ``self.data_dir`` and return the local path to the raster file.
+
         Call :meth:`list_present_day_rasters()` to see a list of available present-day raster names.
 
-        :param _name: the raster name of interest
+        :param _name: The raster name of interest.
         :type _name: :class:`str`
 
-        :return: the local path to the downloaded raster file
+        :return: The local path to the downloaded raster file.
         :rtype: :class:`str`
         """
         name = self._check_raster_avail(_name)
