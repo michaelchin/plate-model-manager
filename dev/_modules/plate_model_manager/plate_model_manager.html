@@ -107,7 +107,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manifest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor</span>
 
-<span class="sd">        :param model_manifest: The URL to a ``models.json`` configuration file.</span>
+<span class="sd">        :param model_manifest: The URL to a ``models.json`` metadata file.</span>
 <span class="sd">                               Normally you don&#39;t need to provide this parameter unless</span>
 <span class="sd">                               you would like to setup your own plate model server.</span>
 
@@ -166,7 +166,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The configuration data for all the models.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The metadata for all the models.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span>
         <span class="k">else</span><span class="p">:</span>
