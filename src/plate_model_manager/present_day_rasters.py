@@ -26,7 +26,7 @@ class PresentDayRasterManager:
     def __init__(self, data_dir="present-day-rasters", raster_manifest=None):
         """Constructor
 
-        :param raster_manifest: The URL to a ``present_day_rasters.json`` file.
+        :param raster_manifest: The URL to a ``present_day_rasters.json`` metadata file.
                                 Normally you don't need to provide this parameter unless
                                 you would like to setup your own present-day raster server.
 
@@ -64,6 +64,7 @@ class PresentDayRasterManager:
 
     @property
     def rasters(self) -> Dict:
+        """The metadata of rasters."""
         if self._rasters is not None:
             return self._rasters
         else:

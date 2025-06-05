@@ -24,7 +24,7 @@ class PlateModelManager:
     def __init__(self, model_manifest: str = "", timeout=(None, None)):
         """Constructor
 
-        :param model_manifest: The URL to a ``models.json`` configuration file.
+        :param model_manifest: The URL to a ``models.json`` metadata file.
                                Normally you don't need to provide this parameter unless
                                you would like to setup your own plate model server.
 
@@ -82,7 +82,7 @@ class PlateModelManager:
 
     @property
     def models(self) -> Dict:
-        """The configuration data for all the models."""
+        """The metadata for all the models."""
         if self._models is not None:
             return self._models
         else:

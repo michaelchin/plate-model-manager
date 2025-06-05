@@ -93,7 +93,7 @@ class PlateModel:
 
     @property
     def model(self) -> Dict:
-        """The mode configuration."""
+        """The model metadata."""
         if self._model is not None:
             return self._model
         else:

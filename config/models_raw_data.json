@@ -110,8 +110,8 @@
             "Terranes": "https://repo.gplates.org/webdav/pmm/clennett2020_m2019/Terranes.zip"
         },
         "TimeDepRasters": {
-            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennet_AgeGrids_0.1d_masked/seafloor_age_mask_{}.0Ma.nc",
-            "SpreadRate": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennett_etal_2020_SpreadRate_Grids/rategrid_final_mask_{}.nc"
+            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennet_AgeGrids_0.1d_masked/seafloor_age_mask_{:.1f}.0Ma.nc",
+            "SpreadRate": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Clennett_etal_2020_G3/Clennett_etal_2020_SpreadRate_Grids/rategrid_final_mask_{:.0f}.nc"
         },
         "Description": "The model was implemented into the Müller et al. (2019) reference frame",
         "URL": "https://doi.org/10.5281/zenodo.10348270",
@@ -147,8 +147,8 @@
             "Johansson2018LIPs": "@<<SvrBaseURL>>@/muller2019/Johansson2018LIPs.zip"
         },
         "TimeDepRasters": {
-            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{}.nc",
-            "SedimentThickness": "@<<SvrBaseURL>>@/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{}.nc"
+            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2019_Tectonics/Muller_etal_2019_Agegrids/Muller_etal_2019_Tectonics_v2.0_netCDF/Muller_etal_2019_Tectonics_v2.0_AgeGrid-{:.0f}.nc",
+            "SedimentThickness": "@<<SvrBaseURL>>@/muller2019/decompacted_sediment_thickness/decompacted_sediment_thickness_0.5_{:.0f}.nc"
         },
         "Description": "This plate model for the last 250 Ma is based on a mantle reference frame, ie it orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions, which typically result from models based on paleomagnetic data. The model also includes continental deformation both along major rift systems and collisional plate boundary zones.",
         "URL": "https://doi.org/10.5281/zenodo.10525286",
@@ -192,7 +192,7 @@
             "COBs": "@<<SvrBaseURL>>@/muller2016/COBs.zip"
         },
         "TimeDepRasters": {
-            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_2016_AREPS_Agegrids/Muller_etal_2016_AREPS_Agegrids_v1.17/Muller_etal_2016_AREPS_v1.17_netCDF/Muller_etal_2016_AREPS_v1.17_AgeGrid-{}.nc"
+            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Muller_etal_2016_AREPS/Muller_etal_2016_AREPS_Agegrids/Muller_etal_2016_AREPS_Agegrids_v1.17/Muller_etal_2016_AREPS_v1.17_netCDF/Muller_etal_2016_AREPS_v1.17_AgeGrid-{:.0f}.nc"
         },
         "Description": "This model represents an update of the SETON2012 model, both in terms of relative and absolute plate motions. The absolute reference used is based on the same hotspot model for the last 100 Ma as used in SETON2012, and a true-polar wander corrected paleomagnetic model for 230 to 100 Ma, with an added 10 deg longitudinal correction for the time period from 100-230 Ma in an attempt to minimise geodynamically unreasonable longitudinal plate motions, resulting in a modified mantle reference frame.",
         "URL": "https://doi.org/10.5281/zenodo.10565444",
@@ -210,9 +210,9 @@
             "ContinentalPolygons": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/ContinentalPolygons.zip"
         },
         "TimeDepRasters": {
-            "AgeGrids": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/agegrids/agegrid-{}-Ma.png",
-            "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/coastlines/coastlines-{}-Ma.png",
-            "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/topologies/topologies-{}-Ma.png"
+            "AgeGrids": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/agegrids/agegrid-{:.0f}-Ma.png",
+            "Coastlines": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/coastlines/coastlines-{:.0f}-Ma.png",
+            "Topologies": "https://repo.gplates.org/webdav/pmm/matthews2016_mantle_ref/Rasters/topologies/topologies-{:.0f}-Ma.png"
         },
         "Description": "This model is identical to MATTHEWS2016_pmag_ref in terms of relative plate models but uses a true polar wander corrected paleomagnetic model, viewed as a proxy for a mantle reference frame model.",
         "URL": "https://doi.org/10.5281/zenodo.10526156",
@@ -271,7 +271,7 @@
             "COBs": "@<<SvrBaseURL>>@/seton2012/COBs.zip"
         },
         "TimeDepRasters": {
-            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Seton_etal_2012_ESR/Seton_etal_2012_ESR_Agegrids/netCDF_0-200Ma/agegrid_{}.nc"
+            "AgeGrids": "https://www.earthbyte.org/webdav/ftp/Data_Collections/Seton_etal_2012_ESR/Seton_etal_2012_ESR_Agegrids/netCDF_0-200Ma/agegrid_{:.0f}.nc"
         },
         "Description": "This model represents the first global plate model with topological plate boundaries. It is based on a hybrid reference frame hybrid absolute reference frame, based on a moving hotspot model for the last 100 Ma, and a true-polar wander corrected paleomagnetic model for 200 to 100 Ma. This combination of absolute reference frames is viewed as a proxy for a mantle reference frame model.",
         "URL": "https://doi.org/10.5281/zenodo.10596049",

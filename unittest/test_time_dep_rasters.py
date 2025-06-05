@@ -52,7 +52,7 @@ class TimeDepRastersTestCase(unittest.TestCase):
         logger.info(filepath)
         self.assertTrue(os.path.isfile(filepath))
 
-        filepaths = self.model.get_rasters("AgeGrids", [10, 11, 12, 13, 14])
+        filepaths = self.model.get_rasters("AgeGrids", [10.0, 11.0, 12, 13, 14])
         self.assertEqual(len(filepaths), 5)
         logger.info(filepaths)
         for f in filepaths:
