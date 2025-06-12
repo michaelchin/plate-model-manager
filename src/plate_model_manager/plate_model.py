@@ -33,12 +33,13 @@ logger = logging.getLogger("pmm")
 
 
 class PlateModel:
-    """Download and manage files for a plate reconstruction model.
+    """Download and manage files required for a plate reconstruction model.
 
     👀👇 **LOOK HERE!!!** 👀👇
 
     Normally you should always use :py:meth:`PlateModelManager.get_model()` to get a :class:`PlateModel` object.
-    Create a :class:`PlateModel` object directly only when you don't have Internet connection and would like to use the local model files in ``readonly`` mode.
+    Create a :class:`PlateModel` object directly only when you don't have Internet connection and would like
+    to use the local model files in ``readonly`` mode.
     Do not create a :class:`PlateModel` object directly if you have no idea what's going on.
     """
 
@@ -46,24 +47,25 @@ class PlateModel:
         self,
         model_name: str,
         model_cfg=None,
-        data_dir=".",
+        data_dir: str = ".",
         readonly=False,
         timeout=(None, None),
     ):
-        """Constructor
+        """Constructor. Create a :class:`PlateModel` instance.
 
         :param model_name: The model name of interest.
-        :type model_name: :class:`~str`
+        :type model_name: str
         :param model_cfg: The model configuration in JSON format.
                           The configuration is either downloaded from the server or
                           loaded from a local file ``.metadata.json``. If you are confused by this parameter,
                           use :py:meth:`PlateModelManager.get_model()` to get a :class:`PlateModel` object instead.
         :param data_dir: The folder path to save the model data.
+        :type data_dir: str, default="."
         :param readonly: If this flag is set to ``True``, The :class:`PlateModel` object will use
                          the files in the local folder and will not attempt to
                          download/update the files from the server.
-        :type readonly: :class:`~bool`
-
+        :type readonly: bool, default=False
+        :param timeout: Network connection `timeout parameter <https://requests.readthedocs.io/en/latest/user/advanced/#timeouts>`__.
         """
         self.model_name = model_name.lower()
         self.meta_filename = METADATA_FILENAME
@@ -255,10 +257,10 @@ class PlateModel:
         """Return a local path for the raster file.
 
         :param time: A single time of interest.
-        :type time: :class:`int` or :class:`float`
+        :type time: int or float
 
         :returns: A local path of the raster file.
-        :rtype: :class:`str`
+        :rtype: str
         """
 
         if not "TimeDepRasters" in self.model:
@@ -316,7 +318,7 @@ class PlateModel:
         return paths
 
     def create_model_dir(self):
-        """Create an empty folder for the model and put a ``.metadata.json`` file in the folder."""
+        """Create a folder with a file ``.metadata.json`` in it to keep the model files."""
         if self.readonly:
             raise Exception("Unable to create model dir in readonly mode.")
         if not self.model_dir:
@@ -343,7 +345,7 @@ class PlateModel:
 
     @staticmethod
     def is_model_dir(folder_path: str):
-        """Return ``True`` if it is a model dir, otherwise ``False``."""
+        """Return ``True`` if the folder contains files of a plate model, otherwise ``False``."""
         return os.path.isdir(folder_path) and os.path.isfile(
             f"{folder_path}/.metadata.json"
         )

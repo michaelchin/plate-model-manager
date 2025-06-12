@@ -24,7 +24,7 @@ class PresentDayRasterManager:
     """Manage the present-day rasters."""
 
     def __init__(self, data_dir="present-day-rasters", raster_manifest=None):
-        """Constructor
+        """Constructor. Create a :class:`PresentDayRasterManager` instance.
 
         :param raster_manifest: The URL to a ``present_day_rasters.json`` metadata file.
                                 Normally you don't need to provide this parameter unless
@@ -77,22 +77,28 @@ class PresentDayRasterManager:
         self._rasters = var
 
     def set_data_dir(self, data_dir):
-        """Set a new data folder to save the present-day rasters"""
+        """Set a new data folder to save the present-day rasters."""
         self.data_dir = data_dir
 
     def list_present_day_rasters(self):
-        """Return a list of available  present-day rasters"""
+        """Return a list of available  present-day rasters."""
         return [name for name in self.rasters]
 
     def _check_raster_avail(self, _name: str):
-        """Check if the raster name is in raster configuration"""
+        """Check if the raster name is in raster configuration."""
         name = _name.lower()
         if not name in self.rasters:
             raise RasterNameNotFound(f"Raster {name} is not found in {self.rasters}.")
         return name
 
     def is_wms(self, _name: str, check_raster_avail_flag=True):
-        """Return ``True`` if the raster is served by ``Web Map Service``, otherwise ``False``"""
+        """Return ``True`` if the raster is served by ``Web Map Service``, otherwise ``False``
+
+        :param _name: The raster name of interest.
+        :type _name: str
+        :param check_raster_avail_flag: If the flag is ``True``, validate the raster name against the raster configuration.
+        :type check_raster_avail_flag: bool
+        """
         if check_raster_avail_flag:
             name = self._check_raster_avail(_name)
         else:
@@ -119,10 +125,10 @@ class PresentDayRasterManager:
         Call :meth:`list_present_day_rasters()` to see a list of available present-day raster names.
 
         :param _name: The raster name of interest.
-        :type _name: :class:`str`
+        :type _name: str
 
         :return: The local path to the downloaded raster file.
-        :rtype: :class:`str`
+        :rtype: str
         """
         name = self._check_raster_avail(_name)
         is_wms_flag = self.is_wms(name, check_raster_avail_flag=False)

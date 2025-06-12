@@ -22,7 +22,7 @@ class PlateModelManager:
     # See an example models.json file at PlateModelManager.get_default_repo_url().
 
     def __init__(self, model_manifest: str = "", timeout=(None, None)):
-        """Constructor
+        """Constructor. Create a :class:`PlateModelManager` instance.
 
         :param model_manifest: The URL to a ``models.json`` metadata file.
                                Normally you don't need to provide this parameter unless
@@ -154,8 +154,12 @@ class PlateModelManager:
         return list(self.models.keys())
 
     @staticmethod
-    def get_local_available_model_names(local_dir):
-        """Return a list of model names in a local folder."""
+    def get_local_available_model_names(local_dir: str):
+        """Return a list of model names in a local folder.
+
+        :param local_dir: The local folder containing models.
+        :type local_dir: str
+        """
         models = []
         for file in os.listdir(local_dir):
             d = os.path.join(local_dir, file)
@@ -182,8 +186,12 @@ class PlateModelManager:
                 continue
         raise ServerUnavailable()
 
-    def download_all_models(self, data_dir="./") -> None:
-        """Download all available models into the ``data_dir``."""
+    def download_all_models(self, data_dir: str = "./") -> None:
+        """Download all available models into the ``data_dir``.
+
+        :param data_dir: The folder to save the model files.
+        :type data_dir: str
+        """
         for name in self.get_available_model_names():
             print(f"download {name}")
             model = self.get_model(name)
