@@ -114,12 +114,13 @@
 <div class="viewcode-block" id="PlateModel">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.PlateModel">[docs]</a>
 <span class="k">class</span> <span class="nc">PlateModel</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download and manage files for a plate reconstruction model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download and manage files required for a plate reconstruction model.</span>
 
 <span class="sd">    👀👇 **LOOK HERE!!!** 👀👇</span>
 
 <span class="sd">    Normally you should always use :py:meth:`PlateModelManager.get_model()` to get a :class:`PlateModel` object.</span>
-<span class="sd">    Create a :class:`PlateModel` object directly only when you don&#39;t have Internet connection and would like to use the local model files in ``readonly`` mode.</span>
+<span class="sd">    Create a :class:`PlateModel` object directly only when you don&#39;t have Internet connection and would like</span>
+<span class="sd">    to use the local model files in ``readonly`` mode.</span>
 <span class="sd">    Do not create a :class:`PlateModel` object directly if you have no idea what&#39;s going on.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -129,24 +130,25 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">model_cfg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
         <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor. Create a :class:`PlateModel` instance.</span>
 
 <span class="sd">        :param model_name: The model name of interest.</span>
-<span class="sd">        :type model_name: :class:`~str`</span>
+<span class="sd">        :type model_name: str</span>
 <span class="sd">        :param model_cfg: The model configuration in JSON format.</span>
 <span class="sd">                          The configuration is either downloaded from the server or</span>
 <span class="sd">                          loaded from a local file ``.metadata.json``. If you are confused by this parameter,</span>
 <span class="sd">                          use :py:meth:`PlateModelManager.get_model()` to get a :class:`PlateModel` object instead.</span>
 <span class="sd">        :param data_dir: The folder path to save the model data.</span>
+<span class="sd">        :type data_dir: str, default=&quot;.&quot;</span>
 <span class="sd">        :param readonly: If this flag is set to ``True``, The :class:`PlateModel` object will use</span>
 <span class="sd">                         the files in the local folder and will not attempt to</span>
 <span class="sd">                         download/update the files from the server.</span>
-<span class="sd">        :type readonly: :class:`~bool`</span>
-
+<span class="sd">        :type readonly: bool, default=False</span>
+<span class="sd">        :param timeout: Network connection `timeout parameter &lt;https://requests.readthedocs.io/en/latest/user/advanced/#timeouts&gt;`__.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_filename</span> <span class="o">=</span> <span class="n">METADATA_FILENAME</span>
@@ -383,10 +385,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a local path for the raster file.</span>
 
 <span class="sd">        :param time: A single time of interest.</span>
-<span class="sd">        :type time: :class:`int` or :class:`float`</span>
+<span class="sd">        :type time: int or float</span>
 
 <span class="sd">        :returns: A local path of the raster file.</span>
-<span class="sd">        :rtype: :class:`str`</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;TimeDepRasters&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
@@ -450,7 +452,7 @@
 <div class="viewcode-block" id="PlateModel.create_model_dir">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.PlateModel.create_model_dir">[docs]</a>
     <span class="k">def</span> <span class="nf">create_model_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an empty folder for the model and put a ``.metadata.json`` file in the folder.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a folder with a file ``.metadata.json`` in it to keep the model files.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to create model dir in readonly mode.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="p">:</span>
@@ -480,7 +482,7 @@
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.PlateModel.is_model_dir">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">is_model_dir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return ``True`` if it is a model dir, otherwise ``False``.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return ``True`` if the folder contains files of a plate model, otherwise ``False``.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder_path</span><span class="si">}</span><span class="s2">/.metadata.json&quot;</span>
         <span class="p">)</span></div>

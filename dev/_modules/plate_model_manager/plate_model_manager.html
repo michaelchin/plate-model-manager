@@ -105,7 +105,7 @@
 <div class="viewcode-block" id="PlateModelManager.__init__">
 <a class="viewcode-back" href="../../api.html#plate_model_manager.PlateModelManager.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manifest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor. Create a :class:`PlateModelManager` instance.</span>
 
 <span class="sd">        :param model_manifest: The URL to a ``models.json`` metadata file.</span>
 <span class="sd">                               Normally you don&#39;t need to provide this parameter unless</span>
@@ -246,8 +246,12 @@
 <div class="viewcode-block" id="PlateModelManager.get_local_available_model_names">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.PlateModelManager.get_local_available_model_names">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_local_available_model_names</span><span class="p">(</span><span class="n">local_dir</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of model names in a local folder.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get_local_available_model_names</span><span class="p">(</span><span class="n">local_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of model names in a local folder.</span>
+
+<span class="sd">        :param local_dir: The local folder containing models.</span>
+<span class="sd">        :type local_dir: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">local_dir</span><span class="p">):</span>
             <span class="n">d</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_dir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
@@ -280,8 +284,12 @@
 
 <div class="viewcode-block" id="PlateModelManager.download_all_models">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.PlateModelManager.download_all_models">[docs]</a>
-    <span class="k">def</span> <span class="nf">download_all_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download all available models into the ``data_dir``.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">download_all_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Download all available models into the ``data_dir``.</span>
+
+<span class="sd">        :param data_dir: The folder to save the model files.</span>
+<span class="sd">        :type data_dir: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_available_model_names</span><span class="p">():</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;download </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>

@@ -1,4 +1,4 @@
-Plate Model Manager Documentation v1.2.2
+Plate Model Manager Documentation v1.3.0
 ========================================
 
 Originally the ``plate-model-manager`` was designed for GPlately_. 
@@ -36,7 +36,6 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
 
 .. _GPlately: https://github.com/GPlates/gplately
 .. _NPM: https://www.npmjs.com/
