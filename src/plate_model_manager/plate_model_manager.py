@@ -146,7 +146,7 @@ class PlateModelManager:
                     model_name, model_cfg=self.models[model_name], data_dir=data_dir
                 )
         else:
-            logger.warning(f"Model {model_name} is not available.")
+            logger.error(f"Model {model_name} is not available.")
             return None
 
     def get_available_model_names(self):

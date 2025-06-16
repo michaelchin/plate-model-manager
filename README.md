@@ -32,12 +32,14 @@ Visit [this page](https://michaelchin.github.io/plate-model-manager/latest/comma
 
 ### Documentation
 
-- [latest](https://michaelchin.github.io/plate-model-manager/latest/)
+- [latest dev](https://michaelchin.github.io/plate-model-manager/latest/)
+- [latest stable](https://michaelchin.github.io/plate-model-manager/stable/)
+- [v1.3.0](https://michaelchin.github.io/plate-model-manager/v1.3.0/)
 - [v1.2.0](https://michaelchin.github.io/plate-model-manager/v1.2.0/)
 
 ### Software adoption
 
-The `plate-model-manager` module is used in
+Here are some software applications that make use of `the plate-model-manager` module:
 
 - [GPlately](https://github.com/GPlates/gplately)
 - [GPlates Web Service](https://github.com/GPlates/gplates-web-service)

@@ -93,6 +93,11 @@ class PlateModel:
             self.run = functools.partial(self.loop.run_in_executor, self.executor)
             asyncio.set_event_loop(self.loop)
 
+        if self._model is None:
+            logger.warning(
+                "Creating a PlateModel instance with the 'model configuration' is None. Normally this should not happen. I allow this just in case some genius is doing something extraordinarily smart."
+            )
+
     @property
     def model(self) -> Dict:
         """The model metadata."""
@@ -100,11 +105,15 @@ class PlateModel:
             return self._model
         else:
             raise Exception(
-                "The plate model is None. This should not happen. Something Extraordinary must have happened."
+                "The 'model configuration' is None. This should not happen. Something extraordinary must have happened. Think carefully what you have done!!!"
             )
 
     @model.setter
     def model(self, var) -> None:
+        if var is None:
+            logger.warning(
+                "You are trying to set the 'model configuration' to None. I will allow this. But I hope you know what you are doing!!!"
+            )
         self._model = var
 
     def __getstate__(self):
