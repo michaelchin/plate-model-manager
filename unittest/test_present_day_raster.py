@@ -29,6 +29,10 @@ class RasterTestCase(unittest.TestCase):
         logger.info(rasters)
         raster_file = self.manager.get_raster("topography")
         self.assertTrue(os.path.isfile(raster_file))
+        raster_file = self.manager.get_raster("etopo1_grd")
+        self.assertTrue(os.path.isfile(raster_file))
+        raster_file = self.manager.get_raster("etopo1_tif")
+        self.assertTrue(os.path.isfile(raster_file))
 
     def test_wms(self):
         self.assertTrue(self.manager.is_wms("vgg"))
