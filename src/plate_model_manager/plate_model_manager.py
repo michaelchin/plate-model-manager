@@ -13,7 +13,7 @@ logger = logging.getLogger("pmm")
 
 
 class PlateModelManager:
-    """Manage a set of public available plate reconstruction models.
+    """Manage a set of publicly available plate reconstruction models.
     The model files are hosted on EarthByte servers.
     You need Internet connection to download the files.
     """
