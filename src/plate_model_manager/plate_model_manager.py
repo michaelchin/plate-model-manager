@@ -181,10 +181,16 @@ class PlateModelManager:
                 if response.status_code == 200:
                     return url
                 else:
+                    logger.warning(
+                        f"Unable to fetch {url}. status_code={response.status_code}"
+                    )
                     continue
             except:
+                logger.warning(f"Unable to fetch {url}.")
                 continue
-        raise ServerUnavailable()
+        raise ServerUnavailable(
+            """Cannot connect to the servers. Either the servers are currently unavailable, or there is a problem with your internet connection."""
+        )
 
     def download_all_models(self, data_dir: str = "./") -> None:
         """Download all available models into the ``data_dir``.
