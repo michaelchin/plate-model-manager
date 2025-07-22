@@ -49,6 +49,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#use-with-pygplates">Use with pyGPlates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#use-with-gplately">Use with GPlately</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-without-internet">Use without Internet</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="command_line_interface.html">Command Line Interface (CLI)</a></li>
@@ -89,6 +90,7 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#use-with-pygplates" id="id1">Use with pyGPlates</a></p></li>
 <li><p><a class="reference internal" href="#use-with-gplately" id="id2">Use with GPlately</a></p></li>
+<li><p><a class="reference internal" href="#use-without-internet" id="id3">Use without Internet</a></p></li>
 </ul>
 </nav>
 <section id="use-with-pygplates">
@@ -134,11 +136,11 @@
 <section id="use-with-gplately">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Use with GPlately</a><a class="headerlink" href="#use-with-gplately" title="Link to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">gplately</span> <span class="kn">import</span> <span class="p">(</span>
-<span class="linenos"> 2</span><span class="n">PlateModelManager</span><span class="p">,</span>
-<span class="linenos"> 3</span><span class="n">PlateReconstruction</span><span class="p">,</span>
-<span class="linenos"> 4</span><span class="n">PlotTopologies</span><span class="p">,</span>
-<span class="linenos"> 5</span><span class="n">PresentDayRasterManager</span><span class="p">,</span>
-<span class="linenos"> 6</span><span class="n">Raster</span><span class="p">,</span>
+<span class="linenos"> 2</span>    <span class="n">PlateModelManager</span><span class="p">,</span>
+<span class="linenos"> 3</span>    <span class="n">PlateReconstruction</span><span class="p">,</span>
+<span class="linenos"> 4</span>    <span class="n">PlotTopologies</span><span class="p">,</span>
+<span class="linenos"> 5</span>    <span class="n">PresentDayRasterManager</span><span class="p">,</span>
+<span class="linenos"> 6</span>    <span class="n">Raster</span><span class="p">,</span>
 <span class="linenos"> 7</span><span class="p">)</span>
 <span class="linenos"> 8</span>
 <span class="linenos"> 9</span><span class="n">model</span> <span class="o">=</span> <span class="n">PlateModelManager</span><span class="p">()</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span>
@@ -170,6 +172,23 @@
 <li><p><a class="reference external" href="https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/introducing_plate_model_manager.py">introducing plate model manager</a></p></li>
 <li><p><a class="reference external" href="https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working_with_plate_model_manager.py">working with plate model manager</a></p></li>
 </ul>
+</div>
+</section>
+<section id="use-without-internet">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Use without Internet</a><a class="headerlink" href="#use-without-internet" title="Link to this heading"></a></h2>
+<p>Assume you have downloaded <code class="docutils literal notranslate"><span class="pre">zahirovic2022</span></code> model in folder <code class="docutils literal notranslate"><span class="pre">plate-model-repo</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="command_line_interface.html#download-a-plate-model">How to download a plate model?</a></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">plate_model_manager</span> <span class="kn">import</span> <span class="n">PlateModel</span>
+<span class="linenos">2</span>
+<span class="hll"><span class="linenos">3</span><span class="n">model</span> <span class="o">=</span> <span class="n">PlateModel</span><span class="p">(</span>
+</span><span class="hll"><span class="linenos">4</span>    <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;zahirovic2022&quot;</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;plate-model-repo&quot;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span>
+</span><span class="hll"><span class="linenos">5</span><span class="p">)</span>
+</span><span class="linenos">6</span><span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_avail_layers</span><span class="p">():</span>
+<span class="linenos">7</span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span>
+</pre></div>
 </div>
 </section>
 </section>

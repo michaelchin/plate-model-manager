@@ -276,10 +276,16 @@
                 <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">url</span>
                 <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Unable to fetch </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">. status_code=</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
                     <span class="k">continue</span>
             <span class="k">except</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to fetch </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
                 <span class="k">continue</span>
-        <span class="k">raise</span> <span class="n">ServerUnavailable</span><span class="p">()</span></div>
+        <span class="k">raise</span> <span class="n">ServerUnavailable</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Cannot connect to the servers. Either the servers are currently unavailable, or there is a problem with your internet connection.&quot;&quot;&quot;</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateModelManager.download_all_models">

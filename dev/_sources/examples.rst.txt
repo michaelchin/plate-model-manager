@@ -57,11 +57,11 @@ Use with GPlately
     :emphasize-lines: 16,17,21,22,26,28
 
     from gplately import (
-    PlateModelManager,
-    PlateReconstruction,
-    PlotTopologies,
-    PresentDayRasterManager,
-    Raster,
+        PlateModelManager,
+        PlateReconstruction,
+        PlotTopologies,
+        PresentDayRasterManager,
+        Raster,
     )
 
     model = PlateModelManager().get_model(
@@ -93,3 +93,25 @@ Use with GPlately
 
 .. _introducing plate model manager: https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/introducing_plate_model_manager.py
 .. _working with plate model manager: https://github.com/GPlates/gplately/blob/master/Notebooks/Examples/working_with_plate_model_manager.py
+
+
+Use without Internet 
+--------------------
+
+Assume you have downloaded ``zahirovic2022`` model in folder ``plate-model-repo``.  
+
+.. seealso::
+
+    `How to download a plate model? <command_line_interface.html#download-a-plate-model>`__
+
+.. code-block:: python
+    :linenos:
+    :emphasize-lines: 3,4,5
+
+    from plate_model_manager import PlateModel
+
+    model = PlateModel(
+        model_name="zahirovic2022", data_dir="plate-model-repo", readonly=True
+    )
+    for layer in model.get_avail_layers():
+        print(model.get_layer(layer))
