@@ -41,6 +41,10 @@ class PlateModel:
     Create a :class:`PlateModel` object directly only when you don't have Internet connection and would like
     to use the local model files in ``readonly`` mode.
     Do not create a :class:`PlateModel` object directly if you have no idea what's going on.
+
+    .. seealso::
+
+        `Use PlateModel class in readonly mode. <examples.html#use-without-internet>`__
     """
 
     def __init__(

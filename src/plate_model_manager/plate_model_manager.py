@@ -15,7 +15,7 @@ logger = logging.getLogger("pmm")
 class PlateModelManager:
     """Manage a set of publicly available plate reconstruction models.
     The model files are hosted on EarthByte servers.
-    You need Internet connection to download the files.
+    You need Internet connection to use this class and download the files.
     """
 
     # Load a models.json file and manage plate models.
@@ -23,6 +23,9 @@ class PlateModelManager:
 
     def __init__(self, model_manifest: str = "", timeout=(None, None)):
         """Constructor. Create a :class:`PlateModelManager` instance.
+        You need Internet connection to create an instance of this class.
+        If you don't have Internet connection, use :class:`PlateModel` class directly in ``readonly`` mode.
+        Visit `this page <examples.html#use-without-internet>`__ to see an example.
 
         :param model_manifest: The URL to a ``models.json`` metadata file.
                                Normally you don't need to provide this parameter unless

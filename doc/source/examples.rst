@@ -98,7 +98,7 @@ Use with GPlately
 Use without Internet 
 --------------------
 
-Assume you have downloaded ``zahirovic2022`` model in folder ``plate-model-repo``.  
+Assume you had downloaded ``zahirovic2022`` model in the folder ``plate-model-repo`` previously when you had Internet connection.  
 
 .. seealso::
 
@@ -106,12 +106,18 @@ Assume you have downloaded ``zahirovic2022`` model in folder ``plate-model-repo`
 
 .. code-block:: python
     :linenos:
-    :emphasize-lines: 3,4,5
+    :emphasize-lines: 7,8,9
 
     from plate_model_manager import PlateModel
 
-    model = PlateModel(
-        model_name="zahirovic2022", data_dir="plate-model-repo", readonly=True
-    )
+    try:
+        model = PlateModelManager().get_model("zahirovic2022", data_dir="plate-model-repo")
+    except:
+        # if unable to connect to the servers, try to use the local files
+        model = PlateModel(
+            model_name="zahirovic2022", data_dir="plate-model-repo", readonly=True
+        )
+        print("Unable to connect to the servers. Using local files in readonly mode.")
+
     for layer in model.get_avail_layers():
         print(model.get_layer(layer))
