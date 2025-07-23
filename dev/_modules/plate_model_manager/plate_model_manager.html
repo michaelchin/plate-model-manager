@@ -96,7 +96,7 @@
 <span class="k">class</span> <span class="nc">PlateModelManager</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Manage a set of publicly available plate reconstruction models.</span>
 <span class="sd">    The model files are hosted on EarthByte servers.</span>
-<span class="sd">    You need Internet connection to download the files.</span>
+<span class="sd">    You need Internet connection to use this class and download the files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Load a models.json file and manage plate models.</span>
@@ -106,6 +106,9 @@
 <a class="viewcode-back" href="../../api.html#plate_model_manager.PlateModelManager.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_manifest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor. Create a :class:`PlateModelManager` instance.</span>
+<span class="sd">        You need Internet connection to create an instance of this class.</span>
+<span class="sd">        If you don&#39;t have Internet connection, use :class:`PlateModel` class directly in ``readonly`` mode.</span>
+<span class="sd">        Visit `this page &lt;examples.html#use-without-internet&gt;`__ to see an example.</span>
 
 <span class="sd">        :param model_manifest: The URL to a ``models.json`` metadata file.</span>
 <span class="sd">                               Normally you don&#39;t need to provide this parameter unless</span>
