@@ -4,6 +4,14 @@ plate\_model\_manager package
 Submodules
 ----------
 
+plate\_model\_manager.auxiliary module
+--------------------------------------
+
+.. automodule:: plate_model_manager.auxiliary
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 plate\_model\_manager.exceptions module
 ---------------------------------------
 
