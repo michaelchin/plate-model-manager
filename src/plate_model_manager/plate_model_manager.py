@@ -116,15 +116,15 @@ class PlateModelManager:
     def get_model(
         self, model_name: str = "default", data_dir: str = "."
     ) -> Union[PlateModel, None]:
-        """Return a :class:`PlateModel` object for a given model name.
+        """Return a :class:`PlateModel` object for a given plate model name.
 
-        Call :meth:`get_available_model_names()` to see a list of available model names.
+        Call :meth:`get_available_model_names()` to see a list of available plate model names.
 
-        :param model_name: the model name of interest
-        :param data_dir: The folder to save the model files.
+        :param model_name: the plate model name of interest
+        :param data_dir: The folder to save the plate model files.
                          This ``data_dir`` can be changed with :meth:`PlateModel.set_data_dir()` later.
 
-        :returns: a :class:`PlateModel` object or ``None`` if the model name is no good.
+        :returns: a :class:`PlateModel` object or ``None`` if the plate model name is no good.
 
         """
         model_name = model_name.lower()

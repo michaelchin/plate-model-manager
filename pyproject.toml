@@ -12,19 +12,18 @@ description = "Plate Model Manager"
 readme = "README.md"
 authors = [{ name = "Michael Chin", email = "michael.chin@sydney.edu.au" }]
 license = { file = "LICENSE" }
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13"
 ]
-keywords = ["Tectonics", "Earth"]
+keywords = ["Geoscience", "Plate Tectonics", "Earth", "Geophysics"]
 dependencies = [
     "aiohttp",
     "requests",

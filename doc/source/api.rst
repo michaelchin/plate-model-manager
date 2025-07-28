@@ -53,4 +53,11 @@ You can use this class to do the things listed below.
     :undoc-members:
     :special-members: __init__
     :exclude-members: rasters
+
+Auxiliary Function
+------------------
+
+Auxiliary functon for users' convenience.
+
+.. autofunction:: plate_model_manager.get_plate_model
     
