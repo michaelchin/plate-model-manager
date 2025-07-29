@@ -11,7 +11,7 @@ logger = logging.getLogger("pmm")
 
 def get_plate_model(
     model_name: str, data_dir: Union[str, os.PathLike]
-) -> Union[PlateModel | None]:
+) -> Union[PlateModel, None]:
     """Convenient function to create a :class:`PlateModel` instance using best effort.
     First, try to get the plate model with :class:`PlateModelManager`.
     If the servers cannot be reached, try to use the local plate model files which were previously downloaded.
