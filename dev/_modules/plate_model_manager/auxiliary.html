@@ -92,7 +92,7 @@
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.get_plate_model">[docs]</a>
 <span class="k">def</span> <span class="nf">get_plate_model</span><span class="p">(</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">PathLike</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">PlateModel</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">PlateModel</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenient function to create a :class:`PlateModel` instance using best effort.</span>
 <span class="sd">    First, try to get the plate model with :class:`PlateModelManager`.</span>
 <span class="sd">    If the servers cannot be reached, try to use the local plate model files which were previously downloaded.</span>
