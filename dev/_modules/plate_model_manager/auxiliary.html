@@ -79,11 +79,13 @@
   <h1>Source code for plate_model_manager.auxiliary</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ServerUnavailable</span>
 <span class="kn">from</span> <span class="nn">.plate_model</span> <span class="kn">import</span> <span class="n">PlateModel</span>
 <span class="kn">from</span> <span class="nn">.plate_model_manager</span> <span class="kn">import</span> <span class="n">PlateModelManager</span>
+<span class="kn">from</span> <span class="nn">.zenodo</span> <span class="kn">import</span> <span class="n">ZenodoRecord</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;pmm&quot;</span><span class="p">)</span>
 
@@ -111,6 +113,29 @@
             <span class="s2">&quot;Unable to connect to the servers. Using local files in readonly mode.&quot;</span>
         <span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span></div>
+
+
+
+<div class="viewcode-block" id="check_update">
+<a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.check_update">[docs]</a>
+<span class="k">def</span> <span class="nf">check_update</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if new versions of plate models are available on Zenodo.</span>
+<span class="sd">    Mainly used by Michael Chin to update the PMM server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">models</span> <span class="o">=</span> <span class="n">PlateModelManager</span><span class="p">()</span><span class="o">.</span><span class="n">models</span>
+    <span class="k">for</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;URL&quot;</span> <span class="ow">in</span> <span class="n">model</span> <span class="ow">and</span> <span class="s2">&quot;Version&quot;</span> <span class="ow">in</span> <span class="n">model</span><span class="p">:</span>
+            <span class="n">record_id</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;zenodo.(\d+)&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;URL&quot;</span><span class="p">])</span>
+            <span class="n">version_id</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;zenodo.(\d+)&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;Version&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">record_id</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">version_id</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># logger.info(record_id[0])</span>
+                <span class="n">latest_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ZenodoRecord</span><span class="p">(</span><span class="n">record_id</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">get_latest_version_id</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">version_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">latest_id</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Model (</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2">) needs update. The latest version ID is: </span><span class="si">{</span><span class="n">latest_id</span><span class="si">}</span><span class="s2">. Your current version ID is : </span><span class="si">{</span><span class="n">version_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+                    <span class="p">)</span></div>
 
 </pre></div>
 

@@ -77,8 +77,9 @@
            <div itemprop="articleBody">
              
   <h1>Source code for plate_model_manager.zenodo</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
 
 
 <div class="viewcode-block" id="ZenodoRecord">
@@ -104,7 +105,7 @@
 
 <div class="viewcode-block" id="ZenodoRecord.get_version">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_version">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_versions</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">record</span>
@@ -128,20 +129,20 @@
 
 <div class="viewcode-block" id="ZenodoRecord.get_latest_version_id">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_latest_version_id">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_latest_version_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">get_latest_version_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_latest_version</span><span class="p">()[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="ZenodoRecord.get_file_links">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_file_links">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_file_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">get_file_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;links&quot;</span><span class="p">][</span><span class="s2">&quot;self&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span></div>
 
 
 <div class="viewcode-block" id="ZenodoRecord.get_filenames">
 <a class="viewcode-back" href="../../plate_model_manager.html#plate_model_manager.zenodo.ZenodoRecord.get_filenames">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">get_filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_version</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]]</span></div>
 </div>
