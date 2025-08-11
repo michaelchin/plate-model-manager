@@ -46,30 +46,27 @@ files = glob.glob(f"{model_path}/{zip_path}/Topologies/*.gpml", recursive=True)
 utils.zip_files(files, f"{model_path}/Topologies.zip", "Topologies", log_fp=info_fp)
 
 # zip coastlines
-files = glob.glob(
-    f"{model_path}/{zip_path}/Coastlines/coastlines_Merdith_etal_v2.gpmlz",
-    recursive=True,
-)
+files = [
+    f"{model_path}/{zip_path}/Coastlines/shapes_coastlines_Merdith_et_al_v2.gpmlz",
+]
 utils.zip_files(files, f"{model_path}/Coastlines.zip", "Coastlines", log_fp=info_fp)
 
 
 # zip static polygons
-files = glob.glob(
-    f"{model_path}/{zip_path}/StaticPolygons/static_polygons_Merdith_etal.gpml",
-    recursive=True,
-)
+files = [
+    f"{model_path}/{zip_path}/StaticPolygons/shapes_static_polygons_Merdith_etal.gpml"
+]
+
 utils.zip_files(
     files, f"{model_path}/StaticPolygons.zip", "StaticPolygons", log_fp=info_fp
 )
 
 # zip rotations
-files = glob.glob(
-    f"{model_path}/{zip_path}/Rotations/1000_0_rotfile_Merdith_etal.rot", recursive=True
-)
+files = [f"{model_path}/{zip_path}/Rotations/1000_0_rotfile_Merdith_etal.rot"]
 utils.zip_files(files, f"{model_path}/Rotations.zip", "Rotations", log_fp=info_fp)
 
 # zip ContinentalPolygons
-files = glob.glob(f"{model_path}/{zip_path}/Continents/continents.gpml", recursive=True)
+files = [f"{model_path}/{zip_path}/Continents/shapes_continents.gpml"]
 utils.zip_files(
     files,
     f"{model_path}/ContinentalPolygons.zip",
@@ -78,9 +75,8 @@ utils.zip_files(
 )
 
 # zip Cratons
-files = glob.glob(
-    f"{model_path}/{zip_path}/Cratons/cratons_Merdith_etal.gpml", recursive=True
-)
+files = [f"{model_path}/{zip_path}/Cratons/shapes_cratons_Merdith_etal.gpml"]
+
 utils.zip_files(files, f"{model_path}/Cratons.zip", "Cratons", log_fp=info_fp)
 
 shutil.rmtree(f"{model_path}/{zip_path}")

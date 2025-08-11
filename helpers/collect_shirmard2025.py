@@ -25,7 +25,7 @@ file_links = record.get_file_links(latest_id)
 print(f"The file links in the latest version: {file_links}")
 
 model_path = utils.get_model_path(sys.argv, "shirmard2025")
-zip_path = "Cao_etal_24_1.8Ga_model_mantle_ref_frame"
+zip_path = "Cao_etal_2024_1.8_Ga_mantle_ref_frame"
 
 info_fp = open(f"{model_path}/info.txt", "w+")
 info_fp.write(f"{datetime.now()}\n")
@@ -42,8 +42,8 @@ if r.status_code in [200]:
     z = zipfile.ZipFile(io.BytesIO(r.content))
     from pathlib import Path
 
-    Path(f"{model_path}/{zip_path}").mkdir(parents=True, exist_ok=True)
-    z.extractall(f"{model_path}/{zip_path}")
+    Path(f"{model_path}").mkdir(parents=True, exist_ok=True)
+    z.extractall(f"{model_path}")
 
 # zip Rotations
 files = [

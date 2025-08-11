@@ -1,10 +1,12 @@
 import logging
 import os
+import re
 from typing import Union
 
 from .exceptions import ServerUnavailable
 from .plate_model import PlateModel
 from .plate_model_manager import PlateModelManager
+from .zenodo import ZenodoRecord
 
 logger = logging.getLogger("pmm")
 
@@ -30,3 +32,23 @@ def get_plate_model(
             "Unable to connect to the servers. Using local files in readonly mode."
         )
     return model
+
+
+def check_update():
+    """Check if new versions of plate models are available on Zenodo.
+    Mainly used by Michael Chin to update the PMM server.
+    """
+
+    models = PlateModelManager().models
+    for model_name in models:
+        model = models[model_name]
+        if isinstance(model, dict) and "URL" in model and "Version" in model:
+            record_id = re.findall(r"zenodo.(\d+)", model["URL"])
+            version_id = re.findall(r"zenodo.(\d+)", model["Version"])
+            if len(record_id) == 1 and len(version_id) == 1:
+                # logger.info(record_id[0])
+                latest_id = str(ZenodoRecord(record_id[0]).get_latest_version_id())
+                if version_id[0] != latest_id:
+                    logger.info(
+                        f"Model ({model_name}) needs update. The latest version ID is: {latest_id}. Your current version ID is : {version_id[0]}."
+                    )

@@ -50,7 +50,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    f = f"{model_path}/{zip_path}/Optimisation/1000_0_rotfile_Merdith_et_al_optimised.rot"
+    f = f"{model_path}/{zip_path}/optimisation/1000_0_rotfile_Merdith_etal_opt.rot"
     info_fp.write(f"Zip Rotations:\n")
     info_fp.write(f"\t{f}\n")
     f_zip.write(f, f"Rotations/{os.path.basename(f)}")
@@ -62,7 +62,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    f = f"{model_path}/{zip_path}/Static_Polygons/static_polygons_Merdith_etal.gpml"
+    f = f"{model_path}/{zip_path}/StaticPolygons/shapes_static_polygons_Merdith_etal.gpml"
     info_fp.write(f"Zip StaticPolygons:\n")
     info_fp.write(f"\t{f}\n")
     f_zip.write(f, f"StaticPolygons/{os.path.basename(f)}")
@@ -74,7 +74,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(f"{model_path}/{zip_path}/Coastlines/coastlines.gpmlz")
+    files = [f"{model_path}/{zip_path}/Coastlines/shapes_coastlines_Merdith_etal.gpmlz"]
     info_fp.write(f"Zip Coastlines:\n")
     for f in files:
         f_zip.write(f, f"Coastlines/{os.path.basename(f)}")
@@ -91,8 +91,8 @@ with zipfile.ZipFile(
         f"{model_path}/{zip_path}/Topologies/1000-410-Convergence.gpml",
         f"{model_path}/{zip_path}/Topologies/1000-410-Divergence.gpml",
         f"{model_path}/{zip_path}/Topologies/1000-410-Topologies.gpml",
-        f"{model_path}/{zip_path}/Topologies/250-0_plate_boundaries.gpml",
-        f"{model_path}/{zip_path}/Topologies/410-250_plate_boundaries.gpml",
+        f"{model_path}/{zip_path}/Topologies/250-0_plate_bounds.gpml",
+        f"{model_path}/{zip_path}/Topologies/410-250_plate_bounds.gpml",
         f"{model_path}/{zip_path}/Topologies/TopologyBuildingBlocks.gpml",
         f"{model_path}/{zip_path}/Topologies/1000-410-Transforms.gpml",
     ]
@@ -123,7 +123,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(f"{model_path}/{zip_path}/Continents/continents.gpml")
+    files = [f"{model_path}/{zip_path}/Continents/shapes_continents.gpml"]
     info_fp.write(f"Zip ContinentalPolygons:\n")
     for f in files:
         f_zip.write(f, f"ContinentalPolygons/{os.path.basename(f)}")
@@ -136,7 +136,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     compresslevel=9,
 ) as f_zip:
-    files = glob.glob(f"{model_path}/{zip_path}/Cratons/cratons.gpml")
+    files = [f"{model_path}/{zip_path}/Cratons/shapes_cratons_Merdith_etal.gpml"]
     info_fp.write(f"Zip Cratons:\n")
     for f in files:
         f_zip.write(f, f"Cratons/{os.path.basename(f)}")

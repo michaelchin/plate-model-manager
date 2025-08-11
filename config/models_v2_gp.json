@@ -16,8 +16,8 @@
         },
         "TimeDepRasters": {},
         "Description": "How Subduction Evolution and Tectonic Stability Drive Sediment-Hosted Mineralization Along Craton Edges.",
-        "URL": "https://zenodo.org/records/15233548",
-        "Version": "10.5281/zenodo.15321284"
+        "URL": "https://doi.org/10.5281/zenodo.15233548",
+        "Version": "10.5281/zenodo.16791505"
     },
     "alfonso2024": {
         "BigTime": 250,
@@ -48,7 +48,7 @@
         },
         "TimeDepRasters": {},
         "Description": "Earth's tectonic and plate boundary evolution over 1.8 billion years",
-        "URL": "https://zenodo.org/records/11536686",
+        "URL": "https://doi.org/10.5281/zenodo.11536686",
         "Version": "10.5281/zenodo.13628813"
     },
     "cao2023": "@cao2024",
@@ -66,7 +66,7 @@
         },
         "Description": "This model is based on MERDITH2021 for relative plate motions but uses a mantle reference frame that orients the plates relative to the mantle using a set of geodynamic rules to exclude geodynamically unreasonable plate motions. The difference between the paleomagnetic and mantle reference frames grows cumulatively back in time \u2013 hence the two reconstructions (MERDITH2021 versus MULLER2022) diverge progressively in the Paleozoic and Proterozoic both in terms of paleolatitude and paleolongitude.",
         "URL": "https://doi.org/10.5281/zenodo.10297173",
-        "Version": "10.5281/zenodo.10910449"
+        "Version": "10.5281/zenodo.13636799"
     },
     "zahirovic2022": {
         "BigTime": 410,
@@ -87,7 +87,7 @@
             "SpreadingRateUsingTopologiesPMAG": "https://repo.gplates.org/webdav/PlateModel_Age_SR_Grids/Zahirovic_etal_2022_GDJ/02_AgegridsUsingTopologies/PaleomagneticFrame/SeafloorSpreadingRateGrids/Zahirovic_etal_2022-v2_PMAG_SPREADING_RATE_grid_{:.1f}Ma.nc"
         },
         "Description": "Subduction kinematics and carbonate platform interactions",
-        "URL": "https://zenodo.org/records/4729045",
+        "URL": "https://doi.org/10.5281/zenodo.4729045",
         "Version": "10.5281/zenodo.13899315"
     },
     "merdith2021": {
@@ -103,7 +103,7 @@
         },
         "Description": "This plate model for the last 1000 Ma is based on a paleomagnetic reference frame. In this model the longitudinal positions of the plates are unconstrained, due to the radial symmetry of the Earth's magnetic field. It is broadly based on a modified combination of MULLER2016 for the last 230 Ma, the MATTHEWS2016_pmag_ref model for 250-410 Ma and a newly constructed model for earlier times.",
         "URL": "https://doi.org/10.5281/zenodo.10346399",
-        "Version": "10.5281/zenodo.12525525"
+        "Version": "10.5281/zenodo.13635864"
     },
     "clennett2020": "@clennett2020_m2019",
     "clennett2020_m2019": {

@@ -6,7 +6,7 @@ from .utils.misc import get_distribution_version
 __version__ = get_distribution_version()
 del get_distribution_version
 
-from .auxiliary import get_plate_model
+from .auxiliary import check_update, get_plate_model
 from .plate_model import PlateModel
 from .plate_model_manager import PlateModelManager
 from .present_day_rasters import PresentDayRasterManager

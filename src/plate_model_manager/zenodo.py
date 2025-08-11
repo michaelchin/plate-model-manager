@@ -1,5 +1,6 @@
+from typing import Dict, List, Union
+
 import requests
-from typing import List, Union, Dict
 
 
 class ZenodoRecord:
@@ -15,7 +16,7 @@ class ZenodoRecord:
     def get_all_version_ids(self) -> List[str]:
         return [record["id"] for record in self.get_all_versions()]
 
-    def get_version(self, id) -> Dict:
+    def get_version(self, id: int) -> Dict:
         for record in self.get_all_versions():
             if record["id"] == id:
                 return record
@@ -33,13 +34,13 @@ class ZenodoRecord:
             f"Unable to find the latest version. Check {self._record_url} to find out what is going on."
         )
 
-    def get_latest_version_id(self) -> str:
+    def get_latest_version_id(self) -> int:
         return self.get_latest_version()["id"]
 
-    def get_file_links(self, id) -> List[str]:
+    def get_file_links(self, id: int) -> List[str]:
         record = self.get_version(id)
         return [file["links"]["self"] for file in record["files"]]
 
-    def get_filenames(self, id) -> List[str]:
+    def get_filenames(self, id: int) -> List[str]:
         record = self.get_version(id)
         return [file["key"] for file in record["files"]]

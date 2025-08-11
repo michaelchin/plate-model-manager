@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 
-from plate_model_manager import PlateModelManager, __version__
+from plate_model_manager import PlateModelManager, __version__, check_update
 
 logger = logging.getLogger("pmm")
 
@@ -57,6 +57,10 @@ def _run_download_command(args):
             )
 
 
+def _run_check_update_command(args):
+    check_update()
+
+
 def main():
     parser = ArgParser()
 
@@ -64,17 +68,61 @@ def main():
 
     subparser = parser.add_subparsers(dest="command")
 
-    ls_cmd = subparser.add_parser("ls")
-    ls_cmd.add_argument("-r", "--repository", type=str, dest="repository")
-    ls_cmd.add_argument("model", type=str, nargs="?")
+    ls_cmd = subparser.add_parser(
+        "ls",
+        description="List all available plate model names. If given a model name, show the details of the model.",
+        help="list all available plate model names. if given a model name, show the details of the model.",
+    )
+    ls_cmd.add_argument(
+        "-r",
+        "--repository",
+        type=str,
+        dest="repository",
+        help="indicate which repository to use. you don't need this argument in most situations.",
+    )
+    ls_cmd.add_argument(
+        "model",
+        type=str,
+        nargs="?",
+        help="the model name. If given, show the details of the model.",
+    )
     ls_cmd.set_defaults(func=_run_ls_command)
 
-    download_cmd = subparser.add_parser("download")
-    download_cmd.add_argument("model", type=str)
-    download_cmd.add_argument("path", type=str, nargs="?", default=os.getcwd())
-    download_cmd.add_argument("-r", "--repository", type=str, dest="repository")
-    download_cmd.add_argument("--download-rasters", action="store_true")
+    download_cmd = subparser.add_parser(
+        "download",
+        description="Download a plate model or all plate models.",
+        help="download a plate model or all plate models",
+    )
+    download_cmd.add_argument(
+        "model", type=str, help="the model name. use 'all' to download all models."
+    )
+    download_cmd.add_argument(
+        "path",
+        type=str,
+        nargs="?",
+        default=os.getcwd(),
+        help="the location to save the plate model files. use the current working directory by default.",
+    )
+    download_cmd.add_argument(
+        "-r",
+        "--repository",
+        type=str,
+        dest="repository",
+        help="indicate which repository to use. you don't need this argument in most situations.",
+    )
+    download_cmd.add_argument(
+        "--download-rasters",
+        action="store_true",
+        help="a flag to indicate if download raster files. the raster files may be large in size.",
+    )
     download_cmd.set_defaults(func=_run_download_command)
+
+    check_update_cmd = subparser.add_parser(
+        "check-update",
+        description="Check if new versions of plate models are available on Zenodo.",
+        help="check if new versions of plate models are available on Zenodo",
+    )
+    check_update_cmd.set_defaults(func=_run_check_update_command)
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
