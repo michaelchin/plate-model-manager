@@ -38,9 +38,10 @@ def check_update():
     """Check if new versions of plate models are available on Zenodo.
     Mainly used by Michael Chin to update the PMM server.
     """
-
+    need_update = False
     models = PlateModelManager().models
     for model_name in models:
+        logger.info(f"Checking update for model -- {model_name} ...")
         model = models[model_name]
         if isinstance(model, dict) and "URL" in model and "Version" in model:
             record_id = re.findall(r"zenodo.(\d+)", model["URL"])
@@ -49,6 +50,9 @@ def check_update():
                 # logger.info(record_id[0])
                 latest_id = str(ZenodoRecord(record_id[0]).get_latest_version_id())
                 if version_id[0] != latest_id:
+                    need_update = True
                     logger.info(
                         f"Model ({model_name}) needs update. The latest version ID is: {latest_id}. Your current version ID is : {version_id[0]}."
                     )
+    if not need_update:
+        logger.info("All models are up-to-date.")

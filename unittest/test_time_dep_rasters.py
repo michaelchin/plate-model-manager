@@ -26,16 +26,16 @@ logger.info(plate_model_manager.__file__)
 
 class TimeDepRastersTestCase(unittest.TestCase):
     def setUp(self):
-        model_manager = PlateModelManager(
+        self.model_manager = PlateModelManager(
             f"{os.path.dirname(__file__)}/models_test.json"
         )
 
         # test remote models.json with URL
-        # model_manager = plate_model.PlateModelManager(
+        # self.model_manager = plate_model.PlateModelManager(
         #    "https://www.earthbyte.org/webdav/ftp/gplately/models.json"
         # )
         self.model_name = "matthews2016_mantle_ref"
-        self.model = model_manager.get_model(self.model_name)
+        self.model = self.model_manager.get_model(self.model_name)
         if self.model is not None:
             self.model.set_data_dir(TEMP_TEST_DIR)
         if os.path.isdir(f"{TEMP_TEST_DIR}/matthews2016_mantle_ref/Rasters"):
@@ -65,6 +65,44 @@ class TimeDepRastersTestCase(unittest.TestCase):
         logger.info(filepaths)
         for f in filepaths:
             self.assertTrue(os.path.isfile(f))
+
+    def test_agegrids(self):
+        logger.info("test age grids ...")
+
+        m = self.model_manager.get_model("alfonso2024", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
+
+        m = self.model_manager.get_model("muller2022", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
+        m.get_raster("AgeGridsPMAG", 100)
+
+        m = self.model_manager.get_model("zahirovic2022", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgegridsUsingIsochronsMantleFrame", 100)
+        m.get_raster("AgegridsUsingIsochronsPMAG", 100)
+        m.get_raster("AgegridsUsingTopologiesMantleFrame", 100)
+        m.get_raster("AgegridsUsingTopologiesPMAG", 100)
+        m.get_raster("SpreadingRateUsingTopologiesMantleFrame", 100)
+        m.get_raster("SpreadingRateUsingTopologiesPMAG", 100)
+
+        m = self.model_manager.get_model("clennett2020", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
+        m.get_raster("SpreadingRate", 100)
+
+        m = self.model_manager.get_model("muller2019", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
+        m.get_raster("SedimentThickness", 100)
+
+        m = self.model_manager.get_model("matthews2016", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
+
+        m = self.model_manager.get_model("muller2016", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
+
+        m = self.model_manager.get_model("zahirovic2016", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
+
+        m = self.model_manager.get_model("seton2012", data_dir=TEMP_TEST_DIR)
+        m.get_raster("AgeGrids", 100)
 
 
 if __name__ == "__main__":
