@@ -69,6 +69,9 @@ files = [
     f"{model_path}/{zip_path}/250-0_plate_boundaries.gpml",
     f"{model_path}/{zip_path}/410-250_plate_boundaries.gpml",
     f"{model_path}/{zip_path}/TopologyBuildingBlocks.gpml",
+    f"{model_path}/{zip_path}/1000-410-Convergence.gpml",
+    f"{model_path}/{zip_path}/1000-410-Divergence.gpml",
+    f"{model_path}/{zip_path}/1000-410-Transforms.gpml",
 ]
 utils.zip_files(files, f"{model_path}/Topologies.zip", "Topologies", info_fp)
 
